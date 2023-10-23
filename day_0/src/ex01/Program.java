@@ -23,6 +23,7 @@ public class Program {
             System.err.println("Illegal Argument");
             System.exit(-1);
         }
+        myScanner.close();
     }
 
     public static boolean ValidationCheck(int number) {

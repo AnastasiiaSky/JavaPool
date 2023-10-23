@@ -17,7 +17,7 @@ public class Program{
         } while (checkingNumber != 42);
 
         System.out.println("Count of coffee-request - " + coffeRequestCounter);
-
+        myScanner.close();
     }
 
     public static boolean CheckCoffeRequest(int number) {
