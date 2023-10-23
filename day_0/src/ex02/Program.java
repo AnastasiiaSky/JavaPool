@@ -22,8 +22,6 @@ public class Program{
 
     public static boolean CheckCoffeRequest(int number) {
         int newNumber = GetSumFromNumberParts(number);
-
-
         if (IsItSimple(newNumber) == true) {
             return true;
         }
@@ -32,16 +30,9 @@ public class Program{
 
     public static int GetSumFromNumberParts(int number) {
         int resultNumber = 0;
-        int counter = 0;
-        int numberBuffer = number;
-        while(numberBuffer != 0) {
-            numberBuffer = numberBuffer / 10;
-            ++counter;
-        }
-        while (counter > 0) {
+        while(number != 0) {
             resultNumber = resultNumber + (number % 10);
             number = number / 10;
-            --counter;
         }
         return resultNumber;
     }
