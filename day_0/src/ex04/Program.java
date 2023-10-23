@@ -36,6 +36,7 @@ public class Program {
         if(ResultValidation(frequentSimbols) == true) {
             PrintResultData(serchingSimbols, frequentSimbols);
         }
+        myScanner.close();
     }
 
     public static void PrintResultData(char[] simbols, int[] frequence) {
