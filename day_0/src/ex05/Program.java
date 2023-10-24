@@ -3,21 +3,17 @@ import java.util.Scanner;
 
 
 public class Program {
-   static Scanner myScanner = new Scanner(System.in);
+
 
     public static void main(String[] args) {
-//        String[] monthDays = {"TU", "WE", "TH", "FR", "SA", "SU", "MO", "TU", "WE", "TH", "FR", "SA", "SU", "MO", "TU",
-//                "WE", "TH", "FR", "SA", "SU", "MO", "TU", "WE", "TH", "FR", "SA", "SU", "MO", "TU", "WE"};
         String[] studentsNames = GetStudentsNames();
+        String[] dateAndTimeForWeek = GetDateAndTime();
+
         for(int it = 0; it < studentsNames.length; ++it) {
             System.out.println(studentsNames[it]);
-//            System.out.println(dateAndTimeForWeek[it]);
-
         }
-        String[] dateAndTimeForWeek = GetDateAndTime();
-        for(int it = 0; it < studentsNames.length; ++it) {
+        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
             System.out.println(dateAndTimeForWeek[it]);
-
         }
 //        dateAndTimeForWeek = CutDateAndTime(dateAndTimeForWeek);
 //        dateAndTimeForWeek = CreateResultDateTimeString(dateAndTimeForWeek, monthDays);
@@ -30,60 +26,57 @@ public class Program {
     }
 
     public static String[] GetDateAndTime() {
+        Scanner timeSc = new Scanner(System.in);
         int it = 0;
         String[] сlassDaysTmp = new String[10];
-        while (it < 10 && !myScanner.hasNext(".")) {
-            ++it;
+        do {
+            String tmpClassDate = timeSc.nextLine();
+            if(tmpClassDate.equals(".")) break;
+            char[] arrClassDate = tmpClassDate.toCharArray();
+            if(CheckClassDay(arrClassDate)) {
+                String ClassDate = arrClassDate[0] + ":00 " + arrClassDate[2] + arrClassDate[3];
+                сlassDaysTmp[it] = ClassDate;
+                ++it;
+            }
+        }   while (it < 10);
+        String[] сlassDays = new String[it];
 
-            System.out.println(it);
-            if(myScanner.hasNextInt()) {
-                System.out.println("time");
-
-                int time = myScanner.nextInt();
-                if(!CheckClassTime(time)) ExitProgramm();
-                System.out.println("time");
-                String timeString = Integer.toString(time);
-                timeString = timeString + ":00 ";
-                if(myScanner.hasNext("MO")) {
-                    timeString = timeString + "MO";
-                } else if(myScanner.hasNext("TU")) {
-                    timeString = timeString + "TU";
-                } else if(myScanner.hasNext("WE")) {
-                    timeString = timeString + "WE";
-                } else if(myScanner.hasNext("TH")) {
-                    timeString = timeString + "TH";
-                } else if(myScanner.hasNext("FR")) {
-                    timeString = timeString + "FR";
-                } else if(myScanner.hasNext("SA")) {
-                    timeString = timeString + "SA";
-                } else if(myScanner.hasNext("SU")) {
-                    timeString = timeString + "SU";
-                } else ExitProgramm();
-
-                сlassDaysTmp[it] = timeString;
-                System.out.println(сlassDaysTmp[it]);
-            } else ExitProgramm();
+        for(int i = 0; i < it; ++i) {
+            сlassDays[i] = сlassDaysTmp[i];
         }
-        if(myScanner.hasNext(".")) myScanner.nextLine();
-        return сlassDaysTmp;
+        return сlassDays;
     }
-    public static boolean CheckClassTime(int number) {
-        return (number == 1 || number == 2 || number == 3 || number == 4 || number == 5 || number == 6);
+    public static boolean CheckClassDay(char[] tmpString) {
+        boolean check = false, checkOne = false;
+        int[] DaysFirst = new int[] {77, 84, 87, 70, 83};
+        int[] DaysSecond = new int[] {79, 85, 69, 72, 82, 65};
+
+        if((int)tmpString[0] < 49 || (int)tmpString[0] > 54) ExitProgramm();
+        for(int i = 0; i < DaysFirst.length; ++i) {
+            if((int)tmpString[2] == DaysFirst[i]) check = true;
+        }
+        for(int i = 0; i < DaysSecond.length; ++i) {
+            if((int)tmpString[3] == DaysSecond[i]) checkOne = true;
+        }
+        if(check == false || checkOne == false) ExitProgramm();
+        return true;
     }
     public static String[] GetStudentsNames() {
+        Scanner myScanner = new Scanner(System.in);
         int it = 0;
         String[] studentsNamesTmp = new String[10];
-        while (it < 10 && !myScanner.hasNext(".")) {
+        do{
             if(myScanner.hasNextLine()) {
                 String studentName = myScanner.nextLine();
+                if(studentName.equals(".")) break;
                 if(studentName.length() > 10) ExitProgramm();
                 if(CheckName(studentName) == true) {
                     studentsNamesTmp[it] = studentName;
                     ++it;
                 }
             }
-        }
-        if(myScanner.hasNext(".")) myScanner.nextLine();
+        } while (it < 10);
+
         String[] studentsNames = new String[it];
         for(int i = 0; i < it; ++i) {
             studentsNames[i] = studentsNamesTmp[i];
