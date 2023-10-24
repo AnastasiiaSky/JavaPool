@@ -4,17 +4,29 @@ import java.util.Scanner;
 
 public class Program {
 
+    static Scanner myScanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         String[] studentsNames = GetStudentsNames();
         String[] dateAndTimeForWeek = GetDateAndTime();
-
         for(int it = 0; it < studentsNames.length; ++it) {
-            System.out.println(studentsNames[it]);
+            System.out.print(studentsNames[it]);
         }
+        System.out.println();
+
         for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
-            System.out.println(dateAndTimeForWeek[it]);
+            System.out.print(dateAndTimeForWeek[it]);
         }
+        String[] fullMonthClasses = CreateFullClasses(dateAndTimeForWeek);
+
+
+        System.out.println();
+
+        for(int it = 0; it < fullMonthClasses.length; ++it) {
+            System.out.print(fullMonthClasses[it] + "   ");
+        }
+        System.out.println();
+
 //        dateAndTimeForWeek = CutDateAndTime(dateAndTimeForWeek);
 //        dateAndTimeForWeek = CreateResultDateTimeString(dateAndTimeForWeek, monthDays);
 //        String[] visitedOrNot = GetVisetedOrNot(studentsNames, dateAndTimeForWeek);
@@ -24,13 +36,56 @@ public class Program {
 //        myScanner.close();
 
     }
+    // Создаем массив со списком всех занятий и с датами
+    public static String[] CreateFullClasses(String[] dateAndTimeForWeek) {
+        String[] allClasses = new String[dateAndTimeForWeek.length];
+        int first_date = findDatesForFirstWeek(dateAndTimeForWeek[0], 0);
+        allClasses[0] = dateAndTimeForWeek[0] + "  " + first_date;
+        for (int i = 1; i < dateAndTimeForWeek.length; ++i) {
+            int weekDay = findDatesForFirstWeek(dateAndTimeForWeek[i], first_date);
+            System.out.println("weekDay " + weekDay);
+            String day = dateAndTimeForWeek[i].substring(5);
+            for(int it = 0; it < i; ++it) {
+                String otherDay = allClasses[it].substring(5, 7);
+                if(day.equals(otherDay)) {
+                    System.out.println("allClasses[it] " + otherDay);
+                    allClasses[i] = dateAndTimeForWeek[i] + "  " + allClasses[it].substring(8, 9);
+                    continue;
+                }
+            }
+            allClasses[i] = dateAndTimeForWeek[i] + "  " + weekDay;
+            }
 
+
+
+
+        return allClasses;
+        }
+
+//    public static String[] MakeOrdered(String[] dateAndTimeForWeek) {
+//        String[] ordered = new String[dateAndTimeForWeek.length];
+//        int max = 13;
+//        for ()
+//    }
+    public static int findDatesForFirstWeek(String weekDay, int first_date) {
+        String[] monthDays = {"NA", "TU", "WE", "TH", "FR", "SA", "SU", "MO"};
+        char[] weekDayArr = weekDay.toCharArray();
+        String day = weekDay.substring(5);
+        System.out.println(day);
+
+        int date = 0;
+        for (int it = 0; it < monthDays.length; ++it) {
+            if (day.equals(monthDays[it])) date = it + first_date;
+        }
+
+        return date;
+    }
+    // Получаем даты
     public static String[] GetDateAndTime() {
-        Scanner timeSc = new Scanner(System.in);
         int it = 0;
         String[] сlassDaysTmp = new String[10];
         do {
-            String tmpClassDate = timeSc.nextLine();
+            String tmpClassDate = myScanner.nextLine();
             if(tmpClassDate.equals(".")) break;
             char[] arrClassDate = tmpClassDate.toCharArray();
             if(CheckClassDay(arrClassDate)) {
@@ -61,8 +116,8 @@ public class Program {
         if(check == false || checkOne == false) ExitProgramm();
         return true;
     }
+    // Получаем имена студентов
     public static String[] GetStudentsNames() {
-        Scanner myScanner = new Scanner(System.in);
         int it = 0;
         String[] studentsNamesTmp = new String[10];
         do{
