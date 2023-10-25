@@ -14,49 +14,85 @@ public class Program {
         int[] firstWeekDates = GetFirstWeekDates(weekDay);
         int[][] firstWeekData = SortDataForFirstWeek(time, weekDay, firstWeekDates);
         int[][] allScadule = MakeAllScadule(firstWeekData);
+        String[] allScaduleForPrint = MakeAllScaduleForPrint(allScadule);
 
 //        System.out.println("Students");
 //        for(int it = 0; it < studentsNames.length; ++it) {
 //            System.out.print(studentsNames[it]);
 //        }
-        System.out.println();
-        System.out.println("dateAndTimeForWeek");
+//        System.out.println();
+//        System.out.println("dateAndTimeForWeek");
+//
+//        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
+//            System.out.print(" " + dateAndTimeForWeek[it]);
+//        }
+//        System.out.println();
+//        System.out.println("Time");
+//        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
+//            System.out.print(" " + time[it]);
+//        }
+//        System.out.println();
+//        System.out.println("weekDayNumbers");
+//        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
+//            System.out.print(" " + weekDay[it]);
+//        }
+//        System.out.println();
+//        System.out.println("firstWeekDates");
+//        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
+//            System.out.print(" " + firstWeekDates[it]);
+//        }
+//        System.out.println();
+//        System.out.println("firstWeekDatesAndDateAndTime");
+//        for(int it = 0; it < firstWeekData.length; ++it) {
+//            for(int j = 0; j < firstWeekData[it].length; ++j) {
+//                System.out.print(" " + firstWeekData[it][j]);
+//            }
+//            System.out.println();
+//        }
+//
+//        System.out.println();
+//        System.out.println("all scadule");
+//        for(int it = 0; it < allScadule.length; ++it) {
+//            for(int j = 0; j < allScadule[it].length; ++j) {
+//                System.out.print(" " + allScadule[it][j]);
+//            }
+//            System.out.println();
+//        }
+                System.out.println();
+        System.out.println("AllScadule");
+        for(int it = 0; it < allScaduleForPrint.length; ++it) {
+            System.out.print(allScaduleForPrint[it]);
+        }
+    }
+    // Делаем массив строк расписания для печати
+//    int[][] allScadule = MakeAllScadule(firstWeekData);
+    public static String[] MakeAllScaduleForPrint(int[][] allScadule) {
+        String[] result = new String[allScadule.length];
+        for(int it = 0; it < result.length; ++it) {
+            String s1 = GetTimeForPrint(allScadule, it);
+            String s2 = GetWeekDayForPrint(allScadule, it);
+            String s3 = GetDate(allScadule, it);
+            result[it] = s1 + " " + s2 + "  " + s3 + "|";
+        }
+        return result;
+    }
 
-        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
-            System.out.print(" " + dateAndTimeForWeek[it]);
-        }
-        System.out.println();
-        System.out.println("Time");
-        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
-            System.out.print(" " + time[it]);
-        }
-        System.out.println();
-        System.out.println("weekDayNumbers");
-        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
-            System.out.print(" " + weekDay[it]);
-        }
-        System.out.println();
-        System.out.println("firstWeekDates");
-        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
-            System.out.print(" " + firstWeekDates[it]);
-        }
-        System.out.println();
-        System.out.println("firstWeekDatesAndDateAndTime");
-        for(int it = 0; it < firstWeekData.length; ++it) {
-            for(int j = 0; j < firstWeekData[it].length; ++j) {
-                System.out.print(" " + firstWeekData[it][j]);
-            }
-            System.out.println();
-        }
-
-        System.out.println();
-        System.out.println("all scadule");
-        for(int it = 0; it < allScadule.length; ++it) {
-            for(int j = 0; j < allScadule[it].length; ++j) {
-                System.out.print(" " + allScadule[it][j]);
-            }
-            System.out.println();
-        }
+    public static String GetDate(int[][] allScadule, int position) {
+        String[] Days = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+                "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21",
+                "22", "23", "24", "25", "26", "27", "28", "29", "30"};;
+        String day = Days[allScadule[position][0] - 1];
+        return day;
+    }
+    public static String GetWeekDayForPrint(int[][] allScadule, int position) {
+        String[] weekDays = {"MO", "TU", "WE", "TH", "FR", "SA", "SU"};;
+        String wDay = weekDays[allScadule[position][1]];
+        return wDay;
+    }
+    public static String GetTimeForPrint(int[][] allScadule, int position) {
+        String[] lessonTime = {"1:00", "2:00", "3:00", "4:00", "5:00", "6:00"};
+        String time = lessonTime[allScadule[position][2]];
+        return time;
     }
     // Делаем полное расписание
     public static int[][] MakeAllScadule(int[][] firstWeekData) {
