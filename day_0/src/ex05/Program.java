@@ -9,76 +9,163 @@ public class Program {
     public static void main(String[] args) {
         String[] studentsNames = GetStudentsNames();
         String[] dateAndTimeForWeek = GetDateAndTime();
-        for(int it = 0; it < studentsNames.length; ++it) {
-            System.out.print(studentsNames[it]);
-        }
+        int[] time = GetLessonsTime(dateAndTimeForWeek);
+        int[] weekDay = GetLessonsWeekDay(dateAndTimeForWeek);
+        int[] firstWeekDates = GetFirstWeekDates(weekDay);
+        int[][] firstWeekData = SortDataForFirstWeek(time, weekDay, firstWeekDates);
+        int[][] allScadule = MakeAllScadule(firstWeekData);
+
+//        System.out.println("Students");
+//        for(int it = 0; it < studentsNames.length; ++it) {
+//            System.out.print(studentsNames[it]);
+//        }
         System.out.println();
+        System.out.println("dateAndTimeForWeek");
 
         for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
-            System.out.print(dateAndTimeForWeek[it]);
-        }
-        String[] fullMonthClasses = CreateFullClasses(dateAndTimeForWeek);
-
-
-        System.out.println();
-
-        for(int it = 0; it < fullMonthClasses.length; ++it) {
-            System.out.print(fullMonthClasses[it] + "   ");
+            System.out.print(" " + dateAndTimeForWeek[it]);
         }
         System.out.println();
+        System.out.println("Time");
+        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
+            System.out.print(" " + time[it]);
+        }
+        System.out.println();
+        System.out.println("weekDayNumbers");
+        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
+            System.out.print(" " + weekDay[it]);
+        }
+        System.out.println();
+        System.out.println("firstWeekDates");
+        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
+            System.out.print(" " + firstWeekDates[it]);
+        }
+        System.out.println();
+        System.out.println("firstWeekDatesAndDateAndTime");
+        for(int it = 0; it < firstWeekData.length; ++it) {
+            for(int j = 0; j < firstWeekData[it].length; ++j) {
+                System.out.print(" " + firstWeekData[it][j]);
+            }
+            System.out.println();
+        }
 
-//        dateAndTimeForWeek = CutDateAndTime(dateAndTimeForWeek);
-//        dateAndTimeForWeek = CreateResultDateTimeString(dateAndTimeForWeek, monthDays);
-//        String[] visitedOrNot = GetVisetedOrNot(studentsNames, dateAndTimeForWeek);
-
-
-
-//        myScanner.close();
-
+        System.out.println();
+        System.out.println("all scadule");
+        for(int it = 0; it < allScadule.length; ++it) {
+            for(int j = 0; j < allScadule[it].length; ++j) {
+                System.out.print(" " + allScadule[it][j]);
+            }
+            System.out.println();
+        }
     }
-    // Создаем массив со списком всех занятий и с датами
-    public static String[] CreateFullClasses(String[] dateAndTimeForWeek) {
-        String[] allClasses = new String[dateAndTimeForWeek.length];
-        int first_date = findDatesForFirstWeek(dateAndTimeForWeek[0], 0);
-        allClasses[0] = dateAndTimeForWeek[0] + "  " + first_date;
-        for (int i = 1; i < dateAndTimeForWeek.length; ++i) {
-            int weekDay = findDatesForFirstWeek(dateAndTimeForWeek[i], first_date);
-            System.out.println("weekDay " + weekDay);
-            String day = dateAndTimeForWeek[i].substring(5);
-            for(int it = 0; it < i; ++it) {
-                String otherDay = allClasses[it].substring(5, 7);
-                if(day.equals(otherDay)) {
-                    System.out.println("allClasses[it] " + otherDay);
-                    allClasses[i] = dateAndTimeForWeek[i] + "  " + allClasses[it].substring(8, 9);
-                    continue;
+    // Делаем полное расписание
+    public static int[][] MakeAllScadule(int[][] firstWeekData) {
+        int[][] allScadule = new int[firstWeekData.length * 4][firstWeekData[0].length];
+        for(int it = 0; it < firstWeekData.length; ++it) {
+            for(int j = 0; j < firstWeekData[0].length; ++j) {
+                allScadule[it][j] = firstWeekData[it][j];
+            }
+        }
+        for(int it = firstWeekData.length; it < allScadule.length; ++it) {
+                allScadule[it][0] = allScadule[it - firstWeekData.length][0] + 7;
+                allScadule[it][1] = allScadule[it - firstWeekData.length][1];
+                allScadule[it][2] = allScadule[it - firstWeekData.length][2];
+        }
+        return  allScadule;
+    }
+
+    // Сортируем данные для первой недели расписания
+    public static int[][] SortDataForFirstWeek(int[] time, int[] weekDay, int[] firstWeekDates) {
+        int[][] firstWeekScadule = new int[firstWeekDates.length][3];
+        int[] firstWeekDatesCopy = new int[firstWeekDates.length];
+        boolean[] visitedTime = new boolean[firstWeekDates.length];
+        for(int it = 0; it < firstWeekDatesCopy.length; ++it) {
+            firstWeekDatesCopy[it] = firstWeekDates[it];
+        }
+            int[] firstWeekDatesSorted = BubbleSort(firstWeekDates);
+        for(int it = 0; it < firstWeekDatesSorted.length; ++it) {
+            for(int j = 0; j < firstWeekDatesCopy.length; ++j) {
+                if(firstWeekDatesSorted[it] == firstWeekDatesCopy[j]) {
+                    firstWeekScadule[it][0] = firstWeekDatesSorted[it];
+                    firstWeekScadule[it][1] = weekDay[j];
+                    int timePos = 0;
+                    if(visitedTime[j] == true) {
+                        timePos = ReturnNotVisitedTimeIndex(visitedTime, weekDay[j], weekDay);
+                        visitedTime[timePos] = true;
+                        firstWeekScadule[it][2] = time[timePos];
+                    } else {
+                        firstWeekScadule[it][2] = time[j];
+                        visitedTime[j] = true;
+                    }
                 }
             }
-            allClasses[i] = dateAndTimeForWeek[i] + "  " + weekDay;
+        }
+        return firstWeekScadule;
+    }
+
+    public static int ReturnNotVisitedTimeIndex(boolean[] visitedTime, int weekDayNumber, int[] weekDay) {
+        int result = 0;
+        for(int it = 0; it < weekDay.length; ++it) {
+            if(weekDay[it] == weekDayNumber && visitedTime[it] == false) {
+                result = it;
             }
-
-
-
-
-        return allClasses;
         }
+        return result;
+    }
 
-//    public static String[] MakeOrdered(String[] dateAndTimeForWeek) {
-//        String[] ordered = new String[dateAndTimeForWeek.length];
-//        int max = 13;
-//        for ()
-//    }
-    public static int findDatesForFirstWeek(String weekDay, int first_date) {
-        String[] monthDays = {"NA", "TU", "WE", "TH", "FR", "SA", "SU", "MO"};
-        char[] weekDayArr = weekDay.toCharArray();
-        String day = weekDay.substring(5);
-        System.out.println(day);
-
-        int date = 0;
-        for (int it = 0; it < monthDays.length; ++it) {
-            if (day.equals(monthDays[it])) date = it + first_date;
+    // Sort Array
+    public static int[] BubbleSort(int[] array) {
+        for (int i = 0; i < array.length - 1; ++i) {
+            for(int j = 0; j < array.length - i - 1; ++j) {
+                if(array[j + 1] < array[j]) {
+                    int swap = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = swap;
+                }
+            }
         }
+        return array;
+    }
 
-        return date;
+    // Получаем даты для первой недели
+    public static int[] GetFirstWeekDates(int[] weekDay){
+        int[] firstWeekDates = new int[weekDay.length];
+        for(int it = 0; it < weekDay.length; ++it) {
+                if(weekDay[it] == 0) {
+                    firstWeekDates[it] = 7;
+                } else {
+                    firstWeekDates[it] = weekDay[it];
+                }
+        }
+        return firstWeekDates;
+    }
+
+    // Получаем массив с номерами дней недели
+    public static int[] GetLessonsWeekDay(String[] dateAndTimeForWeek){
+        String[] weekDays = {"MO", "TU", "WE", "TH", "FR", "SA", "SU"};
+        int[] weekDaysData = new int[dateAndTimeForWeek.length];
+        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
+            char[] curData = dateAndTimeForWeek[it].toCharArray();
+            for(int j = 0; j < weekDays.length; ++j) {
+                char[] day = weekDays[j].toCharArray();
+                if(day[0] == curData[2] && day[1] == curData[3]) weekDaysData[it] = j;
+            }
+        }
+        return weekDaysData;
+    }
+
+    // Получаем массив интов со временем занятий
+    public static int[] GetLessonsTime(String[] dateAndTimeForWeek) {
+        String[] lessonTime = {"1:00", "2:00", "3:00", "4:00", "5:00", "6:00"};
+        int[] timeTable = new int[dateAndTimeForWeek.length];
+        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
+            char[] curData = dateAndTimeForWeek[it].toCharArray();
+            for(int j = 0; j < lessonTime.length; ++j) {
+                char[] time = lessonTime[j].toCharArray();
+                if (time[0] == curData[0]) timeTable[it] = j;
+            }
+        }
+        return timeTable;
     }
     // Получаем даты
     public static String[] GetDateAndTime() {
@@ -89,8 +176,7 @@ public class Program {
             if(tmpClassDate.equals(".")) break;
             char[] arrClassDate = tmpClassDate.toCharArray();
             if(CheckClassDay(arrClassDate)) {
-                String ClassDate = arrClassDate[0] + ":00 " + arrClassDate[2] + arrClassDate[3];
-                сlassDaysTmp[it] = ClassDate;
+                сlassDaysTmp[it] = tmpClassDate;
                 ++it;
             }
         }   while (it < 10);
@@ -102,18 +188,14 @@ public class Program {
         return сlassDays;
     }
     public static boolean CheckClassDay(char[] tmpString) {
-        boolean check = false, checkOne = false;
-        int[] DaysFirst = new int[] {77, 84, 87, 70, 83};
-        int[] DaysSecond = new int[] {79, 85, 69, 72, 82, 65};
-
         if((int)tmpString[0] < 49 || (int)tmpString[0] > 54) ExitProgramm();
-        for(int i = 0; i < DaysFirst.length; ++i) {
-            if((int)tmpString[2] == DaysFirst[i]) check = true;
+        String[] monthDays = {"TU", "WE", "TH", "FR", "SA", "SU", "MO"};
+        boolean check = false;
+        for(int i = 0; i < monthDays.length; ++i) {
+            char[] day = monthDays[i].toCharArray();
+            if(day[0] == tmpString[2] && day[1] == tmpString[3]) check = true;
         }
-        for(int i = 0; i < DaysSecond.length; ++i) {
-            if((int)tmpString[3] == DaysSecond[i]) checkOne = true;
-        }
-        if(check == false || checkOne == false) ExitProgramm();
+        if(check == false) ExitProgramm();
         return true;
     }
     // Получаем имена студентов
@@ -156,223 +238,3 @@ public class Program {
         System.exit(-1);
     }
 }
-
-//public class Program {
-//    static Scanner myScanner = new Scanner(System.in);
-//
-//    public static void main(String[] args) {
-//        String[] monthDays = {"TU", "WE", "TH", "FR", "SA", "SU", "MO", "TU", "WE", "TH", "FR", "SA", "SU", "MO", "TU",
-//                "WE", "TH", "FR", "SA", "SU", "MO", "TU", "WE", "TH", "FR", "SA", "SU", "MO", "TU", "WE"};
-//        String[] studentsNames = GetStudentsNames();
-//        String[] dateAndTimeForWeek = GetDateAndTime();
-//        dateAndTimeForWeek = CutDateAndTime(dateAndTimeForWeek);
-//        dateAndTimeForWeek = CreateResultDateTimeString(dateAndTimeForWeek, monthDays);
-//        String[] visitedOrNot = GetVisetedOrNot(studentsNames, dateAndTimeForWeek);
-//
-//        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
-//            System.out.println(dateAndTimeForWeek[it]);
-//        }
-//
-//    }
-//
-//    public static String[] GetVisetedOrNot(String[] studentsNames, String[] dateAndTimeForWeek) {
-//
-//
-//    }
-//
-//    public static String[] CreateResultDateTimeString(String[] dateAndTime, String[] monthDays) {
-//        String resultTime[] = new String[dateAndTime.length * 4];
-//        for(int i = 0; i < dateAndTime.length * 4; i += dateAndTime.length) {
-//            for (int it = 0; it < dateAndTime.length; ++it) {
-//                String bufferString;
-//                String num;
-//                bufferString = dateAndTime[it].substring(0, 1);
-//                bufferString = bufferString.concat(":00 ");
-//                bufferString = bufferString.concat(dateAndTime[it].substring(2));
-//                resultTime[it+i] = bufferString;
-//                bufferString = "";
-//            }
-//        }
-//        resultTime = AddMonthDay(resultTime, monthDays);
-//        return resultTime;
-//    }
-//
-//    public static String[] AddMonthDay(String[] dateAndTime, String[] monthDays) {
-//        int currentDay = 1;
-//        byte firstDay = 0;
-//        String[] result = new String[dateAndTime.length];
-//        String tu = "TU";
-//        String we = "WE";
-//        String th = "TH";
-//        String fr = "FR";
-//        String sa = "SA";
-//        String su = "SU";
-//        String mo = "MO";
-//
-//
-//
-//        if(dateAndTime[0].endsWith(tu)) {
-//            firstDay = 1;
-//        }
-//        if(dateAndTime[0].endsWith(we)) {
-//            firstDay = 2;
-//        }
-//        if(dateAndTime[0].endsWith(th)) {
-//            firstDay = 3;
-//        }
-//        if(dateAndTime[0].endsWith(fr)) {
-//            firstDay = 4;
-//        }
-//        if(dateAndTime[0].endsWith(sa)) {
-//            firstDay = 5;
-//        }
-//        if(dateAndTime[0].endsWith(su)) {
-//            firstDay = 6;
-//        }
-//        if(dateAndTime[0].endsWith(mo)) {
-//            firstDay = 7;
-//        }
-//
-//        currentDay = firstDay;
-//
-//
-//        for(int it = 0; it < dateAndTime.length; ++it) {
-//            String bufferString = dateAndTime[it];
-//            if(it == 0) {
-//                bufferString = bufferString.concat("  ");
-//                bufferString = bufferString.concat(Integer.toString(currentDay));
-//            } else {
-//                if(checkLastDate(dateAndTime[it - 1], dateAndTime[it])) {
-//                    bufferString = bufferString.concat("  ");
-//                    bufferString = bufferString.concat(Integer.toString(currentDay));
-//                } else {
-//                    for(int j = currentDay - 1; j < monthDays.length; ++j) {
-//                        if(monthDays[j].equals(dateAndTime[it].substring(5))) {
-//                            currentDay = j + 1;
-//                            break;
-//                        }
-//                    }
-//                    bufferString = bufferString.concat("  ");
-//                    bufferString = bufferString.concat(Integer.toString(currentDay));
-//                }
-//            }
-//
-//            result[it] = bufferString;
-//            bufferString = "";
-//        }
-//        return result;
-//    }
-//
-//
-//
-//    public static String[] CutDateAndTime(String[] dateAndTime) {
-//        int numberOfDates = 0;
-//        while(dateAndTime[numberOfDates] != null) {
-//           ++numberOfDates;
-//        }
-//        String[] correctDateAndTime = new String[numberOfDates];
-//        for(int it = 0; it < numberOfDates; ++it) {
-//            correctDateAndTime[it] = dateAndTime[it];
-//        }
-//        return correctDateAndTime;
-//    }
-//
-//    public static String[] GetDateAndTime() {
-//        int dateCounter = 0;
-//        String[] dateAndTime = new String[14];
-////        int dayLessons = 1, weekLessons = 10;
-//        int[] lessons = new int[7];
-//        int it = 0;
-//        String lastDay = "7 KU";
-//        String stopper;
-//        do {
-//            String currentData = myScanner.nextLine();
-//            stopper = currentData;
-//            if(currentData.startsWith(".") == false) {
-//                if (DateAndTimeValidation(currentData)) {
-//                    if(checkLastDate(lastDay, currentData)) {
-//                        lessons[it] += 1;
-//                        if(lessons[it] > 1) {
-//                            System.err.println("Illegal Argument!");
-//                            System.exit(-1);
-//                        }
-//                    } else {
-//                        ++it;
-//                    }
-//                    dateAndTime[dateCounter] = currentData;
-//                    lastDay = currentData;
-//                    ++dateCounter;
-//                }
-//            }
-//        } while (CheckWeekLessonsNumber(lessons) != false && stopper.startsWith(".") == false);
-//
-//        return dateAndTime;
-//    }
-//
-//    public static boolean CheckWeekLessonsNumber(int[] lessons) {
-//        int lessonsCounter = 0;
-//        for(int it = 0; it < lessons.length; ++it) {
-//            lessonsCounter += lessons[it];
-//        }
-//        if(lessonsCounter == 10) {
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    public static boolean checkLastDate(String lastDate, String currentDate) {
-//        String lastWeekDay = lastDate.substring(2);
-//        String curWeekDay = currentDate.substring(2);
-//
-//        if(lastWeekDay.equals(curWeekDay)) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public static boolean DateAndTimeValidation(String currentData) {
-//        if(currentData.length() > 4) {
-//            System.err.println("Illegal Argument!");
-//            System.exit(-1);
-//        }
-//
-//        if((currentData.startsWith("1 ") == true || currentData.startsWith("2 ") == true
-//                || currentData.startsWith("3 ") == true || currentData.startsWith("4 ") == true
-//                || currentData.startsWith("5 ") == true || currentData.startsWith("6 ") == true)
-//                && (currentData.endsWith("MO") == true || currentData.endsWith("TU") == true
-//                || currentData.endsWith("WE") == true || currentData.endsWith("TH") == true
-//                || currentData.endsWith("FR") == true || currentData.endsWith("SA") == true
-//                || currentData.endsWith("SU") == true)) {
-//            return true;
-//        } else {
-//            System.err.println("Illegal Argument!");
-//            System.exit(-1);
-//        }
-//        return true;
-//    }
-//
-//    public static String[] GetStudentsNames() {
-//        int namesCounter = 0;
-//        String[] studentNames = new String[10];
-//        String stopper;
-//
-//        do {
-//            String currentName = myScanner.nextLine();
-//            stopper = currentName;
-//            if(NameValidation(currentName) == true && currentName.startsWith(".") == false) {
-//                studentNames[namesCounter] = currentName;
-//                ++namesCounter;
-//            }
-//        } while (namesCounter < 10 && stopper.startsWith(".") == false);
-//
-//        return studentNames;
-//    }
-//
-//    public static boolean NameValidation(String currentName) {
-//        if(currentName.length() > 10) {
-//            System.err.println("Illegal Argument!");
-//            System.exit(-1);
-//        }
-//        return true;
-//    }
-//}
