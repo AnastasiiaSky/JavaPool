@@ -15,6 +15,8 @@ public class Program {
         int[][] firstWeekData = sortDataForFirstWeek(time, weekDay, firstWeekDates);
         int[][] allScadule = makeAllScadule(firstWeekData);
         String[] allScaduleForPrint = makeAllScaduleForPrint(allScadule);
+        int[][][] attendance = getAttendance(studentsNames, allScadule);
+        printFinalResult(attendance, studentsNames, allScaduleForPrint);
 
 //        System.out.println("Students");
 //        for(int it = 0; it < studentsNames.length; ++it) {
@@ -58,14 +60,132 @@ public class Program {
 //            }
 //            System.out.println();
 //        }
-                System.out.println();
-        System.out.println("AllScadule");
+//                System.out.println();
+//        System.out.println("AllScadule");
+//        for(int it = 0; it < allScaduleForPrint.length; ++it) {
+//            System.out.print(allScaduleForPrint[it]);
+//        }
+//        System.out.println();
+//        System.out.println("attendance ");
+//        for (int it = 0; it < attendance.length; ++it) {
+//            for (int j = 0; j < attendance[it].length; ++j) {
+//                for (int v = 0; v < attendance[it][j].length; ++v) {
+//                    System.out.print(" " + attendance[it][j][v]);
+//                }
+//                System.out.println();
+//            }
+//            System.out.println();
+//
+//        }
+    }
+
+    // Печать конечного результата
+    public static void printFinalResult(int[][][] attendance, String[] studentsNames, String[] allScaduleForPrint) {
+        System.out.printf("%9s", " ");
         for(int it = 0; it < allScaduleForPrint.length; ++it) {
             System.out.print(allScaduleForPrint[it]);
         }
+        System.out.println();
+        for(int it = 0; it < studentsNames.length; ++it) {
+                System.out.printf("%-10s", studentsNames[it]);
+
+            System.out.println();
+        }
+    }
+    // Получаем посещаемость студентов [student_id][scadule_id][1-vis, -1-not-vis, 0 - empty]
+    public static int[][][] getAttendance(String[] studentsNames, int[][] allScadule){
+        int[][][] attendance = new int[studentsNames.length][allScadule.length][1];
+        int it = 0;
+        do {
+            String currentDataForAtten = myScanner.nextLine();
+            if(currentDataForAtten.equals(".")) break;
+            int[] indexes = parseUserAttData(currentDataForAtten, studentsNames, allScadule);
+            attendance[indexes[0]][indexes[1]][0] = indexes[2];
+        }   while (true);
+        return attendance;
+    }
+
+    // получаем массив данных ([0] - index имени студента [1] - index даты [2] - был или не был)
+    public static int[] parseUserAttData(String currentDataForAtten, String[] studentsNames, int[][] allScadule ) {
+        int[] indexes = new int[3];
+        char[] charCurDFA = currentDataForAtten.toCharArray();
+        String name = findName(charCurDFA);
+        int nameIndex = returnNameIndex(studentsNames, name);
+        int timeDateIndex = getDateIndex(charCurDFA, allScadule);
+        int status = returnStatus(charCurDFA);
+        indexes[0] = nameIndex;
+        indexes[1] = timeDateIndex;
+        indexes[2] = status;
+        return indexes;
+    }
+
+    public static int returnStatus(char[] charCurDFA) {
+        String[] statuses = {"HERE", "NOT_HERE"};
+        int status = 0;
+        int pos = -1;
+        for(int it = 0; it < charCurDFA.length; ++it) {
+            if (charCurDFA[it] == ' ') {
+                pos = it;
+            }
+        }
+        char[] chStatus = new char[charCurDFA.length - pos - 1];
+        for(int it = pos+1, j = 0; it < charCurDFA.length; ++it, ++j) {
+            chStatus[j] = charCurDFA[it];
+        }
+        String stat = String.valueOf(chStatus);
+
+        if(statuses[0].equals(stat)) status = 1;
+        if(statuses[1].equals(stat)) status = -1;
+        return status;
+    }
+//
+    public static int getDateIndex(char[] charCurDFA, int[][] allScadule) {
+        int pos = 0, time = 0, date = 0, index = -1;
+        for(int it = 0; it < charCurDFA.length; ++it) {
+            if(charCurDFA[it] == ' ') {
+                pos = it;
+                break;
+            }
+        }
+        time = (int)charCurDFA[pos+1] - 49;
+        char[] chDate = {charCurDFA[pos+3], charCurDFA[pos+4]};
+        if(chDate[1] != ' ') {
+            date = ((int)chDate[0] - 48) * 10 +((int)chDate[1] - 48);
+        } else date = ((int)chDate[0] - 48);
+
+         for(int it = 0; it < allScadule.length; ++it) {
+             if(allScadule[it][0] == date && allScadule[it][2] == time) {
+                 index = it;
+             }
+         }
+         if(index == -1) exitProgramm();
+         return index;
+    }
+    public static int returnNameIndex(String[] studentsNames, String name) {
+        int index = -1;
+        for(int it = 0; it < studentsNames.length; ++it) {
+            if(name.equals(studentsNames[it])) index = it;
+        }
+        if(index == -1) exitProgramm();
+        return index;
+    }
+    public static String findName (char[] charCurDFA) {
+        int len = 0;
+        for(int it = 0; it < charCurDFA.length; ++it) {
+            if(charCurDFA[it] == ' ') {
+                len = it;
+                break;
+            }
+        }
+        char[] chName = new char[len];
+        for(int it = 0; it < len; ++it) {
+            chName[it] = charCurDFA[it];
+        }
+        String name = String.valueOf(chName);
+        return name;
     }
     // Делаем массив строк расписания для печати
-//    int[][] allScadule = MakeAllScadule(firstWeekData);
+    //    int[][] allScadule = MakeAllScadule(firstWeekData);
     public static String[] makeAllScaduleForPrint(int[][] allScadule) {
         String[] result = new String[allScadule.length];
         for(int it = 0; it < result.length; ++it) {
@@ -96,7 +216,7 @@ public class Program {
     }
     // Делаем полное расписание
     public static int[][] makeAllScadule(int[][] firstWeekData) {
-        int[][] allScadule = new int[firstWeekData.length * 4][firstWeekData[0].length];
+        int[][] allScadule = new int[firstWeekData.length * 4 + 1][firstWeekData[0].length];
         for(int it = 0; it < firstWeekData.length; ++it) {
             for(int j = 0; j < firstWeekData[0].length; ++j) {
                 allScadule[it][j] = firstWeekData[it][j];
