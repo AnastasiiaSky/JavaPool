@@ -7,14 +7,14 @@ public class Program {
     static Scanner myScanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        String[] studentsNames = GetStudentsNames();
-        String[] dateAndTimeForWeek = GetDateAndTime();
-        int[] time = GetLessonsTime(dateAndTimeForWeek);
-        int[] weekDay = GetLessonsWeekDay(dateAndTimeForWeek);
-        int[] firstWeekDates = GetFirstWeekDates(weekDay);
-        int[][] firstWeekData = SortDataForFirstWeek(time, weekDay, firstWeekDates);
-        int[][] allScadule = MakeAllScadule(firstWeekData);
-        String[] allScaduleForPrint = MakeAllScaduleForPrint(allScadule);
+        String[] studentsNames = getStudentsNames();
+        String[] dateAndTimeForWeek = getDateAndTime();
+        int[] time = getLessonsTime(dateAndTimeForWeek);
+        int[] weekDay = getLessonsWeekDay(dateAndTimeForWeek);
+        int[] firstWeekDates = getFirstWeekDates(weekDay);
+        int[][] firstWeekData = sortDataForFirstWeek(time, weekDay, firstWeekDates);
+        int[][] allScadule = makeAllScadule(firstWeekData);
+        String[] allScaduleForPrint = makeAllScaduleForPrint(allScadule);
 
 //        System.out.println("Students");
 //        for(int it = 0; it < studentsNames.length; ++it) {
@@ -66,36 +66,36 @@ public class Program {
     }
     // Делаем массив строк расписания для печати
 //    int[][] allScadule = MakeAllScadule(firstWeekData);
-    public static String[] MakeAllScaduleForPrint(int[][] allScadule) {
+    public static String[] makeAllScaduleForPrint(int[][] allScadule) {
         String[] result = new String[allScadule.length];
         for(int it = 0; it < result.length; ++it) {
-            String s1 = GetTimeForPrint(allScadule, it);
-            String s2 = GetWeekDayForPrint(allScadule, it);
-            String s3 = GetDate(allScadule, it);
+            String s1 = getTimeForPrint(allScadule, it);
+            String s2 = getWeekDayForPrint(allScadule, it);
+            String s3 = getDate(allScadule, it);
             result[it] = s1 + " " + s2 + "  " + s3 + "|";
         }
         return result;
     }
 
-    public static String GetDate(int[][] allScadule, int position) {
+    public static String getDate(int[][] allScadule, int position) {
         String[] Days = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
                 "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21",
                 "22", "23", "24", "25", "26", "27", "28", "29", "30"};;
         String day = Days[allScadule[position][0] - 1];
         return day;
     }
-    public static String GetWeekDayForPrint(int[][] allScadule, int position) {
+    public static String getWeekDayForPrint(int[][] allScadule, int position) {
         String[] weekDays = {"MO", "TU", "WE", "TH", "FR", "SA", "SU"};;
         String wDay = weekDays[allScadule[position][1]];
         return wDay;
     }
-    public static String GetTimeForPrint(int[][] allScadule, int position) {
+    public static String getTimeForPrint(int[][] allScadule, int position) {
         String[] lessonTime = {"1:00", "2:00", "3:00", "4:00", "5:00", "6:00"};
         String time = lessonTime[allScadule[position][2]];
         return time;
     }
     // Делаем полное расписание
-    public static int[][] MakeAllScadule(int[][] firstWeekData) {
+    public static int[][] makeAllScadule(int[][] firstWeekData) {
         int[][] allScadule = new int[firstWeekData.length * 4][firstWeekData[0].length];
         for(int it = 0; it < firstWeekData.length; ++it) {
             for(int j = 0; j < firstWeekData[0].length; ++j) {
@@ -111,14 +111,14 @@ public class Program {
     }
 
     // Сортируем данные для первой недели расписания
-    public static int[][] SortDataForFirstWeek(int[] time, int[] weekDay, int[] firstWeekDates) {
+    public static int[][] sortDataForFirstWeek(int[] time, int[] weekDay, int[] firstWeekDates) {
         int[][] firstWeekScadule = new int[firstWeekDates.length][3];
         int[] firstWeekDatesCopy = new int[firstWeekDates.length];
         boolean[] visitedTime = new boolean[firstWeekDates.length];
         for(int it = 0; it < firstWeekDatesCopy.length; ++it) {
             firstWeekDatesCopy[it] = firstWeekDates[it];
         }
-            int[] firstWeekDatesSorted = BubbleSort(firstWeekDates);
+            int[] firstWeekDatesSorted = bubbleSort(firstWeekDates);
         for(int it = 0; it < firstWeekDatesSorted.length; ++it) {
             for(int j = 0; j < firstWeekDatesCopy.length; ++j) {
                 if(firstWeekDatesSorted[it] == firstWeekDatesCopy[j]) {
@@ -126,7 +126,7 @@ public class Program {
                     firstWeekScadule[it][1] = weekDay[j];
                     int timePos = 0;
                     if(visitedTime[j] == true) {
-                        timePos = ReturnNotVisitedTimeIndex(visitedTime, weekDay[j], weekDay);
+                        timePos = returnNotVisitedTimeIndex(visitedTime, weekDay[j], weekDay);
                         visitedTime[timePos] = true;
                         firstWeekScadule[it][2] = time[timePos];
                     } else {
@@ -139,7 +139,7 @@ public class Program {
         return firstWeekScadule;
     }
 
-    public static int ReturnNotVisitedTimeIndex(boolean[] visitedTime, int weekDayNumber, int[] weekDay) {
+    public static int returnNotVisitedTimeIndex(boolean[] visitedTime, int weekDayNumber, int[] weekDay) {
         int result = 0;
         for(int it = 0; it < weekDay.length; ++it) {
             if(weekDay[it] == weekDayNumber && visitedTime[it] == false) {
@@ -150,7 +150,7 @@ public class Program {
     }
 
     // Sort Array
-    public static int[] BubbleSort(int[] array) {
+    public static int[] bubbleSort(int[] array) {
         for (int i = 0; i < array.length - 1; ++i) {
             for(int j = 0; j < array.length - i - 1; ++j) {
                 if(array[j + 1] < array[j]) {
@@ -164,7 +164,7 @@ public class Program {
     }
 
     // Получаем даты для первой недели
-    public static int[] GetFirstWeekDates(int[] weekDay){
+    public static int[] getFirstWeekDates(int[] weekDay){
         int[] firstWeekDates = new int[weekDay.length];
         for(int it = 0; it < weekDay.length; ++it) {
                 if(weekDay[it] == 0) {
@@ -177,7 +177,7 @@ public class Program {
     }
 
     // Получаем массив с номерами дней недели
-    public static int[] GetLessonsWeekDay(String[] dateAndTimeForWeek){
+    public static int[] getLessonsWeekDay(String[] dateAndTimeForWeek){
         String[] weekDays = {"MO", "TU", "WE", "TH", "FR", "SA", "SU"};
         int[] weekDaysData = new int[dateAndTimeForWeek.length];
         for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
@@ -191,7 +191,7 @@ public class Program {
     }
 
     // Получаем массив интов со временем занятий
-    public static int[] GetLessonsTime(String[] dateAndTimeForWeek) {
+    public static int[] getLessonsTime(String[] dateAndTimeForWeek) {
         String[] lessonTime = {"1:00", "2:00", "3:00", "4:00", "5:00", "6:00"};
         int[] timeTable = new int[dateAndTimeForWeek.length];
         for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
@@ -204,14 +204,14 @@ public class Program {
         return timeTable;
     }
     // Получаем даты
-    public static String[] GetDateAndTime() {
+    public static String[] getDateAndTime() {
         int it = 0;
         String[] сlassDaysTmp = new String[10];
         do {
             String tmpClassDate = myScanner.nextLine();
             if(tmpClassDate.equals(".")) break;
             char[] arrClassDate = tmpClassDate.toCharArray();
-            if(CheckClassDay(arrClassDate)) {
+            if(checkClassDay(arrClassDate)) {
                 сlassDaysTmp[it] = tmpClassDate;
                 ++it;
             }
@@ -223,27 +223,27 @@ public class Program {
         }
         return сlassDays;
     }
-    public static boolean CheckClassDay(char[] tmpString) {
-        if((int)tmpString[0] < 49 || (int)tmpString[0] > 54) ExitProgramm();
+    public static boolean checkClassDay(char[] tmpString) {
+        if((int)tmpString[0] < 49 || (int)tmpString[0] > 54) exitProgramm();
         String[] monthDays = {"TU", "WE", "TH", "FR", "SA", "SU", "MO"};
         boolean check = false;
         for(int i = 0; i < monthDays.length; ++i) {
             char[] day = monthDays[i].toCharArray();
             if(day[0] == tmpString[2] && day[1] == tmpString[3]) check = true;
         }
-        if(check == false) ExitProgramm();
+        if(check == false) exitProgramm();
         return true;
     }
     // Получаем имена студентов
-    public static String[] GetStudentsNames() {
+    public static String[] getStudentsNames() {
         int it = 0;
         String[] studentsNamesTmp = new String[10];
         do{
             if(myScanner.hasNextLine()) {
                 String studentName = myScanner.nextLine();
                 if(studentName.equals(".")) break;
-                if(studentName.length() > 10) ExitProgramm();
-                if(CheckName(studentName) == true) {
+                if(studentName.length() > 10) exitProgramm();
+                if(checkName(studentName) == true) {
                     studentsNamesTmp[it] = studentName;
                     ++it;
                 }
@@ -257,19 +257,19 @@ public class Program {
         return studentsNames;
     }
 
-    public static boolean CheckName(String studentName) {
+    public static boolean checkName(String studentName) {
         int[] unicodeSimbols = new int[65535];
         char[] nameSimbols = studentName.toCharArray();
         for(int it = 0; it < nameSimbols.length; ++it) {
             if((int)nameSimbols[it] < 65 || (int)nameSimbols[it] > 122
                     || (int)nameSimbols[it] == 91 || (int)nameSimbols[it] == 92
                     || (int)nameSimbols[it] == 93 || (int)nameSimbols[it] == 94
-                    || (int)nameSimbols[it] == 95 || (int)nameSimbols[it] == 96) ExitProgramm();
+                    || (int)nameSimbols[it] == 95 || (int)nameSimbols[it] == 96) exitProgramm();
         }
         return true;
     }
 
-    public static void ExitProgramm() {
+    public static void exitProgramm() {
         System.err.println("Illegal Argument");
         System.exit(-1);
     }

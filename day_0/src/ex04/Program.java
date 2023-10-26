@@ -33,13 +33,13 @@ public class Program {
             maxChar = ' ';
         }
 
-        if(ResultValidation(frequentSimbols) == true) {
-            PrintResultData(serchingSimbols, frequentSimbols);
+        if(resultValidation(frequentSimbols) == true) {
+            printResultData(serchingSimbols, frequentSimbols);
         }
         myScanner.close();
     }
 
-    public static void PrintResultData(char[] simbols, int[] frequence) {
+    public static void printResultData(char[] simbols, int[] frequence) {
         System.out.println();
 
         int maxNum = frequence[0];
@@ -70,7 +70,7 @@ public class Program {
         System.out.println();
     }
 
-    public static boolean ResultValidation(int[] frequentSimbols) {
+    public static boolean resultValidation(int[] frequentSimbols) {
         if(frequentSimbols[0] > 999) {
             System.err.println("Illegal Argument!");
             System.exit(-1);

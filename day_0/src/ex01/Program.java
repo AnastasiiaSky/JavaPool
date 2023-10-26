@@ -8,7 +8,7 @@ public class Program {
         int counter = 1;
         boolean isSimple = true;
 
-        if (ValidationCheck(numberForCheck) == true) {
+        if (validationCheck(numberForCheck) == true) {
             for(int it = 2; it * it <= numberForCheck; it++) {
                 if (numberForCheck % it == 0) {
                     isSimple = false;
@@ -26,7 +26,7 @@ public class Program {
         myScanner.close();
     }
 
-    public static boolean ValidationCheck(int number) {
+    public static boolean validationCheck(int number) {
         if (number > 1) {
             return true;
         }

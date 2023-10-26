@@ -7,8 +7,8 @@ public class Program{
         int coffeRequestCounter = 0;
         do {
             checkingNumber = myScanner.nextInt();
-                if(RequestValidation(checkingNumber) == true) {
-                    if (CheckCoffeRequest(checkingNumber) == true) {
+                if(requestValidation(checkingNumber) == true) {
+                    if (checkCoffeRequest(checkingNumber) == true) {
                         ++coffeRequestCounter;
                     }
                 } else {
@@ -20,15 +20,15 @@ public class Program{
         myScanner.close();
     }
 
-    public static boolean CheckCoffeRequest(int number) {
-        int newNumber = GetSumFromNumberParts(number);
-        if (IsItSimple(newNumber) == true) {
+    public static boolean checkCoffeRequest(int number) {
+        int newNumber = getSumFromNumberParts(number);
+        if (isItSimple(newNumber) == true) {
             return true;
         }
         return false;
     }
 
-    public static int GetSumFromNumberParts(int number) {
+    public static int getSumFromNumberParts(int number) {
         int resultNumber = 0;
         while(number != 0) {
             resultNumber = resultNumber + (number % 10);
@@ -37,7 +37,7 @@ public class Program{
         return resultNumber;
     }
 
-    public static boolean IsItSimple(int number) {
+    public static boolean isItSimple(int number) {
         for(int it = 2; it * it <= number; it++) {
             if (number % it == 0) {
               return false;
@@ -46,7 +46,7 @@ public class Program{
     return true;
     }
 
-    public static boolean RequestValidation(int number) {
+    public static boolean requestValidation(int number) {
         if(number > 1) {
             return true;
         }

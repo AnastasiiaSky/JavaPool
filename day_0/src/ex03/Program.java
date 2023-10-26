@@ -18,11 +18,11 @@ public class Program {
                 myScanner.next();
                 if (myScanner.hasNextInt()) {
                     currentWeekNumber = myScanner.nextInt();
-                    if (WeekValidation(lastWeekNumber, currentWeekNumber) == true) {
+                    if (weekValidation(lastWeekNumber, currentWeekNumber) == true) {
                         lastWeekNumber = currentWeekNumber;
-                        mark = GetMinMark();
+                        mark = getMinMark();
 
-                        currentWeekNumber = NumberPower(currentWeekNumber);
+                        currentWeekNumber = numberPower(currentWeekNumber);
                         resultData+= (long) (currentWeekNumber * mark);
                     }
                 }
@@ -31,12 +31,12 @@ public class Program {
             }
         }
         System.out.println(resultData);
-        PrintResultData(resultData);
+        printResultData(resultData);
         myScanner.close();
     }
 
 
-    public static void PrintResultData(long result_number) {
+    public static void printResultData(long result_number) {
         int counter = 0;
         while(result_number > 0) {
             ++counter;
@@ -46,20 +46,20 @@ public class Program {
                 continue;
             }
             System.out.print("Week " + counter + " ");
-            PrintEqual(what);
+            printEqual(what);
             System.out.println(">");
             result_number /= 10;
         }
     }
 
-    public static void PrintEqual(long countOfEquals) {
+    public static void printEqual(long countOfEquals) {
         while (countOfEquals > 0) {
             System.out.print("=");
             --countOfEquals;
         }
     }
 
-    public static long NumberPower(long number) {
+    public static long numberPower(long number) {
         long i = 1L;
         number -= 1;
         while (number > 0) {
@@ -68,13 +68,13 @@ public class Program {
         }
         return i;
     }
-    public static boolean WeekValidation(long lastWeek, long currentWeek) {
+    public static boolean weekValidation(long lastWeek, long currentWeek) {
         if (currentWeek <= lastWeek) ExitProgramm();
         if (currentWeek > 18 || currentWeek < 1) ExitProgramm();
         return true;
     }
 
-    public static int GetMinMark() {
+    public static int getMinMark() {
         Scanner myScanner = new Scanner(System.in);
         int counter = 0;
         int minMark = 10;
@@ -96,5 +96,6 @@ public class Program {
         System.exit(-1);
     }
 }
+
 
 
