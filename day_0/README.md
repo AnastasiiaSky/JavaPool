@@ -27,7 +27,6 @@
 # Chapter I 
 ### Preamble
 
-![java-man](misc/images/java-man.png)<br>
 Java Man, or *Homo erectus erectus*
 
 # Chapter II
