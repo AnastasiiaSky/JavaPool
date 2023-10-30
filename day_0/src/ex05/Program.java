@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-
-
 public class Program {
 
     static Scanner myScanner = new Scanner(System.in);
@@ -15,108 +13,61 @@ public class Program {
         int[][] firstWeekData = sortDataForFirstWeek(time, weekDay, firstWeekDates);
         int[][] allScadule = makeAllScadule(firstWeekData);
         String[] allScaduleForPrint = makeAllScaduleForPrint(allScadule);
-        int[][][] attendance = getAttendance(studentsNames, allScadule);
+        int[][] attendance = getAttendance(studentsNames, allScadule);
         printFinalResult(attendance, studentsNames, allScaduleForPrint);
-
-//        System.out.println("Students");
-//        for(int it = 0; it < studentsNames.length; ++it) {
-//            System.out.print(studentsNames[it]);
-//        }
-//        System.out.println();
-//        System.out.println("dateAndTimeForWeek");
-//
-//        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
-//            System.out.print(" " + dateAndTimeForWeek[it]);
-//        }
-//        System.out.println();
-//        System.out.println("Time");
-//        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
-//            System.out.print(" " + time[it]);
-//        }
-//        System.out.println();
-//        System.out.println("weekDayNumbers");
-//        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
-//            System.out.print(" " + weekDay[it]);
-//        }
-//        System.out.println();
-//        System.out.println("firstWeekDates");
-//        for(int it = 0; it < dateAndTimeForWeek.length; ++it) {
-//            System.out.print(" " + firstWeekDates[it]);
-//        }
-//        System.out.println();
-//        System.out.println("firstWeekDatesAndDateAndTime");
-//        for(int it = 0; it < firstWeekData.length; ++it) {
-//            for(int j = 0; j < firstWeekData[it].length; ++j) {
-//                System.out.print(" " + firstWeekData[it][j]);
-//            }
-//            System.out.println();
-//        }
-//
-//        System.out.println();
-//        System.out.println("all scadule");
-//        for(int it = 0; it < allScadule.length; ++it) {
-//            for(int j = 0; j < allScadule[it].length; ++j) {
-//                System.out.print(" " + allScadule[it][j]);
-//            }
-//            System.out.println();
-//        }
-//                System.out.println();
-//        System.out.println("AllScadule");
-//        for(int it = 0; it < allScaduleForPrint.length; ++it) {
-//            System.out.print(allScaduleForPrint[it]);
-//        }
-//        System.out.println();
-//        System.out.println("attendance ");
-//        for (int it = 0; it < attendance.length; ++it) {
-//            for (int j = 0; j < attendance[it].length; ++j) {
-//                for (int v = 0; v < attendance[it][j].length; ++v) {
-//                    System.out.print(" " + attendance[it][j][v]);
-//                }
-//                System.out.println();
-//            }
-//            System.out.println();
-//
-//        }
     }
 
-    // Печать конечного результата
-    public static void printFinalResult(int[][][] attendance, String[] studentsNames, String[] allScaduleForPrint) {
-        System.out.printf("%9s", " ");
-        for(int it = 0; it < allScaduleForPrint.length; ++it) {
+    public static void printFinalResult(int[][] attendance, String[] studentsNames, String[] allScaduleForPrint) {
+        System.out.printf("%12s", " ");
+        for (int it = 0; it < allScaduleForPrint.length; ++it) {
             System.out.print(allScaduleForPrint[it]);
         }
         System.out.println();
-        for(int it = 0; it < studentsNames.length; ++it) {
-                System.out.printf("%-10s", studentsNames[it]);
-
+        for (int it = 0; it < studentsNames.length; ++it) {
+            System.out.printf("%-10s %c", studentsNames[it], '|');
+            for (int j = 0; j < attendance[it].length; ++j) {
+                    if (allScaduleForPrint[j].length() == 11) {
+                        if (attendance[it][j] == 0) {
+                            System.out.printf("%11c", '|');
+                        } else if (attendance[it][j] == 1) {
+                            System.out.printf("%11s", "1|");
+                        } else if (attendance[it][j] == -1) {
+                            System.out.printf("%11s", "-1|");
+                        }
+                    } else {
+                        if (attendance[it][j] == 0) {
+                            System.out.printf("%12c", '|');
+                        } else if (attendance[it][j] == 1) {
+                            System.out.printf("%12s", "1|");
+                        } else if (attendance[it][j] == -1) {
+                            System.out.printf("%12s", "-1|");
+                        }
+                    }
+                }
             System.out.println();
         }
     }
-    // Получаем посещаемость студентов [student_id][scadule_id][1-vis, -1-not-vis, 0 - empty]
-    public static int[][][] getAttendance(String[] studentsNames, int[][] allScadule){
-        int[][][] attendance = new int[studentsNames.length][allScadule.length][1];
+
+    public static int[][] getAttendance(String[] studentsNames, int[][] allScadule){
+        int[][] attendance = new int[studentsNames.length][allScadule.length];
         int it = 0;
         do {
             String currentDataForAtten = myScanner.nextLine();
             if(currentDataForAtten.equals(".")) break;
-            int[] indexes = parseUserAttData(currentDataForAtten, studentsNames, allScadule);
-            attendance[indexes[0]][indexes[1]][0] = indexes[2];
+            attendance = parseUserAttData(currentDataForAtten, studentsNames, allScadule, attendance);
         }   while (true);
         return attendance;
     }
 
-    // получаем массив данных ([0] - index имени студента [1] - index даты [2] - был или не был)
-    public static int[] parseUserAttData(String currentDataForAtten, String[] studentsNames, int[][] allScadule ) {
-        int[] indexes = new int[3];
+    public static int[][] parseUserAttData(String currentDataForAtten, String[] studentsNames, int[][] allScadule, int[][] attendance) {
+        int[][] curAttendance = attendance;
         char[] charCurDFA = currentDataForAtten.toCharArray();
         String name = findName(charCurDFA);
         int nameIndex = returnNameIndex(studentsNames, name);
         int timeDateIndex = getDateIndex(charCurDFA, allScadule);
         int status = returnStatus(charCurDFA);
-        indexes[0] = nameIndex;
-        indexes[1] = timeDateIndex;
-        indexes[2] = status;
-        return indexes;
+        curAttendance[nameIndex][timeDateIndex] = status;
+        return curAttendance;
     }
 
     public static int returnStatus(char[] charCurDFA) {
@@ -138,7 +89,6 @@ public class Program {
         if(statuses[1].equals(stat)) status = -1;
         return status;
     }
-//
     public static int getDateIndex(char[] charCurDFA, int[][] allScadule) {
         int pos = 0, time = 0, date = 0, index = -1;
         for(int it = 0; it < charCurDFA.length; ++it) {
@@ -184,8 +134,6 @@ public class Program {
         String name = String.valueOf(chName);
         return name;
     }
-    // Делаем массив строк расписания для печати
-    //    int[][] allScadule = MakeAllScadule(firstWeekData);
     public static String[] makeAllScaduleForPrint(int[][] allScadule) {
         String[] result = new String[allScadule.length];
         for(int it = 0; it < result.length; ++it) {
@@ -214,7 +162,7 @@ public class Program {
         String time = lessonTime[allScadule[position][2]];
         return time;
     }
-    // Делаем полное расписание
+
     public static int[][] makeAllScadule(int[][] firstWeekData) {
         int[][] allScadule = new int[firstWeekData.length * 4 + 1][firstWeekData[0].length];
         for(int it = 0; it < firstWeekData.length; ++it) {
@@ -230,7 +178,6 @@ public class Program {
         return  allScadule;
     }
 
-    // Сортируем данные для первой недели расписания
     public static int[][] sortDataForFirstWeek(int[] time, int[] weekDay, int[] firstWeekDates) {
         int[][] firstWeekScadule = new int[firstWeekDates.length][3];
         int[] firstWeekDatesCopy = new int[firstWeekDates.length];
@@ -269,7 +216,6 @@ public class Program {
         return result;
     }
 
-    // Sort Array
     public static int[] bubbleSort(int[] array) {
         for (int i = 0; i < array.length - 1; ++i) {
             for(int j = 0; j < array.length - i - 1; ++j) {
@@ -283,7 +229,6 @@ public class Program {
         return array;
     }
 
-    // Получаем даты для первой недели
     public static int[] getFirstWeekDates(int[] weekDay){
         int[] firstWeekDates = new int[weekDay.length];
         for(int it = 0; it < weekDay.length; ++it) {
@@ -296,7 +241,6 @@ public class Program {
         return firstWeekDates;
     }
 
-    // Получаем массив с номерами дней недели
     public static int[] getLessonsWeekDay(String[] dateAndTimeForWeek){
         String[] weekDays = {"MO", "TU", "WE", "TH", "FR", "SA", "SU"};
         int[] weekDaysData = new int[dateAndTimeForWeek.length];
@@ -310,7 +254,6 @@ public class Program {
         return weekDaysData;
     }
 
-    // Получаем массив интов со временем занятий
     public static int[] getLessonsTime(String[] dateAndTimeForWeek) {
         String[] lessonTime = {"1:00", "2:00", "3:00", "4:00", "5:00", "6:00"};
         int[] timeTable = new int[dateAndTimeForWeek.length];
@@ -323,7 +266,7 @@ public class Program {
         }
         return timeTable;
     }
-    // Получаем даты
+
     public static String[] getDateAndTime() {
         int it = 0;
         String[] сlassDaysTmp = new String[10];
@@ -354,7 +297,7 @@ public class Program {
         if(check == false) exitProgramm();
         return true;
     }
-    // Получаем имена студентов
+
     public static String[] getStudentsNames() {
         int it = 0;
         String[] studentsNamesTmp = new String[10];
