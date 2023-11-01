@@ -2,33 +2,42 @@ package ex03;
 
 class Program {
     public static void main(String[] args) {
-        User person1 = new User("Анна Иванова", 5555);
-        User person2 = new User("Иван Петров", 55678);
-        User person3 = new User("Алексей Смирнов", 14325);
-        User person9 = new User("Сергей Есенин", 6987);
-        User person10 = new User("Борис Акунин", 6987);
+        User person1 = new User("Анна Иванова", 5000);
+        User person2 = new User("Иван Петров", 55000);
+        User person3 = new User("Алексей Смирнов", 1000);
+        User person4 = new User("Сергей Есенин", 300);
+        User person5 = new User("Борис Акунин", 10000);
 
-        Transaction first = new Transaction(person1, person2, -500);
-        Transaction second = new Transaction(person1, person3, 500);
-        Transaction tmpo = new Transaction(person9, person10, -500);
-        Transaction tmpo1 = new Transaction(person3, person10, 3500);
-
-
+        Transaction trans1 = new Transaction(person1, person2, -500);
+        Transaction trans2 = new Transaction(person1, person3, 500);
+        Transaction trans3 = new Transaction(person1, person4, -200);
+        Transaction trans4 = new Transaction(person3, person5, 3500);
+        Transaction trans5 = new Transaction(person2, person1, -15);
+        Transaction trans6 = new Transaction(person2, person3, 150);
+        Transaction trans7 = new Transaction(person2, person4, -350);
+        Transaction trans8 = new Transaction(person2, person5, 99.9);
 
         TransactionsLinkedList test = new TransactionsLinkedList();
 
-
-        test.addTransaction(first);
-        test.addTransaction(second);
-        test.addTransaction(tmpo);
-        test.addTransaction(tmpo1);
-
+        test.addTransaction(trans1);
+        test.addTransaction(trans2);
+        test.addTransaction(trans3);
+        test.addTransaction(trans4);
+        System.out.println("После добавления транзакций в TransactionsLinkedList");
         printAddedTransactions(test);
 
-        String uuid = tmpo.getIdentifier();
-        test.deleteTransactionByUUID(uuid);
-        System.out.println("After delete ----------------------");
+        test.deleteTransactionByUUID(trans3.getIdentifier());
+
+        System.out.println("После удаления транзакции из середины TransactionsLinkedList");
         printAddedTransactions(test);
+
+        test.deleteTransactionByUUID(trans1.getIdentifier());
+        System.out.println("После удаления транзакции из начала TransactionsLinkedList");
+        printAddedTransactions(test);
+
+//        test.deleteTransactionByUUID(trans8.getIdentifier());
+//        System.out.println("После удаления транзакции из конца TransactionsLinkedList");
+//        printAddedTransactions(test);
 
 
 

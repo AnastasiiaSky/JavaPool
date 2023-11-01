@@ -60,12 +60,25 @@ public class TransactionsLinkedList implements TransactionsList {
                     current.setNext(null);
                     current.setPrev(null);
                 } else if(current.getPrev() == null) {
+                    System.out.println("Start");
+                    System.out.println("Start1" + current.getPrev() + " " + current.getNext());
+
                     head = current.getNext();
+                    System.out.println("Start1" + head.getPrev() + " " + head.getNext());
+
                     head.setPrev(null);
+                    System.out.println("Start2");
+
                     current.setNext(null);
+                    System.out.println("Start3");
+
+
+                    current.setPrev(null);
+                    System.out.println("Start4");
+
                 } else if(current.getNext() == null) {
-                    tail = current.getPrev();
-                    tail.setNext(null);
+                    current.getPrev().setNext(null);
+                    current.setNext(null);
                     current.setPrev(null);
                 }
                 size--;
