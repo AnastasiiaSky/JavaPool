@@ -5,58 +5,47 @@ class Program {
         User person1 = new User("Anna", 5000.00);
         User person2 = new User("Anton", 300.00);
 
-        System.out.println("USER 1:");
-        System.out.println("-------");
-        System.out.printf("%-10s%15d\n%-10s%15s\n%-10s%15.2f\n",  "ID", person1.getUserId(), "NAME",
-                person1.getUserName(), "BALANCE", person1.getUserBalance());
+        System.out.println("User 1:");
+        printInfoAboutUser(person1);
         person1.setUserName("Anna Ivanova");
         person1.setUserBalance(person1.getUserBalance() + 20.5);
         System.out.println("After using setters:");
-        System.out.println("--------------------");
-        System.out.printf("%-10s%15d\n%-10s%15s\n%-10s%15.2f\n",  "ID", person1.getUserId(), "NAME",
-                person1.getUserName(), "BALANCE", person1.getUserBalance());
-        System.out.println();
-        System.out.println("USER 2:");
-        System.out.println("-------");
-        System.out.printf("%-10s%15d\n%-10s%15s\n%-10s%15.2f\n",  "ID", person2.getUserId(), "NAME",
-                person2.getUserName(), "BALANCE", person2.getUserBalance());
+        printInfoAboutUser(person1);
+        System.out.println("User 2:");
+        printInfoAboutUser(person2);
         person2.setUserName("Anton Petrov");
         person2.setUserBalance(person2.getUserBalance() + 12550.5);
         System.out.println("After using setters:");
-        System.out.println("--------------------");
-        System.out.printf("%-10s%15d\n%-10s%15s\n%-10s%15.2f\n",  "ID", person2.getUserId(), "NAME",
-                person2.getUserName(), "BALANCE", person2.getUserBalance());
-        System.out.println();
+        printInfoAboutUser(person2);
 
         Transaction first = new Transaction(person1, person2, -500);
 
-
-        System.out.println("FIRST TRANSACTION");
-        System.out.println("-----------------");
-        System.out.printf("%-15s%s\n%-15s%s (balance %10.2f)\n%-15s%s (balance %10.2f)\n%-15s%s\n%-15s%-10.2f\n",
-                "Identifier", first.getIdentifier(), "Recipient", first.getRecipient().getUserName(),
-                first.getRecipient().getUserBalance(), "Sender", first.getSender().getUserName(),
-                first.getSender().getUserBalance(), "Category", first.getCategory(), "Amount", first.getAmount());
-
+        System.out.println("TRANSACTION 1");
+        printInfoAboutTransaction(first);
         first.setRecipient(person2);
         first.setSender(person1);
         first.setAmount(10000);
         System.out.println("After using setters");
-        System.out.println("-------------------");
+        printInfoAboutTransaction(first);
+
+    }
+
+    public static void printInfoAboutUser(User user) {
+        System.out.println();
+        System.out.printf("%-10s%15d\n%-10s%15s\n%-10s%15.2f\n",  "ID", user.getUserId(), "NAME",
+                user.getUserName(), "BALANCE", user.getUserBalance());
+        System.out.println("------------------------------------------------------------");
+
+
+    }
+
+    public static void printInfoAboutTransaction(Transaction transaction) {
+        System.out.println();
         System.out.printf("%-15s%s\n%-15s%s (balance %10.2f)\n%-15s%s (balance %10.2f)\n%-15s%s\n%-15s%-10.2f\n",
-                "Identifier", first.getIdentifier(), "Recipient", first.getRecipient().getUserName(),
-                first.getRecipient().getUserBalance(), "Sender", first.getSender().getUserName(),
-                first.getSender().getUserBalance(), "Category", first.getCategory(), "Amount", first.getAmount());
-
-
-
-
-
-
-
-
-
-
-
+                "Identifier", transaction.getIdentifier(), "Recipient", transaction.getRecipient().getUserName(),
+                transaction.getRecipient().getUserBalance(), "Sender", transaction.getSender().getUserName(),
+                transaction.getSender().getUserBalance(), "Category", transaction.getCategory(), "Amount",
+                transaction.getAmount());
+        System.out.println("------------------------------------------------------------");
     }
 }

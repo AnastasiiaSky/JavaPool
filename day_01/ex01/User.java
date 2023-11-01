@@ -1,4 +1,3 @@
-
 package ex01;
 class User {
     private int id;
