@@ -2,7 +2,7 @@ package ex03;
 import java.util.UUID;
 
 class Transaction {
-    private UUID identifier;
+    private String identifier;
     private User recipient;
     private User sender;
     private Category category;
@@ -16,7 +16,7 @@ class Transaction {
     }
 
     public Transaction(User recipient, User sender, double amount) {
-        identifier = UUID.randomUUID();
+        identifier = UUID.randomUUID().toString();
         this.recipient = recipient;
         this.sender = sender;
         if(amount < 0) {
@@ -25,11 +25,10 @@ class Transaction {
             this.category = Category.CREDIT;
         }
         this.amount = amount;
-
     }
 
-    public UUID getIdentifier() {
-        return identifier;
+    public String getIdentifier() {
+        return this.identifier;
     }
     public User getSender() {
         return sender;
@@ -52,7 +51,7 @@ class Transaction {
     public void setRecipient(User recipient) {
         this.recipient = recipient;
     }
-    public void setIdentifier(UUID identifier) {
+    public void setIdentifier(String identifier) {
         this.identifier = identifier;
     }
     public void setAmount(double amount) {

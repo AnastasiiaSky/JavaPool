@@ -28,7 +28,7 @@ class UsersArrayList implements UsersList {
     }
 
     @Override
-    public User getUserById(int personId) {
+    public User getUserById(int personId) throws UserNotFoundException{
         for(int it = 0; it < this.userList.length; ++it) {
             if(this.userList[it].getId() == personId)
                 return userList[it];
@@ -37,7 +37,7 @@ class UsersArrayList implements UsersList {
     }
 
     @Override
-    public User getUserByIndex(int index) {
+    public User getUserByIndex(int index) throws UserNotFoundException {
         if(index < 0 || index > capacity) {
             throw new IndexOutOfBoundsException();
         } else if(index > usersCount) {
