@@ -7,6 +7,8 @@ class Transaction {
     private User sender;
     private Category category;
     private double amount;
+    private Transaction next;
+    private Transaction prev;
 
     private enum Category {
         DEBIT,
@@ -29,40 +31,44 @@ class Transaction {
     public UUID getIdentifier() {
         return identifier;
     }
-
     public User getSender() {
         return sender;
     }
-
     public User getRecipient() {
         return recipient;
     }
-
     public double getAmount() {
         return amount;
     }
-
     public ex03.Transaction.Category getCategory() {
         return category;
     }
-
     public void setCategory(ex03.Transaction.Category category) {
         this.category = category;
     }
-
     public void setSender(User sender) {
         this.sender = sender;
     }
-
     public void setRecipient(User recipient) {
         this.recipient = recipient;
     }
-
     public void setIdentifier(UUID identifier) {
         this.identifier = identifier;
     }
-
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public ex03.Transaction getNext() {
+        return next;
+    }
+    public ex03.Transaction getPrev() {
+        return prev;
+    }
+    public void setNext(ex03.Transaction next) {
+        this.next = next;
+    }
+    public void setPrev(ex03.Transaction prev) {
+        this.prev = prev;
     }
 }

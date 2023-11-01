@@ -2,61 +2,79 @@ package ex03;
 
 public class TransactionsLinkedList implements TransactionsList {
 
-    int transactionNumber;
-    private final TransactionNode start = new TransactionNode(null, null, null);
-    private final TransactionNode finish = new TransactionNode(null, null, null);
+    private int size = 0;
+    Transaction head;
+    Transaction tail;
 
     TransactionsLinkedList() {
-        this.transactionNumber = 0;
-        start.setNext(start);
-        finish.setPrev(finish);
+        this.size = 0;
+        this.head = null;
+        this.tail = null;
     }
 
-    public int getTransactionNumber() {
-        return transactionNumber;
+    public int getSize() {return this.size;}
+    public boolean isEmpty(TransactionsLinkedList cur) {
+       return this.size == 0;
     }
 
-    public ex03.TransactionsLinkedList.TransactionNode getStart() {
-        return start;
+    public Transaction getHead() {
+        return head;
     }
-
-    public ex03.TransactionsLinkedList.TransactionNode getFinish() {
-        return finish;
+    public Transaction getTail() {
+        return tail;
+    }
+    public void setHead(Transaction head) {
+        this.head = head;
+    }
+    public void setTail(Transaction tail) {
+        this.tail = tail;
+    }
+    public void setSize(int size) {
+        this.size = size;
     }
 
     @Override
     public void addTransaction(Transaction current){
-        this.transactionNumber += 1;
-        this.start.setNext(new TransactionNode(current, start.getNext(), finish));
-    }
-
-
-
-
-
-
-
-
-
-
-    class TransactionNode {
-        Transaction current;
-        TransactionNode prev;
-        TransactionNode next;
-
-        TransactionNode(Transaction data, TransactionNode prev, TransactionNode next) {
-            this.current = data;
-            this.prev = prev;
-            this.next = next;
+        this.size += 1;
+        if(this.head == null) {
+            this.head = current;
+            this.tail = current;
+        } else {
+            current.setPrev(this.tail);
+            this.tail.setNext(current);
+            this.tail = this.tail.getNext();
         }
-
-        TransactionNode getPrev() {return this.prev;}
-        TransactionNode getNext() {return this.next;}
-        Transaction getCurrent() {return this.current;}
-
-        void setCurrent(Transaction current) {this.current = current;}
-        void setPrev(TransactionNode prev) {this.prev = prev;}
-        void setNext(TransactionNode next) {this.next = next;}
     }
+
+
+
+
+
+
+
+
+
+//// Узел двусвязного списка
+//    class TransactionNode {
+//        TransactionNode prev;// ссылка на предыдущий узел
+//        Transaction current; // значение
+//        TransactionNode next; // ссылка на текущий узел
+//
+//        TransactionNode(Transaction data, TransactionNode prev, TransactionNode next) {
+//            this.prev = prev;
+//            this.current = data;
+//            this.next = next;
+//        }
+//
+//
+//
+//         TransactionNode getPrev() {return this.prev;}
+//        TransactionNode getNext() {return this.next;}
+//        Transaction getCurrent() {return this.current;}
+//
+//        void setCurrent(Transaction current) {this.current = current;}
+//        void setPrev(TransactionNode prev) {this.prev = prev;}
+//        void setNext(TransactionNode next) {this.next = next;}
+//    }
 
 }

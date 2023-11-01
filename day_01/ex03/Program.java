@@ -8,22 +8,31 @@ class Program {
 
         Transaction first = new Transaction(person1, person2, -500);
         Transaction second = new Transaction(person1, person3, -500);
+        Transaction third = new Transaction(person3, person2, -500);
+
 
 
         TransactionsLinkedList test = new TransactionsLinkedList();
 
         test.addTransaction(first);
+        printAddedTransaction(test);
         test.addTransaction(second);
+        printAddedTransaction(test);
 
-        System.out.println(test.getTransactionNumber());
-        System.out.println(test.getStart().getNext().getCurrent().getIdentifier());
-        System.out.println(test.getStart().getNext().getCurrent().getSender().getName());
-        System.out.println(test.getStart().getNext().getCurrent().getRecipient().getName());
+        test.addTransaction(third);
+        printAddedTransaction(test);
 
-//        System.out.println(test.getTransactionNumber());
-//        System.out.println(test.getFinish().getPrev().getCurrent().getIdentifier());
-//        System.out.println(test.getFinish().getPrev().getCurrent().getSender().getName());
-//        System.out.println(test.getFinish().getPrev().getCurrent().getRecipient().getName());
 
+    }
+
+    public static void printAddedTransaction(TransactionsLinkedList test) {
+        System.out.println("Размер списка: " + test.getSize());
+//        System.out.printf("%30s%30\t%30s%30\n", "Указатель на следущую транзакцию: ", test.getHead().getNext(),
+//                "Указатель на предыдущую транзакцию: ", test.getHead().getPrev());
+
+        System.out.printf("%7s%30s\t%15s%15s\t%15s%15s\t%15s%15s\t%15s%.2f\n", "UUID: ", test.getHead().getIdentifier(),
+                "Отправитель: ", test.getTail().getSender().getName(), "Получатель: ",
+                test.getTail().getRecipient().getName(), "Тип: ", test.getTail().getCategory(),
+                "Сумма: ", test.getTail().getAmount());
     }
 }
