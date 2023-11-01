@@ -25,6 +25,8 @@ class Transaction {
             this.category = Category.CREDIT;
         }
         this.amount = amount;
+        this.next = null;
+        this.prev = null;
     }
 
     public String getIdentifier() {

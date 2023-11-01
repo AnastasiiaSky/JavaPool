@@ -50,21 +50,30 @@ public class TransactionsLinkedList implements TransactionsList {
     public void deleteTransactionByUUID(String uuid) throws TransactionNotFoundException {
         boolean isFound = false;
         if(uuid.equals(null)) throw new TransactionNotFoundException();
-        Transaction current = head.getNext();
-        while(current != tail && size > 0) {
+
+        for(Transaction current = head; current != null; current = current.getNext()) {
             if(current.getIdentifier().equals(uuid)) {
                 isFound = true;
-                current.getPrev().setNext(current.getNext());
-                current.getNext().setPrev(current.getPrev());
-//                setSize(getSize() - 1);
-                this.size = this.size - 1;
+                if(current != null && current.getNext() != null) {
+                    current.getPrev().setNext(current.getNext());
+                    current.getNext().setPrev(current.getPrev());
+                    current.setNext(null);
+                    current.setPrev(null);
+                } else if(current.getPrev() == null) {
+                    head = current.getNext();
+                    head.setPrev(null);
+                    current.setNext(null);
+                } else if(current.getNext() == null) {
+                    tail = current.getPrev();
+                    tail.setNext(null);
+                    current.setPrev(null);
+                }
+                size--;
             } else {
                 current = current.getNext();
             }
         }
-//        if(isFound == true) setSize(getSize() - 1);
         if(isFound == false) throw new TransactionNotFoundException();
-//        System.out.println(current.getIdentifier() + " " + current.getSender().getName() + " " + current.getRecipient().getName());
     }
 
 
