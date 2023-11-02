@@ -42,20 +42,46 @@ class Program {
         testList.addUser(person14);
         printInfoAboutUsersList(testList);
 
+        System.out.println("Получаем пользователя по индексу!");
+        findUserByIndex(testList, 3);
+        findUserByIndex(testList, 5);
+        findUserByIndex(testList, 25);
 
-        System.out.println("Получаем пользователя по индексу 3 и по индексу 10");
-        System.out.println("--------------------------------------------------");
-        System.out.printf("%-23s%s ID %d\n",  "UsersArrayList[3] - ",
-                testList.getUserByIndex(3).getName(), testList.getUserByIndex(3).getId());
-        System.out.printf("%-23s%s ID %d\n",  "UsersArrayList[11] - ",
-                testList.getUserByIndex(10).getName(), testList.getUserByIndex(10).getId());
-        System.out.println();
-        System.out.println("Получаем пользователя по id 4 и по индексу 11");
-        System.out.println("--------------------------------------------------");
-        System.out.printf("%-23s%s ID %d\n",  "UsersArrayList[3] - ",
-                testList.getUserById(4).getName(), testList.getUserById(4).getId());
-        System.out.printf("%-23s%s ID %d\n",  "UsersArrayList[11] - ",
-                testList.getUserById(11).getName(), testList.getUserById(11).getId());4
+
+
+        System.out.println("Получаем пользователя по id");
+        findUserById(testList, 3);
+        findUserById(testList, 5);
+        findUserById(testList, 25);
+    }
+
+    public static void findUserById(UsersArrayList testList, int id) {
+        try {
+            User target = testList.getUserById(id);
+            System.out.println("Id is " + id);
+            printInfoAboutUser(target);
+        } catch (UserNotFoundException e) {
+            System.out.println("UserNotFoundException");
+            System.out.println("ArrayList capacity is - " + testList.getCapacity() + " Users count is - " +
+                    testList.getUsersCount() + " Id is - " + id);
+        }
+    }
+
+    public static void findUserByIndex(UsersArrayList testList, int index) {
+        try {
+            User target = testList.getUserByIndex(index);
+            System.out.println("Index is " + index);
+            printInfoAboutUser(target);
+        } catch (UserNotFoundException e) {
+            System.out.println("UserNotFoundException: ");
+            System.out.println("ArrayList capacity is - " + testList.getCapacity() + " Users count is - " +
+                    testList.getUsersCount() + " Index is - " + index);
+        }
+    }
+
+    public static void printInfoAboutUser(User user) {
+        System.out.printf("ID %d\tUser name - %s\tBalance - %.0f\n", user.getId(),
+                user.getName(), user.getBalance());
     }
 
 
