@@ -1,5 +1,4 @@
 package ex03;
-
 class Program {
     public static void main(String[] args) {
         User person1 = new User("Анна Иванова", 5000);
