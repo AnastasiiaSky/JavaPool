@@ -57,7 +57,7 @@ class UsersArrayList implements UsersList {
 
     @Override
     public String toString() {
-        return "USERARRAYLIST{"
+        return "User array {"
                 + "Capacity " + capacity
                 + ",Users count " + usersCount
                 + '}';

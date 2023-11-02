@@ -75,12 +75,23 @@ public class TransactionsLinkedList implements TransactionsList {
             }
         }
         if(isFound == false) throw new TransactionNotFoundException();
-
-
+    }
+    @Override
+    public Transaction[] toArray() {
+        Transaction[] transactionsArr = new Transaction[size];
+        if(size != 0) {
+            int it = 0;
+            for(Transaction current = head; current != null; current = current.getNext()) {
+                transactionsArr[it] = current;
+                ++it;
+            }
+            return transactionsArr;
+        }
+        return transactionsArr;
     }
     @Override
     public String toString() {
-        return "TRANSACTION LINKED LIST{"
+        return "Transaction list {"
                 + "size - " + size
                 + '}';
     }

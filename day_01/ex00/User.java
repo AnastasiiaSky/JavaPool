@@ -42,7 +42,7 @@ class User {
     }
     @Override
     public String toString() {
-        return "USER{"
+        return "User{"
                 + "user id = " + userId
                 + ", user name = " + userName
                 + ", user balance = " + userBalance

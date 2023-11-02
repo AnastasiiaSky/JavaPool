@@ -68,7 +68,7 @@ class Transaction {
 
     @Override
     public String toString() {
-        return "TRANSACTION{"
+        return "Transaction{"
                 + "transaction UUID = " + identifier
                 + ", Recipient = " + recipient.getUserName()
                 + ", Sender = " + sender.getUserName()

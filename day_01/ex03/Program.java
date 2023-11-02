@@ -38,6 +38,17 @@ class Program {
         System.out.println("Попытка удаления транзакции отсутсвующей в списке транзакций из TransactionsLinkedList");
         transactionDel(test, trans8.getIdentifier());
 
+        System.out.println("Преобразуем TransactionsLinkedList в массив");
+        transArr(test);
+    }
+
+    public static void transArr(TransactionsLinkedList test) {
+        System.out.println();
+        Transaction[] testArr = test.toArray();
+        for (int it = 0; it < testArr.length; ++it) {
+            System.out.println("Transaction[" + it + "] - " + testArr[it].toString());
+        }
+        System.out.println();
     }
 
     public static void transactionDel(TransactionsLinkedList test, String uuid) {

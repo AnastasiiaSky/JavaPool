@@ -76,7 +76,7 @@ class Transaction {
     @Override
     public String toString() {
         if(prev != null && next != null) {
-            return "TRANSACTION{"
+            return "Transaction {"
                     + "transaction UUID = " + identifier
                     + ", Recipient = " + recipient.getName()
                     + ", Sender = " + sender.getName()
@@ -86,7 +86,7 @@ class Transaction {
                     + ", Next = " + next.getIdentifier()
                     + '}';
         } else if(prev == null) {
-            return "TRANSACTION{"
+            return "Transaction {"
                     + "transaction UUID = " + identifier
                     + ", Recipient = " + recipient.getName()
                     + ", Sender = " + sender.getName()
@@ -96,7 +96,7 @@ class Transaction {
                     + ", Next = " + next.getIdentifier()
                     + '}';
         } else if(next == null) {
-            return "TRANSACTION{"
+            return "Transaction {"
                     + "transaction UUID = " + identifier
                     + ", Recipient = " + recipient.getName()
                     + ", Sender = " + sender.getName()
@@ -106,7 +106,7 @@ class Transaction {
                     + ", Next = " + "null"
                     + '}';
         }
-            return "TRANSACTION{"
+            return "Transaction {"
                 + "transaction UUID = " + identifier
                     + ", Recipient = " + recipient.getName()
                     + ", Sender = " + sender.getName()
