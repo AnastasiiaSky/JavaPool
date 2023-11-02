@@ -24,7 +24,13 @@ class Transaction {
         } else {
             this.category = Category.CREDIT;
         }
-        this.amount = amount;
+        if(amount < 0) amount *= -1;
+        if(sender.getBalance() < amount) {
+            this.amount = 0;
+        } else {
+            this.amount = amount;
+        }
+
         this.next = null;
         this.prev = null;
     }
@@ -57,7 +63,12 @@ class Transaction {
         this.identifier = identifier;
     }
     public void setAmount(double amount) {
-        this.amount = amount;
+        if(amount < 0) amount *= -1;
+        if(sender.getBalance() < amount) {
+            this.amount = 0;
+        } else {
+            this.amount = amount;
+        }
     }
 
     public ex03.Transaction getNext() {

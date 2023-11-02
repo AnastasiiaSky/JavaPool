@@ -9,21 +9,27 @@ class Transaction {
     private double amount;
 
     private enum Category {
-        DEBIT,
-        CREDIT
+        OUTCOME,
+        INCOME
     }
 
     public Transaction(User recipient, User sender, double amount) {
         identifier = UUID.randomUUID();
         this.recipient = recipient;
         this.sender = sender;
-        if(amount < 0) {
-            this.category = Category.DEBIT;
-        } else {
-            this.category = Category.CREDIT;
-        }
-        this.amount = amount;
 
+        if(amount < 0) {
+            this.category = Category.OUTCOME;
+        } else {
+            this.category = Category.INCOME;
+        }
+
+        if(amount < 0) amount *= -1;
+        if(sender.getUserBalance() < amount) {
+            this.amount = 0;
+        } else {
+            this.amount = amount;
+        }
     }
 
     public UUID getIdentifier() {
@@ -63,7 +69,12 @@ class Transaction {
     }
 
     public void setAmount(double amount) {
-        this.amount = amount;
+        if(amount < 0) amount *= -1;
+        if(sender.getUserBalance() < amount) {
+                this.amount = 0;
+            } else {
+                this.amount = amount;
+            }
     }
 
     @Override
