@@ -72,4 +72,48 @@ class Transaction {
     public void setPrev(ex03.Transaction prev) {
         this.prev = prev;
     }
+
+    @Override
+    public String toString() {
+        if(prev != null && next != null) {
+            return "TRANSACTION{"
+                    + "transaction UUID = " + identifier
+                    + ", Recipient = " + recipient.getName()
+                    + ", Sender = " + sender.getName()
+                    + ", Transaction type = " + category
+                    + ", Amount = " + amount
+                    + ", Prev = " + prev.getIdentifier()
+                    + ", Next = " + next.getIdentifier()
+                    + '}';
+        } else if(prev == null) {
+            return "TRANSACTION{"
+                    + "transaction UUID = " + identifier
+                    + ", Recipient = " + recipient.getName()
+                    + ", Sender = " + sender.getName()
+                    + ", Transaction type = " + category
+                    + ", Amount = " + amount
+                    + ", Prev = " + "null"
+                    + ", Next = " + next.getIdentifier()
+                    + '}';
+        } else if(next == null) {
+            return "TRANSACTION{"
+                    + "transaction UUID = " + identifier
+                    + ", Recipient = " + recipient.getName()
+                    + ", Sender = " + sender.getName()
+                    + ", Transaction type = " + category
+                    + ", Amount = " + amount
+                    + ", Prev = " + prev.getIdentifier()
+                    + ", Next = " + "null"
+                    + '}';
+        }
+            return "TRANSACTION{"
+                + "transaction UUID = " + identifier
+                    + ", Recipient = " + recipient.getName()
+                    + ", Sender = " + sender.getName()
+                    + ", Transaction type = " + category
+                    + ", Amount = " + amount
+                    + ", Prev = " + "null"
+                    + ", Next = " + "null"
+                    + '}';
+    }
 }

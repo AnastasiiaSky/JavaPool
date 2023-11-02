@@ -19,15 +19,12 @@ class Program {
 
         UsersArrayList testList = new UsersArrayList();
         System.out.println("UsersArrayList после создания.");
-        printInfoAboutUsersList(testList);
-
+        System.out.println(testList.toString());
         testList.addUser(person1);
         testList.addUser(person2);
         testList.addUser(person3);
-
         System.out.println("Добавляем новых пользователей в UsersArrayList");
-        printInfoAboutUsersList(testList);
-
+        System.out.println(testList.toString());
         System.out.println("Добавляем больше 10 новых пользователей в UsersArrayList");
         testList.addUser(person4);
         testList.addUser(person5);
@@ -40,15 +37,11 @@ class Program {
         testList.addUser(person12);
         testList.addUser(person13);
         testList.addUser(person14);
-        printInfoAboutUsersList(testList);
-
+        System.out.println(testList.toString());
         System.out.println("Получаем пользователя по индексу!");
         findUserByIndex(testList, 3);
         findUserByIndex(testList, 5);
         findUserByIndex(testList, 25);
-
-
-
         System.out.println("Получаем пользователя по id");
         findUserById(testList, 3);
         findUserById(testList, 5);
@@ -59,11 +52,10 @@ class Program {
         try {
             User target = testList.getUserById(id);
             System.out.println("Id is " + id);
-            printInfoAboutUser(target);
+            System.out.println(target.toString());
         } catch (UserNotFoundException e) {
             System.out.println("UserNotFoundException");
-            System.out.println("ArrayList capacity is - " + testList.getCapacity() + " Users count is - " +
-                    testList.getUsersCount() + " Id is - " + id);
+            System.out.println(testList.toString() + " Id is - " + id);
         }
     }
 
@@ -71,22 +63,10 @@ class Program {
         try {
             User target = testList.getUserByIndex(index);
             System.out.println("Index is " + index);
-            printInfoAboutUser(target);
+            System.out.println(target.toString());
         } catch (UserNotFoundException e) {
             System.out.println("UserNotFoundException: ");
-            System.out.println("ArrayList capacity is - " + testList.getCapacity() + " Users count is - " +
-                    testList.getUsersCount() + " Index is - " + index);
+            System.out.println(testList.toString() + " Index is - " + index);
         }
-    }
-
-    public static void printInfoAboutUser(User user) {
-        System.out.printf("ID %d\tUser name - %s\tBalance - %.0f\n", user.getId(),
-                user.getName(), user.getBalance());
-    }
-
-
-    public static void printInfoAboutUsersList(UsersArrayList testList) {
-        System.out.printf("%-23s%d\n%-23s%d\n",  "Колличество пользователей - ", testList.getUsersCount(),
-                "Размер массива - ", testList.getCapacity());
     }
 }

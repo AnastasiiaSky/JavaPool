@@ -47,39 +47,27 @@ public class TransactionsLinkedList implements TransactionsList {
     }
 
     @Override
-    public void deleteTransactionByUUID(String uuid) throws TransactionNotFoundException {
+    public void deleteTransactionByUUID(String uuid) {
         boolean isFound = false;
         if(uuid.equals(null)) throw new TransactionNotFoundException();
 
         for(Transaction current = head; current != null; current = current.getNext()) {
             if(current.getIdentifier().equals(uuid)) {
                 isFound = true;
-                if(current != null && current.getNext() != null) {
+                if(current != null && current.getNext() != null && current.getPrev() != null) {
                     current.getPrev().setNext(current.getNext());
                     current.getNext().setPrev(current.getPrev());
                     current.setNext(null);
                     current.setPrev(null);
-                } else if(current.getPrev() == null) {
-                    System.out.println("Start");
-                    System.out.println("Start1" + current.getPrev() + " " + current.getNext());
-
-                    head = current.getNext();
-                    System.out.println("Start1" + head.getPrev() + " " + head.getNext());
-
-                    head.setPrev(null);
-                    System.out.println("Start2");
-
-                    current.setNext(null);
-                    System.out.println("Start3");
-
-
-                    current.setPrev(null);
-                    System.out.println("Start4");
-
-                } else if(current.getNext() == null) {
-                    current.getPrev().setNext(null);
-                    current.setNext(null);
-                    current.setPrev(null);
+                } else if(current.getPrev() == null && current.getNext() != null) {
+                        head = current.getNext();
+                        head.setPrev(null);
+                        current.setNext(null);
+                        current.setPrev(null);
+                } else if (current.getNext() == null && current.getPrev() != null) {
+                        current.getPrev().setNext(null);
+                        current.setNext(null);
+                        current.setPrev(null);
                 }
                 size--;
             } else {
@@ -87,36 +75,14 @@ public class TransactionsLinkedList implements TransactionsList {
             }
         }
         if(isFound == false) throw new TransactionNotFoundException();
+
+
     }
-
-
-
-
-
-
-
-
-//// Узел двусвязного списка
-//    class TransactionNode {
-//        TransactionNode prev;// ссылка на предыдущий узел
-//        Transaction current; // значение
-//        TransactionNode next; // ссылка на текущий узел
-//
-//        TransactionNode(Transaction data, TransactionNode prev, TransactionNode next) {
-//            this.prev = prev;
-//            this.current = data;
-//            this.next = next;
-//        }
-//
-//
-//
-//         TransactionNode getPrev() {return this.prev;}
-//        TransactionNode getNext() {return this.next;}
-//        Transaction getCurrent() {return this.current;}
-//
-//        void setCurrent(Transaction current) {this.current = current;}
-//        void setPrev(TransactionNode prev) {this.prev = prev;}
-//        void setNext(TransactionNode next) {this.next = next;}
-//    }
+    @Override
+    public String toString() {
+        return "TRANSACTION LINKED LIST{"
+                + "size - " + size
+                + '}';
+    }
 
 }

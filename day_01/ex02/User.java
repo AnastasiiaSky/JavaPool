@@ -25,4 +25,13 @@ class User {
     }
 
     public void setName(String name) {this.name = name;}
+
+    @Override
+    public String toString() {
+        return "USER{"
+                + "user id = " + id
+                + ", user name = " + name
+                + ", user balance = " + balance
+                + '}';
+    }
 }

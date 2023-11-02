@@ -65,4 +65,15 @@ class Transaction {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
+    @Override
+    public String toString() {
+        return "TRANSACTION{"
+                + "transaction UUID = " + identifier
+                + ", Recipient = " + recipient.getUserName()
+                + ", Sender = " + sender.getUserName()
+                + ", Transaction type = " + category
+                + ", Amount = " + amount
+                + '}';
+    }
 }

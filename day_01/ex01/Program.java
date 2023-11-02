@@ -25,26 +25,20 @@ class Program {
         User person13 = new User("Сергей Минаев", 6987);
         User person14 = new User("Андрей Рублев", 6987);
 
-        printInfoAboutUser(person1);
-        printInfoAboutUser(person2);
-        printInfoAboutUser(person3);
-        printInfoAboutUser(person4);
-        printInfoAboutUser(person5);
-        printInfoAboutUser(person6);
-        printInfoAboutUser(person7);
-        printInfoAboutUser(person8);
-        printInfoAboutUser(person9);
-        printInfoAboutUser(person10);
-        printInfoAboutUser(person11);
-        printInfoAboutUser(person12);
-        printInfoAboutUser(person13);
-        printInfoAboutUser(person14);
-    }
-
-    public static void printInfoAboutUser(User user) {
-        System.out.printf("%-20s%-5s%d\n", user.getName(), "ID - ",
-                user.getId());
-
+        System.out.println(person1.toString());
+        System.out.println(person2.toString());
+        System.out.println(person3.toString());
+        System.out.println(person4.toString());
+        System.out.println(person5.toString());
+        System.out.println(person6.toString());
+        System.out.println(person7.toString());
+        System.out.println(person8.toString());
+        System.out.println(person9.toString());
+        System.out.println(person10.toString());
+        System.out.println(person11.toString());
+        System.out.println(person12.toString());
+        System.out.println(person13.toString());
+        System.out.println(person14.toString());
     }
 
     public static void printSingletonInfo(UserIdsGenerator first, UserIdsGenerator second) {

@@ -56,4 +56,11 @@ class UsersArrayList implements UsersList {
         }
         this.userList = tmpUserList;
     }
+    @Override
+    public String toString() {
+        return "USERARRAYLIST{"
+                + "Capacity " + capacity
+                + ",Users count " + usersCount
+                + '}';
+    }
 }

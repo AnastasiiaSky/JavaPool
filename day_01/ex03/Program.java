@@ -23,49 +23,41 @@ class Program {
         test.addTransaction(trans2);
         test.addTransaction(trans3);
         test.addTransaction(trans4);
+        test.addTransaction(trans5);
+        test.addTransaction(trans6);
+        test.addTransaction(trans7);
+
         System.out.println("После добавления транзакций в TransactionsLinkedList");
         printAddedTransactions(test);
-
-        test.deleteTransactionByUUID(trans3.getIdentifier());
-
         System.out.println("После удаления транзакции из середины TransactionsLinkedList");
-        printAddedTransactions(test);
-
-        test.deleteTransactionByUUID(trans1.getIdentifier());
+        transactionDel(test, trans3.getIdentifier());
         System.out.println("После удаления транзакции из начала TransactionsLinkedList");
-        printAddedTransactions(test);
-
-//        test.deleteTransactionByUUID(trans8.getIdentifier());
-//        System.out.println("После удаления транзакции из конца TransactionsLinkedList");
-//        printAddedTransactions(test);
-
-
-
+        transactionDel(test, trans1.getIdentifier());
+        System.out.println("После удаления транзакции из конца TransactionsLinkedList");
+        transactionDel(test, trans7.getIdentifier());
+        System.out.println("Попытка удаления транзакции отсутсвующей в списке транзакций из TransactionsLinkedList");
+        transactionDel(test, trans8.getIdentifier());
 
     }
 
+    public static void transactionDel(TransactionsLinkedList test, String uuid) {
+        try {
+            test.deleteTransactionByUUID(uuid);
+            printAddedTransactions(test);
+            System.out.println();
+        } catch (TransactionNotFoundException e) {
+            System.out.println();
+            System.out.println("Transaction not found exception");
+        }
+    }
+
     public static void printAddedTransactions(TransactionsLinkedList test) {
-        System.out.println("Размер списка: " + test.getSize());
+        System.out.println();
+        System.out.println(test.toString());
         Transaction current = test.getHead();
         while(current != null) {
-            System.out.printf("%7s%35s\t%15s%15s\t%15s%15s\t%15s%15s\t%15s%.2f\n", "UUID: ", current.getIdentifier(),
-                    "Отправитель: ", current.getSender().getName(), "Получатель: ", current.getRecipient().getName(),
-                    "Тип: ", current.getCategory(), "Сумма: ", current.getAmount());
+            System.out.println(current.toString());
             current = current.getNext();
         }
     }
 }
-//
-//        while(current != tail) {
-//                if(current.getIdentifier().equals(uuid)) {
-//                isFound = true;
-//                Transaction tmpNext = current.getNext();
-//                Transaction tmpPrev = current.getPrev();
-//                tmpPrev.setNext(tmpNext);
-//                tmpNext.setPrev(tmpPrev);
-//                current.setNext = null;
-//                current.setPrev = null;
-//                } else {
-//                current = current.getNext();
-//                }
-//                }
