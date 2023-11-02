@@ -1,4 +1,4 @@
-package ex03;
+package exception;
 
 public class UserNotFoundException extends RuntimeException {
 

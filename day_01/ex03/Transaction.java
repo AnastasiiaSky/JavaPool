@@ -11,8 +11,8 @@ class Transaction {
     private Transaction prev;
 
     private enum Category {
-        DEBIT,
-        CREDIT
+        OUTCOME,
+        INCOME
     }
 
     public Transaction(User recipient, User sender, double amount) {
@@ -20,9 +20,9 @@ class Transaction {
         this.recipient = recipient;
         this.sender = sender;
         if(amount < 0) {
-            this.category = Category.DEBIT;
+            this.category = Category.OUTCOME;
         } else {
-            this.category = Category.CREDIT;
+            this.category = Category.INCOME;
         }
         if(amount < 0) amount *= -1;
         if(sender.getBalance() < amount) {

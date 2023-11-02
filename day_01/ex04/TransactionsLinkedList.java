@@ -1,5 +1,4 @@
 package ex04;
-
 public class TransactionsLinkedList implements TransactionsList {
 
     private int size = 0;
