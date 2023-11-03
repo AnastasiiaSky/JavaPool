@@ -54,7 +54,7 @@ class Program {
             System.out.println("Id is " + id);
             System.out.println(target.toString());
         } catch (UserNotFoundException e) {
-            System.out.println("UserNotFoundException");
+            System.out.println(e + ": Пользователь с таким id не найден");
             System.out.println(testList.toString() + " Id is - " + id);
         }
     }
@@ -65,7 +65,7 @@ class Program {
             System.out.println("Index is " + index);
             System.out.println(target.toString());
         } catch (UserNotFoundException e) {
-            System.out.println("UserNotFoundException: ");
+            System.out.println(e + ": Пользователь с таким индексом не найден.");
             System.out.println(testList.toString() + " Index is - " + index);
         }
     }

@@ -1,4 +1,6 @@
 package ex04;
+
+import ex04.exceptions.TransactionNotFoundException;
 public class TransactionsLinkedList implements TransactionsList {
 
     private int size = 0;
@@ -49,7 +51,6 @@ public class TransactionsLinkedList implements TransactionsList {
     public void deleteTransactionByUUID(String uuid) {
         boolean isFound = false;
         if(uuid.equals(null)) throw new TransactionNotFoundException();
-
         for(Transaction current = head; current != null; current = current.getNext()) {
             if(current.getIdentifier().equals(uuid)) {
                 isFound = true;

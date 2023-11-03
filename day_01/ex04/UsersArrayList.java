@@ -1,5 +1,6 @@
 package ex04;
 
+import ex04.exceptions.UserNotFoundException;
 class UsersArrayList implements UsersList {
     private User[] userList;
     private int usersCount;

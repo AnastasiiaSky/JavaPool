@@ -49,7 +49,7 @@ public class TransactionsLinkedList implements TransactionsList {
     }
 
     @Override
-    public void deleteTransactionByUUID(String uuid) {
+    public void deleteTransactionByUUID(String uuid) throws TransactionNotFoundException {
         boolean isFound = false;
         if(uuid.equals(null)) throw new TransactionNotFoundException();
 

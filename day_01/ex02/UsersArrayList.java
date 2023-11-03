@@ -17,7 +17,7 @@ class UsersArrayList implements UsersList {
     public int getUsersCount() {return this.usersCount;}
 
     @Override
-    public void addUser(User person) {
+    public void addUser(User person) throws UserNotFoundException{
         if(usersCount > capacity - 1) changeCapacity();
         if(person != null) {
             userList[usersCount] = person;
@@ -28,7 +28,7 @@ class UsersArrayList implements UsersList {
     }
 
     @Override
-    public User getUserById(int personId) {
+    public User getUserById(int personId) throws UserNotFoundException {
         if(this.userList[personId] == null) throw new UserNotFoundException();
 
         for(int it = 0; it < this.userList.length; ++it) {
@@ -39,7 +39,7 @@ class UsersArrayList implements UsersList {
     }
 
     @Override
-    public User getUserByIndex(int index) {
+    public User getUserByIndex(int index) throws UserNotFoundException {
         if(index < 0 || index > capacity) {
             throw new UserNotFoundException();
         } else if(index > usersCount) {

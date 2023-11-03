@@ -1,5 +1,9 @@
 package ex04;
 
+import ex04.exceptions.UserNotFoundException;
+import ex04.exceptions.TransactionNotFoundException;
+import ex04.exceptions.IllegalTransactionException;
+
 class User {
     private final int id;
     private String name;
@@ -40,12 +44,18 @@ class User {
         try {
             this.userTransactions.deleteTransactionByUUID(uuid);
         } catch (TransactionNotFoundException e) {
-            System.out.println("У данного пользователя не существует транзакции с таким UUID");
+            System.out.println(e + ": У данного пользователя не существует транзакции с таким UUID");
         }
     }
 
     public Transaction[] returnTransactionsArray() {
-        return this.userTransactions.toArray();
+        Transaction[] tranList = new Transaction[userTransactions.getSize()];
+        try {
+            tranList = this.userTransactions.toArray();
+        } catch (TransactionNotFoundException e) {
+            System.out.println(e + ": Списке транзакций данного пользователя еще нет транзакций.");
+        }
+        return tranList;
     }
 
     public boolean checkTransactionPossibility(Transaction current) {
@@ -56,6 +66,12 @@ class User {
         }
         return true;
     }
+//    @Override
+//    public boolean equals(Object obj) {
+//        User newUser = (User)obj;
+//        return if(this.id == newUser.getId() && this.name.equals(newUser.name));
+//
+//    }
 
     @Override
     public String toString() {

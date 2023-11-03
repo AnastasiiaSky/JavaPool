@@ -1,5 +1,8 @@
-package ex03;
+package ex04;
 import java.util.UUID;
+import ex04.exceptions.TransactionNotFoundException;
+import ex04.exceptions.UserNotFoundException;
+import ex04.exceptions.IllegalTransactionException;
 
 class Transaction {
     private String identifier;
@@ -15,7 +18,7 @@ class Transaction {
         INCOME
     }
 
-    public Transaction(User recipient, User sender, double amount) {
+    public Transaction(User sender, User recipient, double amount) throws IllegalTransactionException {
         identifier = UUID.randomUUID().toString();
         this.recipient = recipient;
         this.sender = sender;
@@ -24,13 +27,12 @@ class Transaction {
         } else {
             this.category = Category.INCOME;
         }
-        if(amount < 0) amount *= -1;
-        if(sender.getBalance() < amount) {
-            this.amount = 0;
+
+        if(sender.getBalance() < (amount *= -1)) {
+            throw new IllegalTransactionException();
         } else {
             this.amount = amount;
         }
-
         this.next = null;
         this.prev = null;
     }
@@ -47,10 +49,10 @@ class Transaction {
     public double getAmount() {
         return amount;
     }
-    public ex03.Transaction.Category getCategory() {
+    public ex04.Transaction.Category getCategory() {
         return category;
     }
-    public void setCategory(ex03.Transaction.Category category) {
+    public void setCategory(ex04.Transaction.Category category) {
         this.category = category;
     }
     public void setSender(User sender) {
@@ -62,69 +64,84 @@ class Transaction {
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
     }
-    public void setAmount(double amount) {
-        if(amount < 0) amount *= -1;
-        if(sender.getBalance() < amount) {
-            this.amount = 0;
+    public void setAmount(double amount) throws IllegalTransactionException {
+        if(sender.getBalance() < (amount *= -1)) {
+            throw new IllegalTransactionException();
         } else {
             this.amount = amount;
         }
     }
 
-    public ex03.Transaction getNext() {
+    public ex04.Transaction getNext() {
         return next;
     }
-    public ex03.Transaction getPrev() {
+    public ex04.Transaction getPrev() {
         return prev;
     }
-    public void setNext(ex03.Transaction next) {
+    public void setNext(ex04.Transaction next) {
         this.next = next;
     }
-    public void setPrev(ex03.Transaction prev) {
+    public void setPrev(ex04.Transaction prev) {
         this.prev = prev;
     }
 
-    @Override
-    public String toString() {
-        if(prev != null && next != null) {
-            return "Transaction {"
-                    + "transaction UUID = " + identifier
-                    + ", Recipient = " + recipient.getName()
-                    + ", Sender = " + sender.getName()
-                    + ", Transaction type = " + category
-                    + ", Amount = " + amount
-                    + ", Prev = " + prev.getIdentifier()
-                    + ", Next = " + next.getIdentifier()
-                    + '}';
-        } else if(prev == null) {
-            return "Transaction {"
-                    + "transaction UUID = " + identifier
-                    + ", Recipient = " + recipient.getName()
-                    + ", Sender = " + sender.getName()
-                    + ", Transaction type = " + category
-                    + ", Amount = " + amount
-                    + ", Prev = " + "null"
-                    + ", Next = " + next.getIdentifier()
-                    + '}';
-        } else if(next == null) {
-            return "Transaction {"
-                    + "transaction UUID = " + identifier
-                    + ", Recipient = " + recipient.getName()
-                    + ", Sender = " + sender.getName()
-                    + ", Transaction type = " + category
-                    + ", Amount = " + amount
-                    + ", Prev = " + prev.getIdentifier()
-                    + ", Next = " + "null"
-                    + '}';
-        }
-            return "Transaction {"
+//    @Override
+//    public boolean equals(Object obj) {
+//        Transaction isEqual = (Transaction) obj;
+//        return if(this.identifier.equals(isEqual.identifier)
+//                && this.amount == isEqual.amount
+//                && this.category.equals(isEqual.category))
+//    }
+
+    public String transactionInfo() {
+        return sender.getName()
+                + " -> "
+                + recipient.getName()
+                + ", " + amount
+                + ", " + category
+                + ", " + identifier;
+    }
+@Override
+public String toString() {
+    if(prev != null && next != null) {
+        return "Transaction {"
                 + "transaction UUID = " + identifier
-                    + ", Recipient = " + recipient.getName()
-                    + ", Sender = " + sender.getName()
-                    + ", Transaction type = " + category
-                    + ", Amount = " + amount
-                    + ", Prev = " + "null"
-                    + ", Next = " + "null"
-                    + '}';
+                + ", Recipient = " + recipient.getName()
+                + ", Sender = " + sender.getName()
+                + ", Transaction type = " + category
+                + ", Amount = " + amount
+                + ", Prev = " + prev.getIdentifier()
+                + ", Next = " + next.getIdentifier()
+                + '}';
+    } else if(prev == null && next != null) {
+        return "Transaction {"
+                + "transaction UUID = " + identifier
+                + ", Recipient = " + recipient.getName()
+                + ", Sender = " + sender.getName()
+                + ", Transaction type = " + category
+                + ", Amount = " + amount
+                + ", Prev = " + "null"
+                + ", Next = " + next.getIdentifier()
+                + '}';
+    } else if(next == null && prev != null) {
+        return "Transaction {"
+                + "transaction UUID = " + identifier
+                + ", Recipient = " + recipient.getName()
+                + ", Sender = " + sender.getName()
+                + ", Transaction type = " + category
+                + ", Amount = " + amount
+                + ", Prev = " + prev.getIdentifier()
+                + ", Next = " + "null"
+                + '}';
+    }
+    return "Transaction {"
+            + "transaction UUID = " + identifier
+            + ", Recipient = " + recipient.getName()
+            + ", Sender = " + sender.getName()
+            + ", Transaction type = " + category
+            + ", Amount = " + amount
+            + ", Prev = " + "null"
+            + ", Next = " + "null"
+            + '}';
     }
 }

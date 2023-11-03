@@ -63,7 +63,7 @@ class Program {
             System.out.println();
         } catch (TransactionNotFoundException e) {
             System.out.println();
-            System.out.println("Transaction not found exception");
+            System.out.println(e + ": Транзакция не найдена");
         }
     }
 
