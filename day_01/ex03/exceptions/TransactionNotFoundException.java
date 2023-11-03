@@ -1,4 +1,4 @@
-package ex04;
+package ex03.exceptions;
 
 public class TransactionNotFoundException extends RuntimeException {
 

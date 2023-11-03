@@ -1,5 +1,7 @@
 package ex03;
 
+import ex03.exceptions.TransactionNotFoundException;
+
 public class TransactionsLinkedList implements TransactionsList {
 
     private int size = 0;

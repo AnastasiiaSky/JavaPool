@@ -1,4 +1,4 @@
-package ex04;
+package ex04.exceptions;
 
 public class IllegalTransactionException extends RuntimeException {
 

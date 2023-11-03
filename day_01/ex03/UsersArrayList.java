@@ -1,4 +1,6 @@
 package ex03;
+import ex03.exceptions.UserNotFoundException;
+
 
 class UsersArrayList implements UsersList {
     private User[] userList;
