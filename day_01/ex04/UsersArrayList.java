@@ -24,17 +24,18 @@ class UsersArrayList implements UsersList {
             userList[usersCount] = person;
             ++usersCount;
         } else {
-            throw new NullPointerException();
+            throw new UserNotFoundException();
         }
     }
 
     @Override
-    public User getUserById(int personId) {
+    public User getUserById(int personId) throws UserNotFoundException {
+        if(personId > usersCount) throw new UserNotFoundException();
         for(int it = 0; it < this.userList.length; ++it) {
             if(this.userList[it].getId() == personId)
                 return userList[it];
         }
-        throw new UserNotFoundException();
+        return null;
     }
 
     @Override

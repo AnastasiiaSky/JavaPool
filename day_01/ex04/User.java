@@ -19,6 +19,10 @@ class User {
         userTransactions = new TransactionsLinkedList();
     }
 
+    public TransactionsLinkedList getUserTransactions() {
+        return this.userTransactions;
+    }
+
     public int getId() {return id;}
     public String getName() {return name;}
     public double getBalance() {return balance;}
@@ -37,14 +41,6 @@ class User {
             throw new IllegalTransactionException();
         } else {
             userTransactions.addTransaction(current);
-        }
-    }
-
-    public void delTransaction(String uuid) {
-        try {
-            this.userTransactions.deleteTransactionByUUID(uuid);
-        } catch (TransactionNotFoundException e) {
-            System.out.println(e + ": У данного пользователя не существует транзакции с таким UUID");
         }
     }
 

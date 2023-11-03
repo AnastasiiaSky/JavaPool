@@ -48,35 +48,65 @@ public class TransactionsLinkedList implements TransactionsList {
         }
     }
 
-    @Override
-    public void deleteTransactionByUUID(String uuid) throws TransactionNotFoundException {
-        boolean isFound = false;
-        if(uuid.equals(null)) throw new TransactionNotFoundException();
+//    @Override
+//    public void deleteTransactionByUUID(String uuid) throws TransactionNotFoundException {
+//        boolean isFound = false;
+//        if(uuid.equals(null)) throw new TransactionNotFoundException();
+//
+//        for(Transaction current = head; current != null; current = current.getNext()) {
+//            if(current.getIdentifier().equals(uuid)) {
+//                isFound = true;
+//                if(current != null && current.getNext() != null && current.getPrev() != null) {
+//                    current.getPrev().setNext(current.getNext());
+//                    current.getNext().setPrev(current.getPrev());
+//                    current.setNext(null);
+//                    current.setPrev(null);
+//                } else if(current.getPrev() == null && current.getNext() != null) {
+//                        head = current.getNext();
+//                        head.setPrev(null);
+//                        current.setNext(null);
+//                        current.setPrev(null);
+//                } else if (current.getNext() == null && current.getPrev() != null) {
+//                        current.getPrev().setNext(null);
+//                        current.setNext(null);
+//                        current.setPrev(null);
+//                }
+//                size--;
+//            } else {
+//                current = current.getNext();
+//            }
+//        }
+//        if(isFound == false) throw new TransactionNotFoundException();
+//    }
 
-        for(Transaction current = head; current != null; current = current.getNext()) {
-            if(current.getIdentifier().equals(uuid)) {
-                isFound = true;
-                if(current != null && current.getNext() != null && current.getPrev() != null) {
-                    current.getPrev().setNext(current.getNext());
-                    current.getNext().setPrev(current.getPrev());
-                    current.setNext(null);
-                    current.setPrev(null);
-                } else if(current.getPrev() == null && current.getNext() != null) {
+    @Override
+    public void deleteTransactionByUUID(String uuid) {
+        try {
+            for (Transaction current = head; current != null; current = current.getNext()) {
+                if (current.getIdentifier().equals(uuid)) {
+                    if (current != null && current.getNext() != null && current.getPrev() != null) {
+                        current.getPrev().setNext(current.getNext());
+                        current.getNext().setPrev(current.getPrev());
+                        current.setNext(null);
+                        current.setPrev(null);
+                    } else if (current.getPrev() == null && current.getNext() != null) {
                         head = current.getNext();
                         head.setPrev(null);
                         current.setNext(null);
                         current.setPrev(null);
-                } else if (current.getNext() == null && current.getPrev() != null) {
+                    } else if (current.getNext() == null && current.getPrev() != null) {
                         current.getPrev().setNext(null);
                         current.setNext(null);
                         current.setPrev(null);
+                    }
+                    size--;
+                } else {
+                    current = current.getNext();
                 }
-                size--;
-            } else {
-                current = current.getNext();
             }
+        } catch (TransactionNotFoundException e) {
+            System.out.println(e);
         }
-        if(isFound == false) throw new TransactionNotFoundException();
     }
     @Override
     public Transaction[] toArray() {

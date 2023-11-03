@@ -15,8 +15,6 @@ public class TransactionsService {
     public UsersArrayList getUserList() {
         return this.userList;
     }
-
-
     public int getCounter() {
         return counter;
     }
@@ -30,10 +28,7 @@ public class TransactionsService {
     }
 
     public void addNewTransaction(int senderId, int recipientId, double amount) {
-        // отправитель
-        try {
-            userList.getUserById(senderId);
-            userList.getUserById(recipientId);
+        if(usersValidation(senderId) == true && usersValidation(recipientId)) {
             try {
                 double amount1 = amount * -1;
                 Transaction recipientTransaction = new Transaction(userList.getUserById(senderId), userList.getUserById(recipientId), amount1);
@@ -46,9 +41,18 @@ public class TransactionsService {
             } catch (IllegalTransactionException e) {
                 System.out.println(e + ": Невозможно выполнить транзакцию. Баланс отправителя меньше отправляемой суммы");
             }
-        } catch (UserNotFoundException e) {
-            System.out.println(e + ": Невозможно выполнить транзакцию. В списке пользователей нету отпрвителя с таким id или получателя с таким id");
         }
+    }
+
+    public boolean usersValidation(int id) {
+        boolean valid = false;
+        try {
+            userList.getUserById(id);
+            valid = true;
+        } catch (UserNotFoundException e) {
+            System.out.println(e + ": Невозможно выполнить операцию. В списке пользователей нету отпрвителя с таким id или получателя с таким id");
+        }
+        return valid;
     }
 
     public void workWithUserAfterMakingTransaction(int userId, double amount) {
@@ -56,4 +60,44 @@ public class TransactionsService {
         currenBalance += amount;
         userList.getUserById(userId).setBalance(currenBalance);
     }
+
+    public void deleteTransaction(int id, String uuid) {
+
+        boolean validation = usersValidation(id);
+        if(validation == true) {
+            try{
+                userList.getUserById(id).getUserTransactions().deleteTransactionByUUID(uuid);
+            } catch (TransactionNotFoundException e) {
+                System.out.println(e + ": У данного пользователя не существует транзакции с таким UUID");
+            }
+        }
+    }
+
+//    public Transaction[] getUnpairedTransactions() {
+//        TransactionsList unpaired = new TransactionsLinkedList();
+//        boolean flag = false;
+//        for (int i = 0; i < userList.getUsersCount(); ++i) {
+//            Transaction[] trans = userList.getUserByIndex(i).getUserTransactions().toArray();
+//            for (int j = 0; j < trans.length; ++j){
+//                flag = false;
+//                Transaction trans1 = trans[j];
+//                for (int k = 0; k < userList.getUsersCount(); ++j){
+//                    if (i==k) continue;
+//                    Transaction[] trans2 = userList.getUserByIndex(j).getUserTransactions().toArray();
+//                    for (int p = 0; p < trans2.length; ++p){
+//                        Transaction transaction2 = trans2[p];
+//                        if (trans1.getIdentifier().equals(transaction2.getIdentifier())) {
+//                            flag = true;
+//                            break;
+//                        }
+//                    }
+//                    if(flag) break;
+//                }
+//                if(!flag) unpaired.addTransaction(trans1);
+//            }
+//        }
+//        System.out.println("ch");
+//
+//        return unpaired.toArray();
+//    }
 }

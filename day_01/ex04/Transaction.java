@@ -23,9 +23,9 @@ class Transaction {
         this.recipient = recipient;
         this.sender = sender;
         if(amount < 0) {
-            this.category = Category.OUTCOME;
-        } else {
             this.category = Category.INCOME;
+        } else {
+            this.category = Category.OUTCOME;
         }
 
         if(sender.getBalance() < (amount *= -1)) {
@@ -88,9 +88,12 @@ class Transaction {
 //    @Override
 //    public boolean equals(Object obj) {
 //        Transaction isEqual = (Transaction) obj;
-//        return if(this.identifier.equals(isEqual.identifier)
+//         if(this.identifier.equals(isEqual.identifier)
 //                && this.amount == isEqual.amount
-//                && this.category.equals(isEqual.category))
+//                && this.category.equals(isEqual.category)) {
+//             return true;
+//         }
+//         return false;
 //    }
 
     public String transactionInfo() {
