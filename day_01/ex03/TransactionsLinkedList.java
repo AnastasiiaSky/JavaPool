@@ -48,37 +48,6 @@ public class TransactionsLinkedList implements TransactionsList {
         }
     }
 
-//    @Override
-//    public void deleteTransactionByUUID(String uuid) throws TransactionNotFoundException {
-//        boolean isFound = false;
-//        if(uuid.equals(null)) throw new TransactionNotFoundException();
-//
-//        for(Transaction current = head; current != null; current = current.getNext()) {
-//            if(current.getIdentifier().equals(uuid)) {
-//                isFound = true;
-//                if(current != null && current.getNext() != null && current.getPrev() != null) {
-//                    current.getPrev().setNext(current.getNext());
-//                    current.getNext().setPrev(current.getPrev());
-//                    current.setNext(null);
-//                    current.setPrev(null);
-//                } else if(current.getPrev() == null && current.getNext() != null) {
-//                        head = current.getNext();
-//                        head.setPrev(null);
-//                        current.setNext(null);
-//                        current.setPrev(null);
-//                } else if (current.getNext() == null && current.getPrev() != null) {
-//                        current.getPrev().setNext(null);
-//                        current.setNext(null);
-//                        current.setPrev(null);
-//                }
-//                size--;
-//            } else {
-//                current = current.getNext();
-//            }
-//        }
-//        if(isFound == false) throw new TransactionNotFoundException();
-//    }
-
     @Override
     public void deleteTransactionByUUID(String uuid) {
         try {
@@ -112,10 +81,10 @@ public class TransactionsLinkedList implements TransactionsList {
     public Transaction[] toArray() {
         Transaction[] transactionsArr = new Transaction[size];
         if(size != 0) {
-            int it = 0;
-            for(Transaction current = head; current != null; current = current.getNext()) {
-                transactionsArr[it] = current;
-                ++it;
+            Transaction tmpHead = head;
+            for(int i = 0; i < size; ++i) {
+                transactionsArr[i] = tmpHead;
+                tmpHead = tmpHead.getNext();
             }
             return transactionsArr;
         }

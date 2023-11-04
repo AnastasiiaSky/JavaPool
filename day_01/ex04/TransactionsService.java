@@ -73,31 +73,31 @@ public class TransactionsService {
         }
     }
 
-//    public Transaction[] getUnpairedTransactions() {
-//        TransactionsList unpaired = new TransactionsLinkedList();
-//        boolean flag = false;
-//        for (int i = 0; i < userList.getUsersCount(); ++i) {
-//            Transaction[] trans = userList.getUserByIndex(i).getUserTransactions().toArray();
-//            for (int j = 0; j < trans.length; ++j){
-//                flag = false;
-//                Transaction trans1 = trans[j];
-//                for (int k = 0; k < userList.getUsersCount(); ++j){
-//                    if (i==k) continue;
-//                    Transaction[] trans2 = userList.getUserByIndex(j).getUserTransactions().toArray();
-//                    for (int p = 0; p < trans2.length; ++p){
-//                        Transaction transaction2 = trans2[p];
-//                        if (trans1.getIdentifier().equals(transaction2.getIdentifier())) {
-//                            flag = true;
-//                            break;
-//                        }
-//                    }
-//                    if(flag) break;
-//                }
-//                if(!flag) unpaired.addTransaction(trans1);
-//            }
-//        }
-//        System.out.println("ch");
-//
-//        return unpaired.toArray();
-//    }
+    public Transaction[] getUnpairedTransactions() {
+        Transaction[] allTransactions = allTransactions();
+        TransactionsList unpaired = new TransactionsLinkedList();
+        for(int i = 0; i < allTransactions.length; ++i) {
+            boolean ans = false;
+            for(int j = 0; j < allTransactions.length; ++j) {
+                if(j != i) {
+                    if(allTransactions[i].getIdentifier().equals(allTransactions[j].getIdentifier()))
+                        ans = true;
+                }
+            }
+            if(ans == false) unpaired.addTransaction(allTransactions[i]);
+        }
+        return unpaired.toArray();
+    }
+
+    public Transaction[] allTransactions() {
+        TransactionsList allTransactions = new TransactionsLinkedList();
+        for(int i = 0; i < userList.getUsersCount(); ++i) {
+            Transaction[] thisUserTransactions = userList.getUserByIndex(i).getUserTransactions().toArray();
+            for(int j = 0; j < thisUserTransactions.length; ++j) {
+                allTransactions.addTransaction(thisUserTransactions[j]);
+            }
+        }
+        Transaction[] result = allTransactions.toArray();
+        return result;
+    }
 }

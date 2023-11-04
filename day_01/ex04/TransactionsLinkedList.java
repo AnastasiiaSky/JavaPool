@@ -17,7 +17,6 @@ public class TransactionsLinkedList implements TransactionsList {
     public boolean isEmpty(TransactionsLinkedList cur) {
        return this.size == 0;
     }
-
     public Transaction getHead() {
         return head;
     }
@@ -80,10 +79,10 @@ public class TransactionsLinkedList implements TransactionsList {
     public Transaction[] toArray() {
         Transaction[] transactionsArr = new Transaction[size];
         if(size != 0) {
-            int it = 0;
-            for(Transaction current = head; current != null; current = current.getNext()) {
-                transactionsArr[it] = current;
-                ++it;
+            Transaction tmpHead = head;
+            for(int i = 0; i < size; ++i) {
+                transactionsArr[i] = tmpHead;
+                tmpHead = tmpHead.getNext();
             }
             return transactionsArr;
         }

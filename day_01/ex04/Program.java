@@ -13,21 +13,18 @@ class Program {
         ifUserNotFound(service);
         ifBalanceNull(service);
         usersTransactions(service);
-//        unpairedTransactions(service);
+        unpairedTransactions(service);
 
     }
 
-//    public static void unpairedTransactions(TransactionsService service) {
-//        System.out.println("ch");
-//
-//        Transaction[] unp = service.getUnpairedTransactions();
-//        System.out.println("ch");
-//
-//        for(int it = 0; it < unp.length; ++it) {
-//            System.out.println("ch");
-//            System.out.println(unp[it].transactionInfo());
-//        }
-//    }
+    public static void unpairedTransactions(TransactionsService service) {
+        Transaction[] unp = service.getUnpairedTransactions();
+        System.out.println();
+        System.out.println("Не парные транзакции");
+        for(int it = 0; it < unp.length; ++it) {
+            System.out.println(unp[it].transactionInfo());
+        }
+    }
 
     public static void usersTransactions(TransactionsService service) {
         System.out.println();

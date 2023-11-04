@@ -14,7 +14,6 @@ class UsersArrayList implements UsersList {
     public User[] getUserList() {return this.userList;}
     public int getCapacity() {return this.capacity;}
 
-    @Override
     public int getUsersCount() {return this.usersCount;}
 
     @Override
