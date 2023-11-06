@@ -32,9 +32,8 @@ public class TransactionsService {
         return userList.getUserById(id).getBalance();
     }
 
-    public void addNewTransaction(int senderId, int recipientId, double amount) {
+    public void addNewTransaction(int senderId, int recipientId, double amount) throws IllegalTransactionException {
         if(usersValidation(senderId) == true && usersValidation(recipientId)) {
-            try {
                 double amount1 = amount * -1;
                 Transaction recipientTransaction = new Transaction(userList.getUserById(senderId), userList.getUserById(recipientId), amount1);
                 Transaction senderTransaction = new Transaction(userList.getUserById(senderId), userList.getUserById(recipientId), amount);
@@ -43,9 +42,6 @@ public class TransactionsService {
                 workWithUserAfterMakingTransaction(recipientId, amount);
                 userList.getUserById(senderId).addTransaction(senderTransaction);
                 userList.getUserById(recipientId).addTransaction(recipientTransaction);
-            } catch (IllegalTransactionException e) {
-                System.out.println(e + ": Невозможно выполнить транзакцию. Баланс отправителя меньше отправляемой суммы");
-            }
         }
     }
 

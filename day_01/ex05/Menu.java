@@ -83,7 +83,7 @@ class Menu {
                 makeTransfer();
                 break;
             case 4:
-                // Посмотреть все транзакции пользователя
+                getTransForUser();
                 break;
             case 5:
                exit = true;
@@ -105,13 +105,13 @@ class Menu {
                 makeTransfer();
                 break;
             case 4:
-                // Посмотреть все транзакции пользователя
+                getTransForUser();
                 break;
             case 5:
-                // Удалить транзакцию по ID
+                removeTrans();
                 break;
             case 6:
-                // Вывести список не парных транзакций
+                transfValid();
                 break;
             case 7:
                 exit = true;
@@ -156,12 +156,72 @@ class Menu {
         String input = sc.nextLine().trim();
         try {
             String[] inputParts = input.split("\\s+");
+            int send = Integer.parseInt(inputParts[0]);
+            int res = Integer.parseInt(inputParts[1]);
+            double balance = Double.parseDouble(inputParts[2]);
+            service.addNewTransaction(send, res, balance);
+            System.out.println("The transfer is completed");
+            System.out.println("---------------------------------------------------------");
+        } catch (UserNotFoundException | IllegalTransactionException | ArrayIndexOutOfBoundsException e) {
+            System.out.println(e + ": В списке пользователей нет пользователя с таким ID или сумма перевода" +
+                    " больше, чем баланс отправителя, или некорректно введены данные.");
+        }
+    }
 
-
+    private void getTransForUser() {
+        System.out.println("Enter a user ID");
+        String input = sc.nextLine().trim();
+        try{
+            int id = Integer.parseInt(input);
+            Transaction[] userTrans = service.getUserList().getUserById(id).returnTransactionsArray();
+            for (int it = 0; it < userTrans.length; ++it) {
+                System.out.println(userTrans[it].transactionInfo());
+            }
+            System.out.println("---------------------------------------------------------");
         } catch (UserNotFoundException e) {
-            System.out.println(e + ": В списке пользователей нет пользователя с таким ID");
+            System.out.println(e + ": В списке пользователей нет пользователя с таким ID.");
         }
 
+    }
+
+    private void removeTrans() {
+        System.out.println("Enter a user ID and a transfer ID");
+        String input = sc.nextLine().trim();
+        try {
+            String userName = null;
+            int resId = 0;
+            double sum = 0;
+            String[] inputParts = input.split("\\s+");
+            int userId = Integer.parseInt(inputParts[0]);
+            String tranfId = inputParts[1];
+            service.deleteTransaction(userId, tranfId);
+            Transaction[] unp = service.getUnpairedTransactions();
+            for(int it = 0; it < unp.length; ++it) {
+                if(unp[it].getIdentifier().equals(tranfId)) {
+                    userName = unp[it].getRecipient().getName();
+                    resId = unp[it].getRecipient().getId();
+                    sum = unp[it].getAmount();
+                }
+            }
+            System.out.println("Transfer To " + userName + "(id = " + resId + ") " + sum + " removed");
+            System.out.println("---------------------------------------------------------");
+        } catch (TransactionNotFoundException | UserNotFoundException e) {
+            System.out.println(e + ": Id транзакции не найден, или Id пользователя не найден.");
+        }
+
+    }
+
+    private void transfValid() {
+        System.out.println("Check results.");
+        try {
+            Transaction[] unp = service.getUnpairedTransactions();
+            for(int it = 0; it < unp.length; ++it) {
+                System.out.println(unp[it].transactionInfo());
+                }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(e + ": Не парных транзакций нет");
+
+        }
     }
 
     private boolean choiseValidation(int choise) {

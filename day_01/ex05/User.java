@@ -62,12 +62,6 @@ class User {
         }
         return true;
     }
-//    @Override
-//    public boolean equals(Object obj) {
-//        User newUser = (User)obj;
-//        return if(this.id == newUser.getId() && this.name.equals(newUser.name));
-//
-//    }
 
     @Override
     public String toString() {
