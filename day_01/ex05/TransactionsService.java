@@ -23,6 +23,11 @@ public class TransactionsService {
         User newUser = new User(name, balance);
         userList.addUser(newUser);
     }
+
+    public void addUser(User user) {
+        counter += 1;
+        userList.addUser(user);
+    }
     public double getUserBalance(int id) {
         return userList.getUserById(id).getBalance();
     }

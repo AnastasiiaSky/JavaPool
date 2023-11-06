@@ -1,8 +1,8 @@
 package ex05;
 import java.util.UUID;
-import ex04.exceptions.TransactionNotFoundException;
-import ex04.exceptions.UserNotFoundException;
-import ex04.exceptions.IllegalTransactionException;
+import ex05.exceptions.TransactionNotFoundException;
+import ex05.exceptions.UserNotFoundException;
+import ex05.exceptions.IllegalTransactionException;
 
 class Transaction {
     private String identifier;
@@ -49,10 +49,10 @@ class Transaction {
     public double getAmount() {
         return amount;
     }
-    public ex04.Transaction.Category getCategory() {
+    public ex05.Transaction.Category getCategory() {
         return category;
     }
-    public void setCategory(ex04.Transaction.Category category) {
+    public void setCategory(ex05.Transaction.Category category) {
         this.category = category;
     }
     public void setSender(User sender) {
@@ -72,29 +72,18 @@ class Transaction {
         }
     }
 
-    public ex04.Transaction getNext() {
+    public ex05.Transaction getNext() {
         return next;
     }
-    public ex04.Transaction getPrev() {
+    public ex05.Transaction getPrev() {
         return prev;
     }
-    public void setNext(ex04.Transaction next) {
+    public void setNext(ex05.Transaction next) {
         this.next = next;
     }
-    public void setPrev(ex04.Transaction prev) {
+    public void setPrev(ex05.Transaction prev) {
         this.prev = prev;
     }
-
-//    @Override
-//    public boolean equals(Object obj) {
-//        Transaction isEqual = (Transaction) obj;
-//         if(this.identifier.equals(isEqual.identifier)
-//                && this.amount == isEqual.amount
-//                && this.category.equals(isEqual.category)) {
-//             return true;
-//         }
-//         return false;
-//    }
 
     public String transactionInfo() {
         return sender.getName()
