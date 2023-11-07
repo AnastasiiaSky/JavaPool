@@ -16,13 +16,14 @@ import java.util.Scanner;
 class FormatDefiner {
     int sizeC = -1;
    private List<String> formats;
-   Map<String, List<Byte>> formatPairs;
+   Map<String, List<String>> formatPairs;
 
 
    public FormatDefiner() {
        this.formats = getFormatsFromFile("./ex00/signal.txt");
-       if(formats == null) throw new RuntimeException("Invalid file of signatures");
+       if(this.formats == null) throw new RuntimeException("Некорректные данные в файле signal.txt");
        this.formatPairs = parseSignatures(formats);
+
    }
 
    private List<String> getFormatsFromFile(String path) {
@@ -47,67 +48,66 @@ class FormatDefiner {
        return fileData;
    }
 
-
-//    private static void fillSignature(Map<String, String> signature, InputStream in) {
-//        Scanner sc = new Scanner(in);
-//        while (sc.hasNext()) {
-//            StringBuilder sb = new StringBuilder();
-//            String[] line = sc.nextLine().split(", ");
-//            for (String s : line[1].split(" ")) {
-//                sb.append(s);
-//            }
-//            signature.put(line[0], sb.toString());
-//        }
-//        sc.close();
-//    }
-   private Map<String, List<Byte>> parseSignatures(List<String> formats)  {
-       Map<String, List<Byte>> formatPairs = new HashMap<>();
+   private Map<String, List<String>> parseSignatures(List<String> formats)  {
+       Map<String, List<String>> formatPairs = new HashMap<>();
        for(String element : formats) {
            String[] data = element.split(", ");
            String[] signals = data[1].split(" ");
-           List<Byte> byteList = new ArrayList<>();
+           List<String> byteList = new ArrayList<>();
            for(String part : signals) {
-               char[] partSimb = part.toCharArray();
-               int first = hexToByte(partSimb[0]);
-               int second = hexToByte(partSimb[1]);
-               if(first == -1 || second == -1) return null;
-                    byteList.add((byte)((first << 4) + second));
+               byteList.add(part);
            }
            formatPairs.put(data[0], byteList);
-           if(byteList.size() > sizeC) sizeC = byteList.size();
+
+               System.out.println(formatPairs.toString());
        }
        return formatPairs;
    }
 
-    private static int hexToByte(char hex){
-       char[] hexes = {'0', '1', '2', '3', '4','5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-        for(int it = 0; it < hexes.length; ++it) {
-            if(hex == hexes[it]) return it + 1;
-        }
-        return -1;
-    }
-
-//    private List<String> getFormatsFromFile(String path) {
-//        List<String> fileData = new ArrayList<String>();
-//        File fin = new File(path);
-//        try {
-//            Scanner sc = new Scanner(fin);
-//            while (sc.hasNextLine()) {
-//                String curLine = sc.nextLine();
-//                fileData.add(curLine);
-//            }
-//            sc.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
+//
+//               for (Map.Entry<String, String> e : signature.entrySet()) {
+//        if (e.getValue().equals(sb.substring(0, e.getValue().length()))) {
+//            res.add(e.getKey());
+//            System.out.println("PROCESSED");
+//            break;
 //        }
-//        return fileData;
 //    }
-
+//
+//            if (size == res.size()) {
+//        res.clear();
+//        break;
+//    }
+//
+//    line = sc.nextLine();
+//            in.close();
+//}
+//        sc.close();
+//                return res;
+//                }
     public void execute() {
-        System.out.println("formats");
-        for(String s : formats) {
-            System.out.println(s);
+       Scanner sc = new Scanner(System.in);
+        List<String> results = new LinkedList<>();
+        while(true) {
+            System.out.println("Введите путь к файлу или введите 42 для выхода");
+            System.out.println("->");
+            String path = sc.nextLine();
+            if(path.equals("42")) System.exit(0);
+            try {
+                InputStream inputFile = new FileInputStream(path));
+                StringBuilder str = new StringBuilder();
+                for (int i = 0; i < 3; i++) {
+                    sb.append(String.format("%02X", in.read()));
+                }
+
+
+            } catch (IOException e){
+                System.out.println(e.getMessage());
+            }
+
         }
+//        for(String s : formats) {
+//            System.out.println(s);
+//        }
     }
 
 //    public void execute() {
