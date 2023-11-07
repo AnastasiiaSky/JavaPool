@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 class FormatDefiner {
+    int sizeC = -1;
    private List<String> formats;
    Map<String, List<Byte>> formatPairs;
 
@@ -46,9 +47,45 @@ class FormatDefiner {
        return fileData;
    }
 
-   private Map<String, List<Byte>> parseSignatures(List<String> formats) {
 
+//    private static void fillSignature(Map<String, String> signature, InputStream in) {
+//        Scanner sc = new Scanner(in);
+//        while (sc.hasNext()) {
+//            StringBuilder sb = new StringBuilder();
+//            String[] line = sc.nextLine().split(", ");
+//            for (String s : line[1].split(" ")) {
+//                sb.append(s);
+//            }
+//            signature.put(line[0], sb.toString());
+//        }
+//        sc.close();
+//    }
+   private Map<String, List<Byte>> parseSignatures(List<String> formats)  {
+       Map<String, List<Byte>> formatPairs = new HashMap<>();
+       for(String element : formats) {
+           String[] data = element.split(", ");
+           String[] signals = data[1].split(" ");
+           List<Byte> byteList = new ArrayList<>();
+           for(String part : signals) {
+               char[] partSimb = part.toCharArray();
+               int first = hexToByte(partSimb[0]);
+               int second = hexToByte(partSimb[1]);
+               if(first == -1 || second == -1) return null;
+                    byteList.add((byte)((first << 4) + second));
+           }
+           formatPairs.put(data[0], byteList);
+           if(byteList.size() > sizeC) sizeC = byteList.size();
+       }
+       return formatPairs;
    }
+
+    private static int hexToByte(char hex){
+       char[] hexes = {'0', '1', '2', '3', '4','5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        for(int it = 0; it < hexes.length; ++it) {
+            if(hex == hexes[it]) return it + 1;
+        }
+        return -1;
+    }
 
 //    private List<String> getFormatsFromFile(String path) {
 //        List<String> fileData = new ArrayList<String>();
