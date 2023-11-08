@@ -1,12 +1,11 @@
 package ex00;
 
 import java.io.File;
-import java.io.FileInputStream; // поток ввода для чтения из файла
-import java.io.FileOutputStream; // поток вывода для записи в файл
-// FileReader FileWrider - классы для символьного чтения записи, предыдущие два для байтовых данных
-import java.io.IOException; // для FileNotFoundException
-import java.io.InputStream; // для потоков ввода байтовых данных абстрактный класс кот описывает поток ввода
-import java.io.OutputStream; // для потоков выводв байтовых данных абстрактный класс кот описывает поток вывода
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -95,7 +94,7 @@ class FormatDefiner {
         }
     }
 
-    public String getFormatFromMap(String[] firstBytes) {
+    private String getFormatFromMap(String[] firstBytes) {
         for (Map.Entry<List<String>, String> element : formatPairs.entrySet()) {
             List<String> bytes = element.getKey();
             for (int i = 0; i < bytes.size(); ++i) {
@@ -108,13 +107,14 @@ class FormatDefiner {
         return null;
     }
 
-    public void writeToFile(List<String> results) {
+    private void writeToFile(List<String> results) {
         try {
             OutputStream fos = new FileOutputStream("ex00/result.txt", true);
             for (int i = 0; i < results.size(); ++i) {
                 fos.write(results.get(i).getBytes());
                 fos.write("\n".getBytes());
             }
+            fos.close();
         } catch(IOException e) {
             System.err.println(e.getMessage());
         }
