@@ -6,13 +6,14 @@ public final class UserIdsGenerator {
 
     private static int id = 0;
 
-    private UserIdsGenerator() {}
+    private UserIdsGenerator() {
+    }
 
-    public static UserIdsGenerator getInstance()	{
+    public static UserIdsGenerator getInstance() {
         return INSTANCE;
     }
 
-    public int generateId()	{
+    public int generateId() {
         id++;
         return (id);
     }

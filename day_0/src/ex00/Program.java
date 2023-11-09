@@ -4,7 +4,7 @@ public class Program {
         int startNumber = 479598;
         int resultNumber;
         int numberOne, numberTwo, numberThree, numberFour, numberFive, numberSix;
-        if(startNumber > 0) {
+        if (startNumber > 0) {
             numberOne = startNumber % 10;
             numberTwo = startNumber % 100 / 10;
             numberThree = startNumber % 1000 / 100;

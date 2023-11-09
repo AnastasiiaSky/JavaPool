@@ -8,15 +8,15 @@ import ex05.exceptions.UnknownArgumentException;
 
 class Program {
     public static void main(String[] args) {
-        try{
+        try {
             boolean menuMode = false;
             System.out.println("Если Вы хотите открыть программу в режиме разработчика используйте аргумент" +
                     " --profile=dev");
-            if(args.length > 0 && args[0].equals("--profile=dev")) {
+            if (args.length > 0 && args[0].equals("--profile=dev")) {
                 menuMode = true;
                 System.out.println("Вы запускаете программу в режиме разработчика. Вам доступно удаление транзакций" +
                         " по ID и поиск непарных транзакций");
-            } else if(args.length == 0) {
+            } else if (args.length == 0) {
                 menuMode = false;
                 System.out.println("Вы запускаете программу в режиме пользователя. Вам не доступно удаление транзакций" +
                         " по ID и поиск непарных транзакций");

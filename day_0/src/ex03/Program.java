@@ -23,7 +23,7 @@ public class Program {
                         mark = getMinMark();
 
                         currentWeekNumber = numberPower(currentWeekNumber);
-                        resultData+= (long) (currentWeekNumber * mark);
+                        resultData += (long) (currentWeekNumber * mark);
                     }
                 }
             } else {
@@ -38,10 +38,10 @@ public class Program {
 
     public static void printResultData(long result_number) {
         int counter = 0;
-        while(result_number > 0) {
+        while (result_number > 0) {
             ++counter;
             long what = result_number % 10;
-            if(what == 0) {
+            if (what == 0) {
                 result_number /= 10;
                 continue;
             }
@@ -68,6 +68,7 @@ public class Program {
         }
         return i;
     }
+
     public static boolean weekValidation(long lastWeek, long currentWeek) {
         if (currentWeek <= lastWeek) ExitProgramm();
         if (currentWeek > 18 || currentWeek < 1) ExitProgramm();
@@ -80,12 +81,12 @@ public class Program {
         int minMark = 10;
         int currentMark;
         while (counter < 5) {
-            if(myScanner.hasNextInt() == false) ExitProgramm();
-                currentMark = myScanner.nextInt();
-                if(currentMark < 1 && currentMark > 19) ExitProgramm();
-                if (minMark > currentMark) {
-                    minMark = currentMark;
-                }
+            if (myScanner.hasNextInt() == false) ExitProgramm();
+            currentMark = myScanner.nextInt();
+            if (currentMark < 1 && currentMark > 19) ExitProgramm();
+            if (minMark > currentMark) {
+                minMark = currentMark;
+            }
             ++counter;
         }
         return minMark;

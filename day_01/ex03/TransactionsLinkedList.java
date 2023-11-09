@@ -14,31 +14,38 @@ public class TransactionsLinkedList implements TransactionsList {
         this.tail = null;
     }
 
-    public int getSize() {return this.size;}
+    public int getSize() {
+        return this.size;
+    }
+
     public boolean isEmpty(TransactionsLinkedList cur) {
-       return this.size == 0;
+        return this.size == 0;
     }
 
     public Transaction getHead() {
         return head;
     }
+
     public Transaction getTail() {
         return tail;
     }
+
     public void setHead(Transaction head) {
         this.head = head;
     }
+
     public void setTail(Transaction tail) {
         this.tail = tail;
     }
+
     public void setSize(int size) {
         this.size = size;
     }
 
     @Override
-    public void addTransaction(Transaction current){
+    public void addTransaction(Transaction current) {
         this.size += 1;
-        if(this.head == null) {
+        if (this.head == null) {
             this.head = current;
             this.tail = current;
         } else {
@@ -77,12 +84,13 @@ public class TransactionsLinkedList implements TransactionsList {
             System.out.println(e);
         }
     }
+
     @Override
     public Transaction[] toArray() {
         Transaction[] transactionsArr = new Transaction[size];
-        if(size != 0) {
+        if (size != 0) {
             Transaction tmpHead = head;
-            for(int i = 0; i < size; ++i) {
+            for (int i = 0; i < size; ++i) {
                 transactionsArr[i] = tmpHead;
                 tmpHead = tmpHead.getNext();
             }
@@ -90,6 +98,7 @@ public class TransactionsLinkedList implements TransactionsList {
         }
         return transactionsArr;
     }
+
     @Override
     public String toString() {
         return "Transaction list {"

@@ -1,4 +1,5 @@
 package ex03;
+
 import java.util.UUID;
 
 class Transaction {
@@ -19,13 +20,13 @@ class Transaction {
         identifier = UUID.randomUUID().toString();
         this.recipient = recipient;
         this.sender = sender;
-        if(amount < 0) {
+        if (amount < 0) {
             this.category = Category.OUTCOME;
         } else {
             this.category = Category.INCOME;
         }
-        if(amount < 0) amount *= -1;
-        if(sender.getBalance() < amount) {
+        if (amount < 0) amount *= -1;
+        if (sender.getBalance() < amount) {
             this.amount = 0;
         } else {
             this.amount = amount;
@@ -38,33 +39,42 @@ class Transaction {
     public String getIdentifier() {
         return this.identifier;
     }
+
     public User getSender() {
         return sender;
     }
+
     public User getRecipient() {
         return recipient;
     }
+
     public double getAmount() {
         return amount;
     }
+
     public ex03.Transaction.Category getCategory() {
         return category;
     }
+
     public void setCategory(ex03.Transaction.Category category) {
         this.category = category;
     }
+
     public void setSender(User sender) {
         this.sender = sender;
     }
+
     public void setRecipient(User recipient) {
         this.recipient = recipient;
     }
+
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
     }
+
     public void setAmount(double amount) {
-        if(amount < 0) amount *= -1;
-        if(sender.getBalance() < amount) {
+        if (amount < 0) amount *= -1;
+        if (sender.getBalance() < amount) {
             this.amount = 0;
         } else {
             this.amount = amount;
@@ -74,19 +84,22 @@ class Transaction {
     public ex03.Transaction getNext() {
         return next;
     }
+
     public ex03.Transaction getPrev() {
         return prev;
     }
+
     public void setNext(ex03.Transaction next) {
         this.next = next;
     }
+
     public void setPrev(ex03.Transaction prev) {
         this.prev = prev;
     }
 
     @Override
     public String toString() {
-        if(prev != null && next != null) {
+        if (prev != null && next != null) {
             return "Transaction {"
                     + "transaction UUID = " + identifier
                     + ", Recipient = " + recipient.getName()
@@ -96,7 +109,7 @@ class Transaction {
                     + ", Prev = " + prev.getIdentifier()
                     + ", Next = " + next.getIdentifier()
                     + '}';
-        } else if(prev == null) {
+        } else if (prev == null) {
             return "Transaction {"
                     + "transaction UUID = " + identifier
                     + ", Recipient = " + recipient.getName()
@@ -106,7 +119,7 @@ class Transaction {
                     + ", Prev = " + "null"
                     + ", Next = " + next.getIdentifier()
                     + '}';
-        } else if(next == null) {
+        } else if (next == null) {
             return "Transaction {"
                     + "transaction UUID = " + identifier
                     + ", Recipient = " + recipient.getName()
@@ -117,14 +130,14 @@ class Transaction {
                     + ", Next = " + "null"
                     + '}';
         }
-            return "Transaction {"
+        return "Transaction {"
                 + "transaction UUID = " + identifier
-                    + ", Recipient = " + recipient.getName()
-                    + ", Sender = " + sender.getName()
-                    + ", Transaction type = " + category
-                    + ", Amount = " + amount
-                    + ", Prev = " + "null"
-                    + ", Next = " + "null"
-                    + '}';
+                + ", Recipient = " + recipient.getName()
+                + ", Sender = " + sender.getName()
+                + ", Transaction type = " + category
+                + ", Amount = " + amount
+                + ", Prev = " + "null"
+                + ", Next = " + "null"
+                + '}';
     }
 }

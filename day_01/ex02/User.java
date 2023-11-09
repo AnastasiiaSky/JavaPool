@@ -12,9 +12,17 @@ class User {
         if (balance >= 0) this.balance = balance;
     }
 
-    public int getId() {return id;}
-    public String getName() {return name;}
-    public double getBalance() {return balance;}
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
 
     public void setBalance(double balance) {
         if (balance < 0) {
@@ -24,7 +32,9 @@ class User {
         }
     }
 
-    public void setName(String name) {this.name = name;}
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public String toString() {

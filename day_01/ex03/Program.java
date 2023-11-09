@@ -4,7 +4,6 @@ import ex03.exceptions.TransactionNotFoundException;
 import ex03.exceptions.UserNotFoundException;
 
 
-
 class Program {
     public static void main(String[] args) {
         User person1 = new User("Анна Иванова", 5000);
@@ -71,7 +70,7 @@ class Program {
         System.out.println();
         System.out.println(test.toString());
         Transaction current = test.getHead();
-        while(current != null) {
+        while (current != null) {
             System.out.println(current.toString());
             current = current.getNext();
         }

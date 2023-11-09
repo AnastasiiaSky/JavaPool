@@ -1,5 +1,6 @@
 
 package ex00;
+
 class User {
     private int userId;
     private String userName;
@@ -40,6 +41,7 @@ class User {
             userBalance = balance;
         }
     }
+
     @Override
     public String toString() {
         return "User{"

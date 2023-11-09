@@ -1,21 +1,24 @@
 package ex02;
 
 import ex02.exceptions.*;
+
 import java.io.File;
 import java.util.Scanner;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
+
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
 public class FileManager {
     private File pwd;
+
     public FileManager(String path) {
         this.pwd = new File(path);
-        if(!pwd.exists()) throw new NoSuchFileOrDirectory();
-        if(!pwd.isDirectory()) throw new NoSuchFileOrDirectory();
+        if (!pwd.exists()) throw new NoSuchFileOrDirectory();
+        if (!pwd.isDirectory()) throw new NoSuchFileOrDirectory();
     }
 
     public void run() {
@@ -28,15 +31,15 @@ public class FileManager {
     }
 
     private void chooseCommand(String command) {
-        if(command.length()<1) return;
+        if (command.length() < 1) return;
         String[] arguments = command.split(" ");
-        if(arguments[0].equals("cd")) {
+        if (arguments[0].equals("cd")) {
             ChangeDirectory(arguments);
-        } else if(arguments[0].equals("ls")) {
+        } else if (arguments[0].equals("ls")) {
             ListInformation();
-        } else if(arguments[0].equals("mv")) {
+        } else if (arguments[0].equals("mv")) {
             moveOrRename(arguments);
-        } else if(arguments[0].equals("exit")) {
+        } else if (arguments[0].equals("exit")) {
             exitProgramm();
         } else throw new WrongCommandException();
     }
@@ -46,7 +49,7 @@ public class FileManager {
     }
 
     private void moveOrRename(String[] arguments) {
-        if(arguments.length != 3) return;
+        if (arguments.length != 3) return;
         Path firstA = Paths.get(arguments[1]);
         Path secondA = Paths.get(arguments[2]);
         try {
@@ -88,7 +91,7 @@ public class FileManager {
 
     private void ListInformation() {
         File[] files = this.pwd.listFiles();
-        for(int it = 0; it < files.length; ++it) {
+        for (int it = 0; it < files.length; ++it) {
             double fileSize = getFileSize(files[it]);
             System.out.printf("%-30s\t%10.4f KB\n", files[it].getName(), fileSize);
         }

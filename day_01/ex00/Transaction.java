@@ -1,4 +1,5 @@
 package ex00;
+
 import java.util.UUID;
 
 class Transaction {
@@ -18,14 +19,14 @@ class Transaction {
         this.recipient = recipient;
         this.sender = sender;
 
-        if(amount < 0) {
+        if (amount < 0) {
             this.category = Category.OUTCOME;
         } else {
             this.category = Category.INCOME;
         }
 
-        if(amount < 0) amount *= -1;
-        if(sender.getUserBalance() < amount) {
+        if (amount < 0) amount *= -1;
+        if (sender.getUserBalance() < amount) {
             this.amount = 0;
         } else {
             this.amount = amount;
@@ -69,12 +70,12 @@ class Transaction {
     }
 
     public void setAmount(double amount) {
-        if(amount < 0) amount *= -1;
-        if(sender.getUserBalance() < amount) {
-                this.amount = 0;
-            } else {
-                this.amount = amount;
-            }
+        if (amount < 0) amount *= -1;
+        if (sender.getUserBalance() < amount) {
+            this.amount = 0;
+        } else {
+            this.amount = amount;
+        }
     }
 
     @Override

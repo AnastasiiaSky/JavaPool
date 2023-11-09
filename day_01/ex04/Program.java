@@ -21,7 +21,7 @@ class Program {
         Transaction[] unp = service.getUnpairedTransactions();
         System.out.println();
         System.out.println("Не парные транзакции");
-        for(int it = 0; it < unp.length; ++it) {
+        for (int it = 0; it < unp.length; ++it) {
             System.out.println(unp[it].transactionInfo());
         }
     }
@@ -52,6 +52,7 @@ class Program {
 
 
     }
+
     public static void ifBalanceNull(TransactionsService service) {
         System.out.println("Добавляем транзакцию для сделующих пользователей(У отправителя нулевой балланс)");
         System.out.println(service.getUserList().getUserById(8).toString());
@@ -60,18 +61,19 @@ class Program {
 
 
     }
+
     public static void ifUserNotFound(TransactionsService service) {
         System.out.println("Добавляем транзакцию для сделующих пользователей(Отправителя не существует в списке)");
         try {
             service.addNewTransaction(service.getUserList().getUserById(12).getId(), service.getUserList().getUserById(6).getId(), 2000);
-        } catch(UserNotFoundException e) {
+        } catch (UserNotFoundException e) {
             System.out.println(e + ": Невозможно выполнить транзакцию. В списке пользователей нету отпрвителя с таким id или получателя с таким id");
         }
         System.out.println();
         System.out.println("(Получателя не существует в списке)");
         try {
             service.addNewTransaction(service.getUserList().getUserById(1).getId(), service.getUserList().getUserById(66).getId(), 2000);
-        } catch(UserNotFoundException e) {
+        } catch (UserNotFoundException e) {
             System.out.println(e + ": Невозможно выполнить транзакцию. В списке пользователей нету отпрвителя с таким id или получателя с таким id");
         }
     }
@@ -98,7 +100,6 @@ class Program {
         System.out.println(service.getUserList().getUserById(6).toString());
 
     }
-
 
 
     public static void userAdding(TransactionsService service) {

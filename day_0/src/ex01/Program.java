@@ -9,7 +9,7 @@ public class Program {
         boolean isSimple = true;
 
         if (validationCheck(numberForCheck) == true) {
-            for(int it = 2; it * it <= numberForCheck; it++) {
+            for (int it = 2; it * it <= numberForCheck; it++) {
                 if (numberForCheck % it == 0) {
                     isSimple = false;
                     break;

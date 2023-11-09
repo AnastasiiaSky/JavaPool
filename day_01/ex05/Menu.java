@@ -1,15 +1,18 @@
 package ex05;
+
 import java.util.Scanner;
 
 import ex05.exceptions.TransactionNotFoundException;
 import ex05.exceptions.UserNotFoundException;
 import ex05.exceptions.IllegalTransactionException;
 import ex05.exceptions.UnknownArgumentException;
+
 class Menu {
     Scanner sc;
     boolean menuMode;
     TransactionsService service;
-    public Menu (boolean menuMode) {
+
+    public Menu(boolean menuMode) {
         this.sc = new Scanner(System.in);
         this.service = new TransactionsService();
         this.menuMode = menuMode;
@@ -18,14 +21,14 @@ class Menu {
     public void consoleMenu() {
         boolean exit = false;
         while (true) {
-            if(menuMode == false) {
+            if (menuMode == false) {
                 System.out.println("1. Add a user.");
                 System.out.println("2. View user balances.");
                 System.out.println("3. Perform a transfer.");
                 System.out.println("4. View all transactions for a specific user.");
                 System.out.println("5. Finish execution.");
                 exit = userMode();
-                if(exit == true) break;
+                if (exit == true) break;
             } else {
                 System.out.println("1. Add a user.");
                 System.out.println("2. View user balances.");
@@ -35,7 +38,7 @@ class Menu {
                 System.out.println("6. DEV – check transfer validity.");
                 System.out.println("7. Finish execution.");
                 exit = devMode();
-                if(exit == true) break;
+                if (exit == true) break;
             }
         }
         sc.close();
@@ -45,15 +48,15 @@ class Menu {
         boolean exit = false;
         String ch = sc.nextLine().trim();
         try {
-                int choise = Integer.parseInt(ch);
-                if(choiseValidation(choise) == true) {
-                   exit = userModePoints(choise);
-                }
+            int choise = Integer.parseInt(ch);
+            if (choiseValidation(choise) == true) {
+                exit = userModePoints(choise);
+            }
 
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.out.println(e + ": Введите целое число соответствуещее пункту меню.");
         }
-    return exit;
+        return exit;
     }
 
     private boolean devMode() {
@@ -61,10 +64,10 @@ class Menu {
         String ch = sc.nextLine().trim();
         try {
             int choise = Integer.parseInt(ch);
-            if(choiseValidation(choise) == true) {
+            if (choiseValidation(choise) == true) {
                 exit = devModePoints(choise);
             }
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.out.println(e + ": Введите целое число соответствуещее пункту меню.");
         }
         return exit;
@@ -86,8 +89,8 @@ class Menu {
                 getTransForUser();
                 break;
             case 5:
-               exit = true;
-               break;
+                exit = true;
+                break;
         }
         return exit;
     }
@@ -125,13 +128,13 @@ class Menu {
         String input = sc.nextLine().trim();
         try {
             String[] inputParts = input.split("\\s+");
-            if(inputParts.length == 2) {
-               String name = inputParts[0];
-               double balance = Double.parseDouble(inputParts[1]);
-               User user = new User(name, balance);
-               service.addUser(user);
-               System.out.println("User with id = " + user.getId() + " is added");
-               System.out.println("---------------------------------------------------------");
+            if (inputParts.length == 2) {
+                String name = inputParts[0];
+                double balance = Double.parseDouble(inputParts[1]);
+                User user = new User(name, balance);
+                service.addUser(user);
+                System.out.println("User with id = " + user.getId() + " is added");
+                System.out.println("---------------------------------------------------------");
             }
         } catch (UnknownArgumentException e) {
             System.out.println(e + ": Введите имя пользователя и баланс через пробел");
@@ -171,7 +174,7 @@ class Menu {
     private void getTransForUser() {
         System.out.println("Enter a user ID");
         String input = sc.nextLine().trim();
-        try{
+        try {
             int id = Integer.parseInt(input);
             Transaction[] userTrans = service.getUserList().getUserById(id).returnTransactionsArray();
             for (int it = 0; it < userTrans.length; ++it) {
@@ -196,8 +199,8 @@ class Menu {
             String tranfId = inputParts[1];
             service.deleteTransaction(userId, tranfId);
             Transaction[] unp = service.getUnpairedTransactions();
-            for(int it = 0; it < unp.length; ++it) {
-                if(unp[it].getIdentifier().equals(tranfId)) {
+            for (int it = 0; it < unp.length; ++it) {
+                if (unp[it].getIdentifier().equals(tranfId)) {
                     userName = unp[it].getRecipient().getName();
                     resId = unp[it].getRecipient().getId();
                     sum = unp[it].getAmount();
@@ -215,9 +218,9 @@ class Menu {
         System.out.println("Check results.");
         try {
             Transaction[] unp = service.getUnpairedTransactions();
-            for(int it = 0; it < unp.length; ++it) {
+            for (int it = 0; it < unp.length; ++it) {
                 System.out.println(unp[it].transactionInfo());
-                }
+            }
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println(e + ": Не парных транзакций нет");
 
@@ -225,12 +228,12 @@ class Menu {
     }
 
     private boolean choiseValidation(int choise) {
-        if(this.menuMode == false) {
-            if(choise < 1 || choise > 5) {
+        if (this.menuMode == false) {
+            if (choise < 1 || choise > 5) {
                 return false;
             }
         } else {
-            if(choise < 1 || choise > 7) {
+            if (choise < 1 || choise > 7) {
                 return false;
             }
         }

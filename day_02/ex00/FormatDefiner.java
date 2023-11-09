@@ -79,7 +79,7 @@ class FormatDefiner {
                 }
                 String[] firstBytes = str.toString().split(",");
                 String answer = getFormatFromMap(firstBytes);
-                if(answer == null) {
+                if (answer == null) {
                     System.out.println("UNDEFINED");
                     results = new ArrayList<>();
                 } else {
@@ -100,7 +100,7 @@ class FormatDefiner {
             for (int i = 0; i < bytes.size(); ++i) {
                 if (bytes.get(i).equals(firstBytes[i]) && bytes.get(i + 1).equals(firstBytes[i + 1])
                         && bytes.get(i + 2).equals(firstBytes[i + 2])) {
-                        return element.getValue();
+                    return element.getValue();
                 }
             }
         }
@@ -115,7 +115,7 @@ class FormatDefiner {
                 fos.write("\n".getBytes());
             }
             fos.close();
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }

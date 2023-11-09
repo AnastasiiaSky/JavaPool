@@ -23,9 +23,17 @@ class User {
         return this.userTransactions;
     }
 
-    public int getId() {return id;}
-    public String getName() {return name;}
-    public double getBalance() {return balance;}
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
 
     public void setBalance(double balance) {
         if (balance < 0) {
@@ -35,9 +43,12 @@ class User {
         }
     }
 
-    public void setName(String name) {this.name = name;}
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void addTransaction(Transaction current) {
-        if(!checkTransactionPossibility(current)) {
+        if (!checkTransactionPossibility(current)) {
             throw new IllegalTransactionException();
         } else {
             userTransactions.addTransaction(current);
@@ -55,8 +66,8 @@ class User {
     }
 
     public boolean checkTransactionPossibility(Transaction current) {
-        if(current.getSender().getId() == this.id) {
-            if(current.getAmount() > this.balance) {
+        if (current.getSender().getId() == this.id) {
+            if (current.getAmount() > this.balance) {
                 return false;
             }
         }
