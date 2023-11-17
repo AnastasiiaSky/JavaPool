@@ -14,6 +14,7 @@ import java.util.Scanner;
 
 class FormatDefiner {
     int sizeC = -1;
+    int signalLength;
     private List<String> formats;
     Map<List<String>, String> formatPairs;
 
@@ -26,9 +27,9 @@ class FormatDefiner {
     }
 
     private List<String> getFormatsFromFile(String path) {
+
         List<String> fileData = new ArrayList<String>();
-        try {
-            InputStream fin = new FileInputStream(path);
+        try (InputStream fin = new FileInputStream(path)) {
             StringBuilder inputData = new StringBuilder();
             while (fin.available() > 0) {
                 inputData.append((char) fin.read());
@@ -57,10 +58,12 @@ class FormatDefiner {
             for (String part : signals) {
                 byteList.add(part);
             }
+            if(this.sizeC < byteList.size()) this.sizeC = byteList.size();
             formatPairs.put(byteList, data[0]);
         }
         return formatPairs;
     }
+
 
     public void execute() {
         Scanner sc = new Scanner(System.in);
@@ -70,23 +73,22 @@ class FormatDefiner {
             System.out.println("->");
             String path = sc.nextLine().trim();
             if (path.equals("42")) System.exit(0);
-            try {
-                InputStream inputFile = new FileInputStream(path);
-                StringBuilder str = new StringBuilder();
-                for (int i = 0; i < 3; i++) {
-                    str.append(String.format("%02X", inputFile.read()));
-                    if (i != 2) str.append(",");
+            try (InputStream inputFile = new FileInputStream(path)){
+                String result = "";
+
+                List<String> checkingBytes = new ArrayList<>();
+                int count = this.sizeC;
+                while(inputFile.available() > 0 && count >= 0) {
+                    --count;
+                    checkingBytes.add(String.format("%02X", inputFile.read()));
                 }
-                String[] firstBytes = str.toString().split(",");
-                String answer = getFormatFromMap(firstBytes);
-                if (answer == null) {
+                result = getFormatFromMap(checkingBytes);
+                if (result == null) {
                     System.out.println("UNDEFINED");
-                    results = new ArrayList<>();
                 } else {
                     System.out.println("PROCESSED");
-                    results.add(answer);
                 }
-                writeToFile(results);
+                writeToFile(result);
             } catch (IOException e) {
                 System.out.println(e.getMessage() + ": Файл не найден!");
             }
@@ -94,27 +96,26 @@ class FormatDefiner {
         }
     }
 
-    private String getFormatFromMap(String[] firstBytes) {
-        for (Map.Entry<List<String>, String> element : formatPairs.entrySet()) {
-            List<String> bytes = element.getKey();
-            for (int i = 0; i < bytes.size(); ++i) {
-                if (bytes.get(i).equals(firstBytes[i]) && bytes.get(i + 1).equals(firstBytes[i + 1])
-                        && bytes.get(i + 2).equals(firstBytes[i + 2])) {
-                    return element.getValue();
+    private String getFormatFromMap(List<String> checkingBytes) {
+        String result = "";
+        for(Map.Entry<List<String>, String> entry : formatPairs.entrySet()) {
+            List<String> signature = entry.getKey();
+            String name = entry.getValue();
+            for(int it = 0; it < signature.size(); ++it) {
+                if(!checkingBytes.get(it).equals(signature.get(it))) break;
+                if(it + 1 == signature.size()) {
+                    result = name;
+                    break;
                 }
             }
         }
-        return null;
+        return result;
     }
 
-    private void writeToFile(List<String> results) {
-        try {
-            OutputStream fos = new FileOutputStream("ex00/result.txt", true);
-            for (int i = 0; i < results.size(); ++i) {
-                fos.write(results.get(i).getBytes());
+    private void writeToFile(String results) {
+        try (OutputStream fos = new FileOutputStream("ex00/result.txt", true)) {
+                fos.write(results.getBytes());
                 fos.write("\n".getBytes());
-            }
-            fos.close();
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
