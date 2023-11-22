@@ -5,7 +5,13 @@ public class Program {
         if (args.length == 1 && args[0].startsWith("--count=")) {
             String[] buffer = args[0].split("=");
             Integer amount = Integer.parseInt(buffer[1]);
-            new ThreadsWork(amount);
+            ThreadsWork hen = new ThreadsWork(amount, "Hen");
+            ThreadsWork egg = new ThreadsWork(amount, "Egg");
+            try{
+                egg.join();
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
             for (int it = 0; it < amount; ++it) {
                 System.out.println("Human");
             }
