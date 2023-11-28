@@ -9,7 +9,7 @@ public class ThreadsWork extends Thread{
         this.amount = amount;
         this.object = object;
         start();
-        run();
+
     }
 
     @Override

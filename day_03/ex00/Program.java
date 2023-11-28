@@ -9,6 +9,7 @@ public class Program {
             ThreadsWork egg = new ThreadsWork(amount, "Egg");
             try{
                 egg.join();
+                hen.join();
             } catch(InterruptedException e) {
                 e.printStackTrace();
             }
