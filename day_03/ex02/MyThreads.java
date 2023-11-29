@@ -20,7 +20,6 @@ public class MyThreads extends Thread {
             this.sumOfThePart += partToCount.get(it);
         }
         printInfo();
-//        System.out.println("sumOfThePart    " + this.sumOfThePart);
     }
 
     private void printInfo() {

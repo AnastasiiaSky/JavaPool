@@ -17,13 +17,6 @@ public class ArrayCreator {
         }
     }
 
-//    private void printArray() {
-//        for (int it = 0; it < size; ++it) {
-//            System.out.println(numbers.get(it) + " ");
-//        }
-//        System.out.println();
-//    }
-
     public ArrayList<Integer> getNumbers() {
         return this.numbers;
     }

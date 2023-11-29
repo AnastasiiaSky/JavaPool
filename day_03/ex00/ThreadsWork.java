@@ -1,8 +1,8 @@
 package ex00;
 
-public class ThreadsWork extends Thread{
-    private volatile Integer amount;
-    private volatile String object;
+public class ThreadsWork extends Thread {
+    private final Integer amount;
+    private final String object;
 
 
     public ThreadsWork(Integer amount, String object) {
@@ -14,8 +14,10 @@ public class ThreadsWork extends Thread{
 
     @Override
     public void run() {
-        for(int it = 0; it < amount; ++it) {
+        for (int it = 0; it < amount; ++it) {
             System.out.println(object);
         }
     }
 }
+
+

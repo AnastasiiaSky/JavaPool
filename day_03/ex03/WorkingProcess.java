@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class WorkingProcess {
     private final int threadsCount;
     private final HashMap<Integer, String> urls = new HashMap<>();
-    private final String sourceFilename = "/Users/qylenett/Desktop/ex03/src/ex03/files_urls.txt";
+    private final String sourceFilename = "/Users/qylenett/Desktop/projects/Java_Bootcamp.Day03-1/src/ex03/files_urls.txt";
 
 
     public WorkingProcess(int threadsCount) {

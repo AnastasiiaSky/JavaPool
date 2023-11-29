@@ -7,10 +7,10 @@ public class Program {
             Integer amount = Integer.parseInt(buffer[1]);
             ThreadsWork hen = new ThreadsWork(amount, "Hen");
             ThreadsWork egg = new ThreadsWork(amount, "Egg");
-            try{
+            try {
                 egg.join();
                 hen.join();
-            } catch(InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             for (int it = 0; it < amount; ++it) {
