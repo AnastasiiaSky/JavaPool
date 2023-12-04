@@ -21,7 +21,7 @@ public class Converter {
 
     private void convert() {
         try {
-            BufferedImage image =  ImageIO.read(new File(picture));
+            BufferedImage image = ImageIO.read(new File(picture));
             printPicture(image);
         } catch (IOException e) {
             System.out.println(e);
@@ -29,8 +29,8 @@ public class Converter {
     }
 
     private void printPicture(BufferedImage image) {
-        if(image != null && image.getHeight() > 0 && image.getWidth() > 0) {
-            for(int i = 0; i < image.getWidth(); ++i) {
+        if (image != null && image.getHeight() > 0 && image.getWidth() > 0) {
+            for (int i = 0; i < image.getWidth(); ++i) {
                 for (int j = 0; j < image.getHeight(); ++j) {
                     Color color = new Color(image.getRGB(j, i));
 //                    System.out.println(color);

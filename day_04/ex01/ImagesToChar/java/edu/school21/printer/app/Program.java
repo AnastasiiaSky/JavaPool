@@ -5,11 +5,9 @@ import ImagesToChar.src.java.edu.school21.printer.logic.Converter;
 import java.io.File;
 
 
-
-
 public class Program {
     public static void main(String[] args) {
-        if(args.length == 2 && args[0].length() == 1 && args[1].length() == 1) {
+        if (args.length == 2 && args[0].length() == 1 && args[1].length() == 1) {
             char[] white = args[0].trim().toCharArray();
             char[] black = args[1].trim().toCharArray();
             File file = new File(".");
