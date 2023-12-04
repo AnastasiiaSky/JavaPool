@@ -9,11 +9,11 @@ import javax.imageio.ImageIO;
 
 import com.diogonunes.jcolor.AnsiFormat;
 import com.diogonunes.jcolor.Attribute;
-import org.junit.jupiter.api.Disabled;
+//import org.junit.jupiter.api.Disabled;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 import static com.diogonunes.jcolor.Attribute.*;
-import static com.diogonunes.jcolor.tests.unit.DataGenerator.randomInt;
+//import static com.diogonunes.jcolor.tests.unit.DataGenerator.randomInt;
 
 public class Converter {
     private final String background;
@@ -25,7 +25,7 @@ public class Converter {
         this.picture = picture;
         File file = new File(".");
         String absolut = file.getAbsolutePath();
-        this.picturePath = absolut.substring(0, absolut.length() - 1) + "/ImagesToChar/resources/it.bmp";
+        this.picturePath = absolut.substring(0, absolut.length() - 1) + "resources/it.bmp";
         convert();
     }
 
@@ -59,24 +59,27 @@ public class Converter {
 
     private void getColor(String color) {
         if (color.equalsIgnoreCase("YELLOW")) {
-            System.out.print(colorize(" "), YELLOW_TEXT(), YELLOW_BACK());
+            System.out.print(colorize(" ", YELLOW_TEXT(), YELLOW_BACK()));
         } else if (color.equalsIgnoreCase("RED")) {
-            System.out.print(colorize(" "), RED_TEXT(), RED_BACK());
+            System.out.print(colorize(" ", RED_TEXT(), RED_BACK()));
         } else if (color.equalsIgnoreCase("PINK")) {
-            System.out.print(colorize(" "), MAGENTA_TEXT(), MAGENTA_BACK());
+            System.out.print(colorize(" ", MAGENTA_TEXT(), MAGENTA_BACK()));
         } else if (color.equalsIgnoreCase("BLUE")) {
-            System.out.print(colorize(" "), BLUE_TEXT(), BLUE_BACK());
+            System.out.print(colorize(" ", BLUE_TEXT(), BLUE_BACK()));
         } else if (color.equalsIgnoreCase("GREEN")) {
-            System.out.print(colorize(" "), GREEN_TEXT(), GREEN_BACK());
+            System.out.print(colorize(" ", GREEN_TEXT(), GREEN_BACK()));
         } else if (color.equalsIgnoreCase("MAGENTA")) {
-            System.out.print(colorize(" "), MAGENTA_TEXT(), MAGENTA_BACK());
+            System.out.print(colorize(" ", MAGENTA_TEXT(), MAGENTA_BACK()));
         } else if (color.equalsIgnoreCase("CYAN")) {
-            System.out.print(colorize(" "), CYAN_TEXT(), CYAN_BACK());
+            System.out.print(colorize(" ", CYAN_TEXT(), CYAN_BACK()));
         } else if (color.equalsIgnoreCase("WHITE")) {
-            System.out.print(colorize(" "), WHITE_TEXT(), WHITE_BACK());
+            System.out.print(colorize(" ", WHITE_TEXT(), WHITE_BACK()));
         } else if (color.equalsIgnoreCase("BLACK")) {
-            System.out.print(colorize(" "), BLACK_TEXT(), BLACK_BACK());
+            System.out.print(colorize(" ", BLACK_TEXT(), BLACK_BACK()));
         }
     }
+
+
+
 }
 
