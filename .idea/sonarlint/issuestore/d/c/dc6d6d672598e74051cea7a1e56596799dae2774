@@ -1,0 +1,19 @@
+
+–
+java:S1192‰"zDefine a constant instead of duplicating this literal "---------------------------------------------------------" 5 times.(É´ðëýÿÿÿÿ
+s	java:S135"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆžÿÿÿÿÿ
+n	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(—”¾
+=
+java:S1125"'Remove the unnecessary boolean literal.(Åð‚¤
+=
+java:S1125"'Remove the unnecessary boolean literal.(œëæŒ
+=
+java:S1125)"'Remove the unnecessary boolean literal.(œëæŒ
+=
+java:S11254"'Remove the unnecessary boolean literal.(é ¾Ã
+=
+java:S1125C"'Remove the unnecessary boolean literal.(é ¾Ã
+<	java:S131N""Add a default case to this switch.(ë¡Çøÿÿÿÿ
+<	java:S131d""Add a default case to this switch.(ë¡Çøÿÿÿÿ
+C
+java:S1125ç"'Remove the unnecessary boolean literal.(˜§¤Òøÿÿÿÿ

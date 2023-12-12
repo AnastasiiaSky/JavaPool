@@ -1,0 +1,12 @@
+
+J
+java:S1066X"/Merge this if statement with the enclosing one.(½ Ş¿şÿÿÿÿ
+y
+java:S1488i"^Immediately return this expression instead of assigning it to the temporary variable "result".(è…‚äûÿÿÿÿ
+n	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(—”¾
+=
+java:S1125("'Remove the unnecessary boolean literal.(Ùöü¿
+=
+java:S1125H"'Remove the unnecessary boolean literal.(¸æÉ
+B
+java:S1125\"'Remove the unnecessary boolean literal.(©ç¶Òÿÿÿÿÿ
