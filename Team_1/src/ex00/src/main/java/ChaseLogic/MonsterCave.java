@@ -6,7 +6,7 @@ import static ChaseLogic.ObjectsData.*;
 
 /* Создаем пещеру для монстра */
 
-public class MonsterCave {
+public final class MonsterCave {
     private ArrayList<ArrayList<Character>> gameBoard;
     private Position currentMonsterPosition;
     private ArrayList<ArrayList<Integer>> gameBoardCave;
@@ -47,12 +47,12 @@ public class MonsterCave {
         return cave;
     }
 
-//    private void printCave() {
-//        for(int it = 0; it < gameBoardCave.size(); ++it) {
-//            for (int j = 0; j < gameBoardCave.get(it).size(); ++j) {
-//                System.out.print(gameBoardCave.get(it).get(j));
-//            }
-//            System.out.println();
-//        }
-//    }
+    public void printCave() {
+        for(int it = 0; it < gameBoardCave.size(); ++it) {
+            for (int j = 0; j < gameBoardCave.get(it).size(); ++j) {
+                System.out.print(gameBoardCave.get(it).get(j));
+            }
+            System.out.println();
+        }
+    }
 }

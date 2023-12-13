@@ -6,7 +6,7 @@ import static ChaseLogic.ObjectsData.*;
 
 /* Класс создает монстров на карте игры */
 
-public class MonstersCreator {
+public final class MonstersCreator {
     private ArrayList<ArrayList<Character>> gameBoard;
     private Position currentPosition;
     private final int gameBoardWidth;
@@ -38,10 +38,10 @@ public class MonstersCreator {
     private boolean checkMonsterCreation() {
         int x = this.currentPosition.getX(), y = this.currentPosition.getY();
         return gameBoard.get(x).get(y) != EMPTY_SIMBL
-                && ((x + 1 < this.gameBoardWidth && gameBoard.get(x + 1).get(y) == PLAYER_SIMBL)
-                    || (x - 1 > 0 && gameBoard.get(x - 1).get(y) == PLAYER_SIMBL)
-                    || (y + 1 < this.gameBoardLength && gameBoard.get(x).get(y + 1) == PLAYER_SIMBL)
-                    || (y - 1 > 0 && gameBoard.get(x).get(y - 1) == PLAYER_SIMBL));
+                && ((x + 1 < this.gameBoardWidth - 1 && gameBoard.get(x + 1).get(y) == PLAYER_SIMBL)
+                    || (x - 1 > 1 && gameBoard.get(x - 1).get(y) == PLAYER_SIMBL)
+                    || (y + 1 < this.gameBoardLength - 1 && gameBoard.get(x).get(y + 1) == PLAYER_SIMBL)
+                    || (y - 1 > 1 && gameBoard.get(x).get(y - 1) == PLAYER_SIMBL));
     }
 
 

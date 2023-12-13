@@ -11,8 +11,9 @@ import static ChaseLogic.ObjectsData.*;
 public class MonstersTask {
     private final int MONSTER_COUNT;
     private ArrayList<ArrayList<Character>> gameBoard;
-    private ArrayList<Position> monstersList; // создаем лист монстров где мы будем хранить координаты всех монстров
+    private ArrayList<Position> monstersList; //!  создаем лист монстров где мы будем хранить координаты всех монстров
     private Position purposePosition;
+    private ArrayList<Thread> monsterThreads; //!  создаем список потоков монстров
 
 
 
@@ -22,13 +23,23 @@ public class MonstersTask {
         this.MONSTER_COUNT = monsters_count;
         this.monstersList = new ArrayList<>();
         this.purposePosition = new Position(0, 0, width, length);
+        this.monsterThreads = new ArrayList<>();
         executeCreation();
     }
 
     private void executeCreation() {
         findPlayerPosition();
         createMonsters();
+        createMonsterThreads();
 //        printMonstersList();
+    }
+
+    private void createMonsterThreads() {
+        for(int it = 0; it < monstersList.size(); ++it) {
+            Thread monster = new Thread(new MonsterThread(this.monstersList.get(it), this.purposePosition, gameBoard));
+            System.out.println(monster.getName());
+            monsterThreads.add(monster);
+        }
     }
 
     public ArrayList<ArrayList<Character>> getGameBoard() {
