@@ -4,22 +4,19 @@ import ChaseLogic.Exceptions.IllegalPointPositionException;
 
 import java.util.Objects;
 
+import static ChaseLogic.ObjectsData.SIZE;
+
 /* Класс описывает точку расположения того или иного объекта на карте игры */
 public final class Position {
-    private final int width;
-    private final int length;
-
     private int x;
     private int y;
 
 
-    public Position(final int x, final int y, final int width, final int length) {
-        this.width = width;
-        this.length = length;
-        if(x >= 0 && x <= this.width) {
+    public Position(final int x, final int y) {
+        if(x >= 0 && x < SIZE) {
             this.x = x;
         } else throw new IllegalPointPositionException();
-        if(y >= 0 && y <= this.length) {
+        if(y >= 0 && y < SIZE) {
             this.y = y;
         } else throw new IllegalPointPositionException();
     }
@@ -34,13 +31,13 @@ public final class Position {
     }
 
     private void setX(final int x) {
-        if(x >= 0 && x <= this.width) {
+        if(x >= 0 && x < SIZE) {
             this.x = x;
         } else throw new IllegalPointPositionException();
     }
 
     private void setY(final int y) {
-        if(y >= 0 && y <= this.length) {
+        if(y >= 0 && y < SIZE) {
             this.y = y;
         } else throw new IllegalPointPositionException();
     }
@@ -56,15 +53,13 @@ public final class Position {
         if (o == null) return false;
         Position position = (Position) o;
         if(this.hashCode() != o.hashCode()) return false;
-        return this.width == position.width
-                && this.length == position.length
-                && this.x == position.x
+        return this.x == position.x
                 && this.y == position.y;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash( width * 3 + 5 * length + 7 * x + 9 * y);
+        return Objects.hash( 5 * SIZE + 7 * x + 9 * y);
     }
 
     @Override

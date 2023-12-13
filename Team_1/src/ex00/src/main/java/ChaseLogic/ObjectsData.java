@@ -8,4 +8,6 @@ public final class ObjectsData {
     public static final Character EMPTY_SIMBL = ' ';
     public static final Character OBSTACLE_SIMBL = '#';
     public static final Character TARGET_SIMBL = 'O';
+    public static final Integer SIZE = Program.SIZE;
+
 }

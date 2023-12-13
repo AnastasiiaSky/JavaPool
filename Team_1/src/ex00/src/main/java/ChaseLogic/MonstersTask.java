@@ -13,33 +13,31 @@ public class MonstersTask {
     private ArrayList<ArrayList<Character>> gameBoard;
     private ArrayList<Position> monstersList; //!  создаем лист монстров где мы будем хранить координаты всех монстров
     private Position purposePosition;
-    private ArrayList<Thread> monsterThreads; //!  создаем список потоков монстров
 
 
 
     public MonstersTask(ArrayList<ArrayList<Character>> gameBoard, int monsters_count) {
-        int width = gameBoard.size(), length = gameBoard.get(0).size();
         this.gameBoard = gameBoard;
         this.MONSTER_COUNT = monsters_count;
         this.monstersList = new ArrayList<>();
-        this.purposePosition = new Position(0, 0, width, length);
-        this.monsterThreads = new ArrayList<>();
+        this.purposePosition = new Position(1, 1);
         executeCreation();
     }
 
     private void executeCreation() {
         findPlayerPosition();
         createMonsters();
-        createMonsterThreads();
-//        printMonstersList();
     }
 
-    private void createMonsterThreads() {
+    public void executeMonsterTask() {
+        Cave currentCave = new Cave(this.gameBoard);
         for(int it = 0; it < monstersList.size(); ++it) {
-            Thread monster = new Thread(new MonsterThread(this.monstersList.get(it), this.purposePosition, gameBoard));
-            System.out.println(monster.getName());
-            monsterThreads.add(monster);
+            Wave currentWave = new Wave(monstersList.get(it), purposePosition, currentCave);
+            Position newPosition = currentWave.getNextStep();
+            this.gameBoard.get(monstersList.get(it).getX()).set(monstersList.get(it).getY(), EMPTY_SIMBL);
+            this.gameBoard.get(newPosition.getX()).set(newPosition.getY(), MONSTER_SIMBL);
         }
+
     }
 
     public ArrayList<ArrayList<Character>> getGameBoard() {
@@ -51,16 +49,16 @@ public class MonstersTask {
     }
 
     private void findPlayerPosition() {
-        for(int i = 0; i < gameBoard.size(); ++i)
-            for(int j = 0; j < gameBoard.get(i).size(); ++j)
-                if(gameBoard.get(i).get(j).equals(PLAYER_SIMBL))
+        for(int i = 0; i < SIZE; ++i)
+            for(int j = 0; j < SIZE; ++j)
+                if(gameBoard.get(i).get(j).equals(PLAYER_SIMBL)) {
                     this.purposePosition.setPosition(i, j);
+                }
     }
     private void createMonsters() {
         for(int i = 0; i < MONSTER_COUNT; ++i) {
             MonstersCreator monster = new MonstersCreator(gameBoard, purposePosition);
             monstersList.add(monster.getCurrentPosition());
-//            System.out.println(monster.toString());
         }
     }
 

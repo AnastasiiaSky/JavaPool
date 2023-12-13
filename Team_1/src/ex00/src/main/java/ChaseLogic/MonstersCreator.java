@@ -9,15 +9,11 @@ import static ChaseLogic.ObjectsData.*;
 public final class MonstersCreator {
     private ArrayList<ArrayList<Character>> gameBoard;
     private Position currentPosition;
-    private final int gameBoardWidth;
-    private final int gameBoardLength;
+
 
     public MonstersCreator(ArrayList<ArrayList<Character>> gameBoard, final Position purposePosition) {
-        this.gameBoardWidth = gameBoard.size();
-        this.gameBoardLength = gameBoard.get(0).size();
         this.gameBoard = gameBoard;
-        this.currentPosition = new Position(randomIntCreation(),
-                randomIntCreation(), gameBoardWidth, gameBoardLength);
+        this.currentPosition = new Position(randomIntCreation(), randomIntCreation());
         createMonster();
     }
 
@@ -26,7 +22,7 @@ public final class MonstersCreator {
     }
 
     private int randomIntCreation() {
-        return (int) (Math.random() * (gameBoard.size() - 1));
+        return (int) (Math.random() * SIZE);
     }
     private void createMonster() {
         while(checkMonsterCreation()) {
@@ -38,10 +34,10 @@ public final class MonstersCreator {
     private boolean checkMonsterCreation() {
         int x = this.currentPosition.getX(), y = this.currentPosition.getY();
         return gameBoard.get(x).get(y) != EMPTY_SIMBL
-                && ((x + 1 < this.gameBoardWidth - 1 && gameBoard.get(x + 1).get(y) == PLAYER_SIMBL)
-                    || (x - 1 > 1 && gameBoard.get(x - 1).get(y) == PLAYER_SIMBL)
-                    || (y + 1 < this.gameBoardLength - 1 && gameBoard.get(x).get(y + 1) == PLAYER_SIMBL)
-                    || (y - 1 > 1 && gameBoard.get(x).get(y - 1) == PLAYER_SIMBL));
+                && ((x + 1 < SIZE && gameBoard.get(x + 1).get(y) == PLAYER_SIMBL)
+                    || (x - 1 > 0 && gameBoard.get(x - 1).get(y) == PLAYER_SIMBL)
+                    || (y + 1 < SIZE && gameBoard.get(x).get(y + 1) == PLAYER_SIMBL)
+                    || (y - 1 > 0 && gameBoard.get(x).get(y - 1) == PLAYER_SIMBL));
     }
 
 
