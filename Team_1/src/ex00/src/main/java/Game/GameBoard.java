@@ -1,78 +1,107 @@
 package Game;
 
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import static com.diogonunes.jcolor.Ansi.colorize;
-import static com.diogonunes.jcolor.Attribute.*;
-
-//char layer_occupied_the_square
+import static Game.ObjectsData.*;
 
 public class GameBoard {
-    private int width;
-    private int length;
-    private int monstr;
+    private final int size;
 
+    private ArrayList<ArrayList<Character>> matrix = null;
 
-    private ArrayList<ArrayList <Character>> matrix = null;
-
-    public GameBoard(int width, int length, int monstr) {
-        this.width = width;
-        this.length = length;
-        this.monstr = monstr;
-        createMatrix(width, length);
-        createMonster(matrix, monstr);
-        createPlayer(matrix);
-        printMatrix();
+    public GameBoard(int size, int wall) {
+        this.size = size;
+        createMatrix(size);
+        createWall(matrix, wall);
+        createPlayer();
+        createTarget();
     }
 
-    private void createPlayer(ArrayList<ArrayList<Character>> matrix){
-        int count = 0;
-        while (count < 1){
+    public ArrayList<ArrayList<Character>> getMatrix(){
+        return matrix;
+    }
+
+    public void movePlayer(int x, int y){
+//        matrix.get(x).
+    }
+
+
+    private void createTarget() {
+        Position position = searchEmptyIndex(matrix);
+        matrix.get(position.getX()).set(position.getY(), ObjectsData.TARGET_SIMBL);
+    }
+
+
+    private void createPlayer() {
+        Position position = searchEmptyIndex(matrix);
+        matrix.get(position.getX()).set(position.getY(), ObjectsData.PLAYER_SIMBL);
+    }
+
+    private Position searchEmptyIndex(ArrayList<ArrayList<Character>> matrix) {
+        while (true) {
             int x = (int) (Math.random() * matrix.size());
             int y = (int) (Math.random() * matrix.get(0).size());
-            if(matrix.get(x).get(y).equals(' ') && !matrix.get(x).get(y).equals('#')){
-                matrix.get(x).set(y, 'X');
-                count ++;
+            if (matrix.get(x).get(y).equals(ObjectsData.EMPTY_SIMBL)) {
+                return new Position(x, y);
             }
         }
     }
 
-    private void createMonster(ArrayList<ArrayList<Character>> matrix, int monstr){
+    private void createWall(ArrayList<ArrayList<Character>> matrix, int wall) {
         int count = 0;
-        while (count < monstr){
+        while (count < wall) {
             int x = (int) (Math.random() * matrix.size());
             int y = (int) (Math.random() * matrix.get(0).size());
-            if(matrix.get(x).get(y).equals(' ')){
-                matrix.get(x).set(y, '#');
-                count ++;
+            int random = (int) (Math.random() * 500); // changing the density of the group of obstacles
+            if (matrix.get(x).get(y).equals(ObjectsData.EMPTY_SIMBL)) {
+                if (checkNeighbours(matrix, x, y) || random == 1) {
+                    matrix.get(x).set(y, ObjectsData.OBSTACLE_SIMBL);
+                    count++;
+                }
             }
         }
     }
 
-    private void createMatrix(int width, int length){
+    boolean checkNeighbours(ArrayList<ArrayList<Character>> matrix, int x, int y) {
+        if (x == 0 || x == ObjectsData.SIZE - 1 || y == 0 || y == ObjectsData.SIZE - 1) {
+            return false;
+        }
+        if ((matrix.get(x - 1).get(y).equals(ObjectsData.OBSTACLE_SIMBL)
+                || matrix.get(x + 1).get(y).equals(ObjectsData.OBSTACLE_SIMBL)) &&
+                !(matrix.get(x).get(y - 1).equals(ObjectsData.OBSTACLE_SIMBL)
+                        || matrix.get(x).get(y + 1).equals(ObjectsData.OBSTACLE_SIMBL))) {
+            return true;
+        } else if ((matrix.get(x).get(y - 1).equals(ObjectsData.OBSTACLE_SIMBL)
+                || matrix.get(x).get(y + 1).equals(ObjectsData.OBSTACLE_SIMBL)) &&
+                !(matrix.get(x - 1).get(y).equals(ObjectsData.OBSTACLE_SIMBL)
+                        || matrix.get(x + 1).get(y).equals(ObjectsData.OBSTACLE_SIMBL))) {
+            return true;
+        }
+        return false;
+    }
+
+    private void createMatrix(int size) {
         matrix = new ArrayList<>();
-        for (int i = 0; i < width; ++i) {
+        for (int i = 0; i < size; ++i) {
             ArrayList<Character> row = new ArrayList<>();
-            for (int j = 0; j < length; ++j) {
-                row.add(' ');
+            for (int j = 0; j < size; ++j) {
+//                System.out.println(ObjectsData.OBSTACLE_SIMBL);
+                row.add(ObjectsData.EMPTY_SIMBL);
             }
             matrix.add(row);
         }
     }
-    public void printMatrix(){
-        for (int i = 0; i < width; ++i){
-            for (int j = 0; j < length; ++j){
-                if(matrix.get(i).get(j).equals(' ')){
-                    System.out.print(colorize("   ", RED_BACK()));
-                } else if(matrix.get(i).get(j).equals('#')) {
-                    System.out.print(colorize("   ", GREEN_BACK()));
-                } else if(matrix.get(i).get(j).equals('X')){
-                    System.out.print(colorize("   ", BLUE_BACK()));
+
+    public void printMatrix() {
+        for (int i = 0; i < size; ++i) {
+            for (int j = 0; j < size; ++j) {
+                if (matrix.get(i).get(j).equals(ObjectsData.EMPTY_SIMBL)) {
+                    ObjectsData.printEmptySimbl();
+                } else if (matrix.get(i).get(j).equals(ObjectsData.OBSTACLE_SIMBL)) {
+                    ObjectsData.printObstacleSimbl();
+                } else if (matrix.get(i).get(j).equals(ObjectsData.PLAYER_SIMBL)) {
+                    ObjectsData.printPlayerSimbl();
+                } else if (matrix.get(i).get(j).equals(ObjectsData.TARGET_SIMBL)) {
+                    ObjectsData.printTargetSimbl();
                 }
             }
             System.out.println();

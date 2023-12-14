@@ -4,27 +4,13 @@ import java.util.ArrayList;
 
 import static ChaseLogic.ObjectsData.*;
 
-/* Создаем пещеру для монстра */
-
 public final class Cave {
     private ArrayList<ArrayList<Character>> gameBoard;
-//    private Position currentMonsterPosition;
     private ArrayList<ArrayList<Integer>> gameBoardCave;
 
     public Cave(final ArrayList<ArrayList<Character>> gameBoard) {
         this.gameBoard = gameBoard;
-//        this.currentMonsterPosition = currentPosition;
         this.gameBoardCave = new ArrayList<>();
-        createCaveMatrix();
-//        printCave();
-    }
-
-    public ArrayList<ArrayList<Integer>> getGameBoardCave() {
-        return gameBoardCave;
-    }
-
-    public void setGameBoardCave(ArrayList<ArrayList<Character>> gameBoard) { // изменение пещеры
-        this.gameBoard = gameBoard;
         createCaveMatrix();
     }
 
@@ -49,14 +35,5 @@ public final class Cave {
             }
         }
         this.gameBoardCave = cave;
-    }
-
-    public void printCave() {
-        for(int it = 0; it < gameBoardCave.size(); ++it) {
-            for (int j = 0; j < gameBoardCave.get(it).size(); ++j) {
-                System.out.printf("%3d", gameBoardCave.get(it).get(j));
-            }
-            System.out.println();
-        }
     }
 }

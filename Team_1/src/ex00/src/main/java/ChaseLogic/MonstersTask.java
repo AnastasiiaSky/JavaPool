@@ -3,15 +3,12 @@ package ChaseLogic;
 import java.util.ArrayList;
 import static ChaseLogic.ObjectsData.*;
 
-/* Класс должен описывать всю логику создания, движения монстров итд */
-/* ? Первая передача карты игры сюда, необходимо вызвать конструктор).
-   ? Для получения текущего gameBoard - getGameBoard()
-   ? для установки нового gameBoard - setGameBoard() */
+
 
 public class MonstersTask {
     private final int MONSTER_COUNT;
     private ArrayList<ArrayList<Character>> gameBoard;
-    private ArrayList<Position> monstersList; //!  создаем лист монстров где мы будем хранить координаты всех монстров
+    private ArrayList<Position> monstersList;
     private Position purposePosition;
 
 
@@ -29,16 +26,21 @@ public class MonstersTask {
         createMonsters();
     }
 
-    public void executeMonsterTask() {
+    public void executeMonsterTask(ArrayList<ArrayList<Character>> gameBoard) {
+        this.gameBoard = gameBoard;
+        findPlayerPosition();
         Cave currentCave = new Cave(this.gameBoard);
         for(int it = 0; it < monstersList.size(); ++it) {
             Wave currentWave = new Wave(monstersList.get(it), purposePosition, currentCave);
             Position newPosition = currentWave.getNextStep();
+//            if(newPosition.equals(this.purposePosition)) // игрок поиграл! что-то сделать
             this.gameBoard.get(monstersList.get(it).getX()).set(monstersList.get(it).getY(), EMPTY_SIMBL);
             this.gameBoard.get(newPosition.getX()).set(newPosition.getY(), MONSTER_SIMBL);
+            this.monstersList.get(it).setPosition(newPosition.getX(), newPosition.getY());
         }
-
     }
+
+
 
     public ArrayList<ArrayList<Character>> getGameBoard() {
         return this.gameBoard;
@@ -61,11 +63,4 @@ public class MonstersTask {
             monstersList.add(monster.getCurrentPosition());
         }
     }
-
-//    private void printMonstersList() {
-//        System.out.println("MonstersList");
-//        for (Position cur : monstersList) {
-//            System.out.println(cur.toString());
-//        }
-//    }
 }
