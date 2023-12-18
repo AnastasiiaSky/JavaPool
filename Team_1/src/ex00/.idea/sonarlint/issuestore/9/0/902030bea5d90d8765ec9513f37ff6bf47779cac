@@ -1,0 +1,40 @@
+
+v
+java:S2293'"YReplace the type specification in this constructor call with the diamond operator ("<>").(ã˜Ü§8ÇĞ‚óÆ1
+{
+java:S22931"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ó­²øÿÿÿÿ8ÇĞ‚óÆ1
+
+java:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(­ŸÍÕ8ÈĞ‚óÆ1
+J
+java:S5411D"(Use a primitive boolean expression here.(„‡ò¡úÿÿÿÿ8ÉĞ‚óÆ1
+E
+java:S5411V"(Use a primitive boolean expression here.(˜’§Ò8ÉĞ‚óÆ1
+J
+java:S5411\"(Use a primitive boolean expression here.(´Š£¹üÿÿÿÿ8ÉĞ‚óÆ1
+E
+java:S5411b"(Use a primitive boolean expression here.(ôÕ‘å8ÉĞ‚óÆ1
+E
+java:S5411h"(Use a primitive boolean expression here.(æ¢—”8ÉĞ‚óÆ1
+0
+java:S1700"Rename field "wave"(Œï¢«8ÉĞ‚óÆ1
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ç›¹úûÿÿÿÿ8ÊĞ‚óÆ1
+X	java:S125"<This block of commented-out lines of code should be removed.(Ëá³¦8¸Ò‚óÆ1
+A
+java:S1659@"Declare "y" on a separate line.(–«–Ÿıÿÿÿÿ8¼Ò‚óÆ1
+I
+java:S1125D"'Remove the unnecessary boolean literal.(„‡ò¡úÿÿÿÿ8½Ò‚óÆ1
+H
+java:S1168O"+Return an empty collection instead of null.(¥¹ï8¾Ò‚óÆ1
+D
+java:S1125V"'Remove the unnecessary boolean literal.(˜’§Ò8¿Ò‚óÆ1
+I
+java:S1125\"'Remove the unnecessary boolean literal.(´Š£¹üÿÿÿÿ8ÀÒ‚óÆ1
+D
+java:S1125b"'Remove the unnecessary boolean literal.(ôÕ‘å8ÁÒ‚óÆ1
+D
+java:S1125h"'Remove the unnecessary boolean literal.(æ¢—”8ÂÒ‚óÆ1
+o	java:S100o"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ĞˆµÕúÿÿÿÿ8ÂÒ‚óÆ1
+t
+java:S3776o"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(ĞˆµÕúÿÿÿÿ8ÃÒ‚óÆ1
+A
+java:S1659s"Declare "y" on a separate line.(ÁŸÌŸüÿÿÿÿ8ÄÒ‚óÆ1

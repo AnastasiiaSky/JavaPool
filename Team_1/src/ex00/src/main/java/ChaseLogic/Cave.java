@@ -2,10 +2,10 @@ package ChaseLogic;
 
 import java.util.ArrayList;
 
-import static ChaseLogic.ObjectsData.*;
+import static Game.ObjectsData.*;
 
 public final class Cave {
-    private ArrayList<ArrayList<Character>> gameBoard;
+    private final ArrayList<ArrayList<Character>> gameBoard;
     private ArrayList<ArrayList<Integer>> gameBoardCave;
 
     public Cave(final ArrayList<ArrayList<Character>> gameBoard) {
@@ -14,20 +14,22 @@ public final class Cave {
         createCaveMatrix();
     }
 
-    public int getCaveElement(final int x, final int y) {
+    public ArrayList<ArrayList<Character>> getGameBoard() {
+        return gameBoard;
+    }
 
+    public int getCaveElement(final int x, final int y) {
         return this.gameBoardCave.get(x).get(y);
     }
 
     private void createCaveMatrix() {
-        int width = gameBoard.size(), length = gameBoard.get(0).size();
-        ArrayList<ArrayList<Integer>> cave = new ArrayList<ArrayList<Integer>>();
-        for(int i = 0; i < width; ++i) {
-            cave.add(i, new ArrayList<Integer>());
-            for (int j = 0; j < length; ++j) {
-                if(gameBoard.get(i).get(j) == OBSTACLE_SIMBL
-                        || gameBoard.get(i).get(j) == MONSTER_SIMBL
-                        || gameBoard.get(i).get(j) == TARGET_SIMBL ) {
+        ArrayList<ArrayList<Integer>> cave = new ArrayList<>();
+        for (int i = 0; i < SIZE; ++i) {
+            cave.add(i, new ArrayList<>());
+            for (int j = 0; j < SIZE; ++j) {
+                if (gameBoard.get(i).get(j).equals(OBSTACLE_SIMBL)
+                        || gameBoard.get(i).get(j).equals(MONSTER_SIMBL)
+                        || gameBoard.get(i).get(j).equals(TARGET_SIMBL)) {
                     cave.get(i).add(j, -1);
                 } else {
                     cave.get(i).add(j, 0);

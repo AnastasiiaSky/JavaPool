@@ -4,7 +4,7 @@ import Game.Exceptions.IllegalPointPositionException;
 
 import java.util.Objects;
 
-import static Game.ObjectsData.SIZE;
+import static Game.ObjectsData.*;
 
 /* Класс описывает точку расположения того или иного объекта на карте игры */
 public final class Position {
@@ -12,15 +12,13 @@ public final class Position {
     private int y;
 
 
-    public Position(final int x, final int y) {
-        if(x >= 0 && x < SIZE) {
+    public Position(int x, int y) {
+        if ((x >= 0 && x < SIZE) && (y >= 0 && y < SIZE)) {
             this.x = x;
-        } else throw new IllegalPointPositionException();
-        if(y >= 0 && y < SIZE) {
             this.y = y;
         } else throw new IllegalPointPositionException();
-    }
 
+    }
 
     public int getX() {
         return x;
@@ -31,13 +29,13 @@ public final class Position {
     }
 
     private void setX(final int x) {
-        if(x >= 0 && x < SIZE) {
+        if (x >= 0 && x < SIZE) {
             this.x = x;
         } else throw new IllegalPointPositionException();
     }
 
     private void setY(final int y) {
-        if(y >= 0 && y < SIZE) {
+        if (y >= 0 && y < SIZE) {
             this.y = y;
         } else throw new IllegalPointPositionException();
     }
@@ -52,14 +50,14 @@ public final class Position {
         if (this.getClass() != o.getClass()) return false;
         if (o == null) return false;
         Position position = (Position) o;
-        if(this.hashCode() != o.hashCode()) return false;
+        if (this.hashCode() != o.hashCode()) return false;
         return this.x == position.x
                 && this.y == position.y;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash( 5 * SIZE + 7 * x + 9 * y);
+        return Objects.hash(5 * SIZE + 7 * x + 9 * y);
     }
 
     @Override

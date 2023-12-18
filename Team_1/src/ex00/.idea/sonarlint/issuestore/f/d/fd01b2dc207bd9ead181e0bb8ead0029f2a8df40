@@ -1,0 +1,20 @@
+
+ˆ
+java:S1319"lThe type of "monstersList" should be an interface such as "List" rather than the implementation "ArrayList".(ƒ‡…I8”¾ªòÆ1
+ˆ
+java:S1319"lThe type of "monstersList" should be an interface such as "List" rather than the implementation "ArrayList".(©Æ T8”¾ªòÆ1
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ç›¹úûÿÿÿÿ8–¾ªòÆ1
+a
+java:S2583#"DChange this condition so that it does not always evaluate to "false"(ø¶´8¦¾ªòÆ1
+[
+java:S35166"9Refactor this method to not always return the same value.(÷şùÿÿÿÿ8¦¾ªòÆ1
+
+java:S11862"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¸â´8¦¾ªòÆ1
+D
+java:S1125#"'Remove the unnecessary boolean literal.(ø¶´8«¾ªòÆ1
+]	java:S125&"<This block of commented-out lines of code should be removed.(èÁÏıÿÿÿÿ8«¾ªòÆ1
+f
+java:S11722"IRemove these unused method parameters "oldPosition", "newPosition", "it".(¸â´8«¾ªòÆ1
+]	java:S1257"<This block of commented-out lines of code should be removed.(êˆÜÿÿÿÿÿ8¬¾ªòÆ1
+N
+java:S11442"1Remove this unused private "ifProduction" method.(¸â´8¯¾ªòÆ1

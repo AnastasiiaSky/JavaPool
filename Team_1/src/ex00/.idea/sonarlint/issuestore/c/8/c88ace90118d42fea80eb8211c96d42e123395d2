@@ -1,0 +1,7 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ìÆ«úÿÿÿÿ
+R
+java:S1117"<Rename "position" which hides the field declared at line 10.(¢Ó¤ï
+m
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(“à¯ˆùÿÿÿÿ
+<	java:S131'""Add a default case to this switch.(èŠœ›ûÿÿÿÿ

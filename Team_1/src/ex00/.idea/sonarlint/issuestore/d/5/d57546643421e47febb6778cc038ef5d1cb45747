@@ -1,0 +1,33 @@
+
+u
+java:S1104"SMake scanner a static final constant or non-public and provide accessors if needed.(¾©´¬øÿÿÿÿ8²¦ÓìÆ1
+O
+java:S1444"-Make this "public static scanner" field final(¾©´¬øÿÿÿÿ8·¦ÓìÆ1
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ìÆ«úÿÿÿÿ8Í³áÃÆ1
+e
+java:S2259_"HA "NullPointerException" could be thrown; "movePlayer" is nullable here.(†ŠÃÊ8Õ¦ÓìÆ1
+F
+java:S2440"$Remove this instantiation of "Args".(ªÕñêùÿÿÿÿ8ä¦ÓìÆ1
+W
+java:S1854'":Remove this useless assignment to local variable "target".(¼Ì•’8ç¦ÓìÆ1
+W
+java:S1854&":Remove this useless assignment to local variable "player".(™Ö°8ç¦ÓìÆ1
+T
+java:S1854%"8Remove this useless assignment to local variable "wall".(ÖÜõD8ç¦ÓìÆ1
+E
+java:S1481%")Remove this unused "wall" local variable.(ÖÜõD8é¦ÓìÆ1
+H
+java:S1481&"+Remove this unused "player" local variable.(™Ö°8ê¦ÓìÆ1
+H
+java:S1481'"+Remove this unused "target" local variable.(¼Ì•’8ë¦ÓìÆ1
+]	java:S125M"<This block of commented-out lines of code should be removed.(ÿÚâµûÿÿÿÿ8ˆ§ÓìÆ1
+]	java:S125Q"<This block of commented-out lines of code should be removed.(ÿÚâµûÿÿÿÿ8Š§ÓìÆ1
+]	java:S125U"<This block of commented-out lines of code should be removed.(ÿÚâµûÿÿÿÿ8‹§ÓìÆ1
+]	java:S125Y"<This block of commented-out lines of code should be removed.(ÿÚâµûÿÿÿÿ8Œ§ÓìÆ1
+B
+java:S1128"%Remove this unused import 'java.awt'.(ï´µ©8¯°ÀğÆ1
+T
+java:S1128"7Remove this unused import 'java.awt.event.KeyListener'.(ç„›û8¯°ÀğÆ1
+O
+java:S1128
+"-Remove this unused import 'Game.ObjectsData'.(ö‹¢¥ùÿÿÿÿ8Ğ©òÆ1
