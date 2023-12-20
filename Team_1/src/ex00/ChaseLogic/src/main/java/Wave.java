@@ -15,9 +15,6 @@ public final class Wave {
     private ArrayList<ArrayList<Boolean>> visibility;
 
 
-
-
-
     public Wave(final int currentPositionX, final int currentPositionY,
                 final int purposePositionX, final int purposePositionY,
                 ArrayList<ArrayList<Integer>> cave) {
@@ -41,7 +38,6 @@ public final class Wave {
     public int getNextPositionY() {
         return nextPositionY;
     }
-
 
 
     private class Point {
@@ -69,6 +65,7 @@ public final class Wave {
             this.y = y;
         }
     }
+
     private void createEmptyWave() {
         ArrayList<ArrayList<Integer>> emptyWave = new ArrayList<>(SIZE);
         for (int i = 0; i < SIZE; ++i) {
@@ -88,6 +85,7 @@ public final class Wave {
         }
         this.visibility = data;
     }
+
     public boolean createRealWave() {
         Point workingPoint = new Point(currentPosition.getX(), currentPosition.getY());
         ArrayDeque<Point> points = new ArrayDeque<>();

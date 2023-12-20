@@ -44,7 +44,7 @@ public class MonstersTask {
             result = ifNotProduction(oldPosition, newPosition, it);
 
 
-            if(IS_PRODUCTION) {
+            if (IS_PRODUCTION) {
                 gameBoard.monsterActionMatrix(oldPosition);
 
                 Scanner sc = new Scanner(System.in);
@@ -69,7 +69,7 @@ public class MonstersTask {
             if (!result) break;
 
 
-            if(checkGameOver(oldPosition.getX(), oldPosition.getY(), purposePosition.getX(), purposePosition.getY())) {
+            if (checkGameOver(oldPosition.getX(), oldPosition.getY(), purposePosition.getX(), purposePosition.getY())) {
                 gameBoard.printGameOverMatrix();
                 printGameOver();
                 System.exit(0);

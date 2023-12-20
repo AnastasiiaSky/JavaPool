@@ -1,6 +1,5 @@
 package Game.src.main.java;
 
-/* Класс с данными о символьном представлении всех действующих лиц игры */
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 import static com.diogonunes.jcolor.Attribute.*;
@@ -9,17 +8,17 @@ import static com.diogonunes.jcolor.Attribute.RED_BACK;
 public final class ObjectsData {
     public static final String EMPTY_LINE_TEMPLATE = "                                                  ";
     public static final String ERROR_ONE_LINE_TEMPLATE = "     Oop! Add enemies \uD83D\uDE08 before start the game!   \n " +
-                                                         "        Try again with other arguments!          ";
+            "        Try again with other arguments!          ";
     public static final String ERROR_TWO_LINE_TEMPLATE = "    Oops! The game-board size must be bigger:     \n" +
-                                                         "       (We should place: goal, player,            \n" +
-                                                         "          and minimum one enemy.)                 \n" +
-                                                         "        Try again with other arguments!           ";
+            "       (We should place: goal, player,            \n" +
+            "          and minimum one enemy.)                 \n" +
+            "        Try again with other arguments!           ";
 
     public static final String ERROR_THREE_LINE_TEMPLATE = "    Oops! Too much enemies or obstacles:          \n" +
-                                                           "        Try again with other arguments!           ";
+            "        Try again with other arguments!           ";
 
     public static final String NEGATIVE_ARGUMENT_LINE_TEMPLATE = "     Oops! \\uD83D\\uDE40 Arguments can't be negative:       \n" +
-                                                                 "        Try again with other arguments!           ";
+            "        Try again with other arguments!           ";
 
     public static final String GAME_OVER_LINE_TEMPLATE = "                    GAME OVER                    ";
     public static final String WIN_LINE_TEMPLATE = "                   \uD83E\uDD73 YOU WIN!!! \uD83E\uDD73                ";
@@ -163,6 +162,5 @@ public final class ObjectsData {
         System.out.println(colorize(EMPTY_LINE_TEMPLATE, BOLD(), MAGENTA_TEXT(), YELLOW_BACK()));
     }
 }
-
 
 

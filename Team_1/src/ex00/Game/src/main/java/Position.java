@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import static Game.src.main.java.ObjectsData.*;
 
-/* Класс описывает точку расположения того или иного объекта на карте игры */
 public final class Position {
     private int x;
     private int y;

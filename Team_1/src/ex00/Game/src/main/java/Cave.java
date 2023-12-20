@@ -15,15 +15,6 @@ public final class Cave {
         createCaveMatrix();
     }
 
-//    public ArrayList<ArrayList<Character>> getGameBoard() {
-//        return gameBoard;
-//    }
-
-//    public int getCaveElement(final int x, final int y) {
-//        return this.gameBoardCave.get(x).get(y);
-//    }
-
-
     public ArrayList<ArrayList<Integer>> getGameBoardCave() {
         return gameBoardCave;
     }

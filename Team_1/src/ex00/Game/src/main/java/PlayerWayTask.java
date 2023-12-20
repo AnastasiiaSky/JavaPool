@@ -1,7 +1,6 @@
 package Game.src.main.java;
 
 
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
@@ -35,7 +34,7 @@ public class PlayerWayTask {
     private Position findElement(Character simbl) {
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++) {
-                if(gameBoard.getMatrix().get(i).get(j).equals(simbl))
+                if (gameBoard.getMatrix().get(i).get(j).equals(simbl))
                     return new Position(i, j);
             }
         return null;
@@ -50,7 +49,7 @@ public class PlayerWayTask {
             tmp1.add(i, new ArrayList<>());
 
             for (int j = 0; j < SIZE; j++) {
-                if(this.gameBoard.getMatrix().get(i).get(j).equals(MONSTER_SIMBL)
+                if (this.gameBoard.getMatrix().get(i).get(j).equals(MONSTER_SIMBL)
                         || this.gameBoard.getMatrix().get(i).get(j).equals(OBSTACLE_SIMBL)) {
                     tmp.get(i).add(j, -1);
                 } else {

@@ -19,6 +19,7 @@ public class Player extends GameElements {
         this.matrix = matrix;
         this.move = move;
     }
+
     @Override
     protected void createElement() {
         Position position = searchEmptyIndex(matrix);
@@ -37,7 +38,7 @@ public class Player extends GameElements {
         switch (move) {
             case "a":
                 if (checkPosition(position.getX(), position.getY() - 1)) {
-                        matrix.get(position.getX()).set(position.getY(), EMPTY_SIMBL);
+                    matrix.get(position.getX()).set(position.getY(), EMPTY_SIMBL);
                     matrix.get(position.getX()).set(position.getY() - 1, PLAYER_SIMBL);
                     moveCompleted = true;
                 } else {
@@ -47,7 +48,7 @@ public class Player extends GameElements {
                 break;
             case "w":
                 if (checkPosition(position.getX() - 1, position.getY())) {
-                        matrix.get(position.getX()).set(position.getY(), EMPTY_SIMBL);
+                    matrix.get(position.getX()).set(position.getY(), EMPTY_SIMBL);
                     matrix.get(position.getX() - 1).set(position.getY(), PLAYER_SIMBL);
                     moveCompleted = true;
                 } else {
@@ -57,7 +58,7 @@ public class Player extends GameElements {
                 break;
             case "d":
                 if (checkPosition(position.getX(), position.getY() + 1)) {
-                        matrix.get(position.getX()).set(position.getY(), EMPTY_SIMBL);
+                    matrix.get(position.getX()).set(position.getY(), EMPTY_SIMBL);
                     matrix.get(position.getX()).set(position.getY() + 1, PLAYER_SIMBL);
                     moveCompleted = true;
                 } else {
@@ -67,7 +68,7 @@ public class Player extends GameElements {
                 break;
             case "s":
                 if (checkPosition(position.getX() + 1, position.getY())) {
-                        matrix.get(position.getX()).set(position.getY(), EMPTY_SIMBL);
+                    matrix.get(position.getX()).set(position.getY(), EMPTY_SIMBL);
                     matrix.get(position.getX() + 1).set(position.getY(), PLAYER_SIMBL);
                     moveCompleted = true;
                 } else {
@@ -87,7 +88,7 @@ public class Player extends GameElements {
             printYouWin();
             System.exit(0);
         }
-        if(matrix.get(x).get(y).equals(MONSTER_SIMBL)){
+        if (matrix.get(x).get(y).equals(MONSTER_SIMBL)) {
             GameBoard gameOver = new GameBoard(super.matrix);
             gameOver.printGameOverMatrix();
             printGameOver();

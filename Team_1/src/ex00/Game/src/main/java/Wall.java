@@ -16,7 +16,7 @@ public class Wall extends GameElements {
             while (count < WALLS_COUNT) {
                 int x = (int) (Math.random() * SIZE);
                 int y = (int) (Math.random() * SIZE);
-                int random = (int) (Math.random() * 10); // changing the density of the group of obstacles
+                int random = (int) (Math.random() * 10);
                 if (matrix.get(x).get(y).equals(EMPTY_SIMBL)) {
                     matrix.get(x).set(y, OBSTACLE_SIMBL);
                     count++;
@@ -27,7 +27,7 @@ public class Wall extends GameElements {
             while (count < WALLS_COUNT) {
                 int x = (int) (Math.random() * SIZE);
                 int y = (int) (Math.random() * SIZE);
-                int random = (int) (Math.random() * 10); // changing the density of the group of obstacles
+                int random = (int) (Math.random() * 10);
                 if (matrix.get(x).get(y).equals(EMPTY_SIMBL)
                         && checkNeighbours(matrix, x, y) || random == 1) {
                     matrix.get(x).set(y, OBSTACLE_SIMBL);

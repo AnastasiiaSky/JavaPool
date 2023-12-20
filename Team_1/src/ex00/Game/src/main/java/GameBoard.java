@@ -17,7 +17,6 @@ public class GameBoard {
     }
 
 
-
     public ArrayList<ArrayList<Character>> getMatrix() {
         return matrix;
     }
@@ -32,7 +31,6 @@ public class GameBoard {
             matrix.add(row);
         }
     }
-
 
 
     public void printMatrix() {
@@ -54,7 +52,7 @@ public class GameBoard {
         }
     }
 
-    public void printGameOverMatrix()  {
+    public void printGameOverMatrix() {
         for (int i = 0; i < SIZE; ++i) {
             for (int j = 0; j < SIZE; ++j) {
                 if (matrix.get(i).get(j).equals(EMPTY_SIMBL)) {
@@ -77,7 +75,7 @@ public class GameBoard {
         for (int i = 0; i < SIZE; ++i) {
             for (int j = 0; j < SIZE; ++j) {
                 if (matrix.get(i).get(j).equals(EMPTY_SIMBL)) {
-                    if(i == oldMonsterPosition.getX() && j == oldMonsterPosition.getY()) {
+                    if (i == oldMonsterPosition.getX() && j == oldMonsterPosition.getY()) {
                         printSimblWhenGameOver(MONSTER_SIMBL);
                     } else {
                         printEmptySimbl();
