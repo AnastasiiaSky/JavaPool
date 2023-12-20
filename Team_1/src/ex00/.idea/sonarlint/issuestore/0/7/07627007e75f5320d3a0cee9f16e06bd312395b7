@@ -1,8 +1,0 @@
-
-{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ç›¹úûÿÿÿÿ8˜··ìÅ1
-a
-java:S22594"?A "NullPointerException" could be thrown; "o" is nullable here.(â­˜˜úÿÿÿÿ8Ôß­Æ1
-a
-java:S25835"DChange this condition so that it does not always evaluate to "false"(Êôƒ‰8Õß­Æ1
-[
-java:S35163"9Refactor this method to not always return the same value.(İ¢êÍıÿÿÿÿ8Õß­Æ1

@@ -1,11 +1,0 @@
-
-’
-java:S1319	"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Úûäüÿÿÿÿ8îßÑÅÆ1
-{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ìÆ«úÿÿÿÿ8ïßÑÅÆ1
-\
-java:S1118":Add a private constructor to hide the implicit public one.(ãòÙÂøÿÿÿÿ8…àÑÅÆ1
-L
-java:S1481"/Remove this unused "sourceFile" local variable.(Ğığ8´Ë¹ÆÆ1
-]	java:S125"<This block of commented-out lines of code should be removed.(ğ±»ıÿÿÿÿÿ8´Ë¹ÆÆ1
-q
-java:S1128"ORemove this unused import 'Game.Exceptions.IncorrectApplicationProductionData'.(Ñğ°Ğüÿÿÿÿ8Ç÷ÙÅÆ1

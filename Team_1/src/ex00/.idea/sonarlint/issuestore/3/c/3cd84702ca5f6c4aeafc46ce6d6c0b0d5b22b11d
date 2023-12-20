@@ -1,17 +1,0 @@
-
-v
-java:S2293&"YReplace the type specification in this constructor call with the diamond operator ("<>").(€ «Õ8ÊäĞÆ1
-v
-java:S2293("YReplace the type specification in this constructor call with the diamond operator ("<>").(œıÿ³8ÌäĞÆ1
-†
-java:S1319"iThe type of "gameBoard" should be an interface such as "List" rather than the implementation "ArrayList".(ÍËÍ¦8ÌäĞÆ1
-
-java:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Ù±Ûß8ÍäĞÆ1
-…
-java:S1319"iThe type of "gameBoard" should be an interface such as "List" rather than the implementation "ArrayList".(É¼º8ÍäĞÆ1
-{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ç›¹úûÿÿÿÿ8ĞäĞÆ1
-X	java:S125"<This block of commented-out lines of code should be removed.(Ù»°Ú8èäĞÆ1
-]	java:S125"<This block of commented-out lines of code should be removed.(¨€–ğùÿÿÿÿ8éäĞÆ1
-]	java:S125"<This block of commented-out lines of code should be removed.(ÎÂ¢´úÿÿÿÿ8êäĞÆ1
-F
-java:S1659%"$Declare "length" on a separate line.(«·çşÿÿÿÿ8ïäĞÆ1
