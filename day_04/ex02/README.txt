@@ -49,3 +49,6 @@ MAGENTA
 CYAN
 WHITE
 BLACK
+
+
+    javac -cp "lib/jcommander-1.82.jar:lib/JColor-5.5.1.jar" src/java/edu/school21/printer/app/Program.java src/java/edu/school21/printer/logic/Converter.java -d ./target
