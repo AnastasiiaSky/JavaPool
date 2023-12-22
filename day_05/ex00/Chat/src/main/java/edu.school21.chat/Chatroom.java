@@ -1,19 +1,33 @@
-package edu.school21.chat;
+package edu.school21.chat.models;
+
+import edu.school21.chat.models.Message;
 
 import java.util.List;
 import java.util.Objects;
 
 public final class Chatroom {
-    private final int id;
+    private final Long id;
     private final String chatName;
-    private final String owner;
+    private final User owner;
     private List<Message> messages;
 
-    public Chatroom(int id, String chatName, String owner, List<Message> messages) {
+    public Chatroom(Long id, String chatName, User owner, List<Message> messages) {
         this.id = id;
         this.chatName = chatName;
         this.owner = owner;
         this.messages = messages;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getChatName() {
+        return chatName;
+    }
+
+    public User getOwner() {
+        return owner;
     }
 
     @Override
@@ -30,24 +44,17 @@ public final class Chatroom {
     @Override
     public int hashCode() {
         return Objects.hash(25 * id + 45 * chatName.length()
-                + 33 * owner.length() + 111 * messages.size());
+                + 33 * owner.hashCode() + 111 * messages.size());
     }
 
     @Override
     public String toString() {
-        return "Chatroom{" +
+        return "{" +
                 "id=" + id +
-                ", chatName='" + chatName + '\'' +
-                ", owner='" + owner + '\'' +
-                ", messages=" + getMassagesString() +
+                ", chatName=\"'" + chatName + '\"' +
+                ", owner=" + owner.toString() +
+                ", messages= null" +
                 '}';
     }
 
-    private String getMassagesString() {
-        String result = "";
-        for (Message message : this.messages) {
-            result += message + "\n";
-        }
-        return result;
-    }
 }

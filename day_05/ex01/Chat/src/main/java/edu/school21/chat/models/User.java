@@ -4,18 +4,30 @@ import java.util.List;
 import java.util.Objects;
 
 public final class User {
-    private final int id;
+    private final Long id;
     private final String login;
     private final String password;
     private List<Chatroom> allChatRooms;
     private List<Chatroom> userChatRooms;
 
-    public User(int id, String login, String password, List<Chatroom> allChatrooms, List<Chatroom> userChatrooms) {
+    public User(Long id, String login, String password, List<Chatroom> allChatrooms, List<Chatroom> userChatrooms) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.allChatRooms = allChatrooms;
         this.userChatRooms = userChatrooms;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @Override
@@ -39,20 +51,12 @@ public final class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "{" +
                 "id=" + id +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\n' +
-                ", allChatRooms:" + '\n' + getChatRoomsString(allChatRooms) +
-                ", userChatRooms:" + '\n' + getChatRoomsString(userChatRooms) +
+                ", login=\"" + login + '\"' +
+                ", password=\"" + password + '\"' +
+                ", allChatRooms = null" +
+                ", userChatRooms = null" +
                 '}';
-    }
-
-    private String getChatRoomsString(List<Chatroom> chatRooms) {
-        String result = "";
-        for (Chatroom chatroom : chatRooms) {
-            result += chatroom + "\n";
-        }
-        return result;
     }
 }

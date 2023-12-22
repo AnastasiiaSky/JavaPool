@@ -6,12 +6,12 @@ import java.util.Objects;
 
 public final class Message {
     private final Long id;
-    private final String author;
-    private final String chat;
+    private final User author;
+    private final Chatroom chat;
     private final String text;
     private final Timestamp time;
 
-    public Message(Long id, String author, String chat, String text, Timestamp time) {
+    public Message(Long id, User author, Chatroom chat, String text, Timestamp time) {
         this.id = id;
         this.author = author;
         this.chat = chat;
@@ -33,18 +33,19 @@ public final class Message {
 
     @Override
     public int hashCode() {
-        return Objects.hash(77 * id + 25 * author.length() + 45 * chat.length()
-                + 33 * text.length() + 15 * time.getNanos());
+        return Objects.hash(77 * id + 25 * author.hashCode()
+                + 17 + 45 * chat.hashCode() +
+                +33 * text.length() + 15 * time.getNanos());
     }
 
     @Override
     public String toString() {
-        return "Message{" +
-                "id=" + id +
-                ", author='" + author + '\'' +
-                ", chat=" + chat +
-                ", text='" + text + '\'' +
-                ", time=" + time +
+        return "Message : {" + '\n' +
+                "id=" + id + ",\n" +
+                "author=" + author.toString() + '\n' +
+                "chat= " + chat.toString() + '\n' +
+                "text=\"" + text + '\"' + '\n' +
+                "time=" + time +
                 '}';
     }
 }

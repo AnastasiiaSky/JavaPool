@@ -9,19 +9,25 @@ import java.io.InputStreamReader;
 import java.util.Optional;
 
 public class Program {
+    private static final String NULL_MESSAGE_TEMPLATE = "This DataBase does not have a message with ID = ";
+
     public static void main(String[] args) {
         System.out.println("Enter a message ID");
         Long messageId;
         try (InputStreamReader reader = new InputStreamReader(System.in);
-                BufferedReader scanner = new BufferedReader(reader)) {
+             BufferedReader scanner = new BufferedReader(reader)) {
             messageId = Long.parseLong(scanner.readLine());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         MessagesRepositoryJdbcImpl task = new MessagesRepositoryJdbcImpl();
         Optional<Message> message = task.findById(messageId);
-        message.ifPresent(value -> {
-            System.out.println(value.toString());
-        });
+        if (!message.isPresent()) {
+            System.out.println(NULL_MESSAGE_TEMPLATE + messageId);
+        } else {
+            message.ifPresent(value -> {
+                System.out.println(value.toString());
+            });
+        }
     }
 }
