@@ -86,36 +86,35 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository {
     }
 
     @Override
-    public void save(Message message) {
+    public void save(Message message) throws NotSavedSubEntityException {
         User author = message.getAuthor();
         Chatroom chatroom = message.getChat();
         String text = message.getText();
-        if (!checkUser(author) || !checkChat(chatroom)) {
-            System.out.println("Incorrect user or chatroom");
-            throw new NotSavedSubEntityException();
-        }
-        try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement()) {
-            statement.executeUpdate(String.format(ADD_MESSAGE_QUERY_TEMPLATE, author.getId(), chatroom.getId(), text));
+        try {
+            if (!checkUser(author) || !checkChat(chatroom)) throw new NotSavedSubEntityException();
+            try (Connection connection = dataSource.getConnection();
+                 Statement statement = connection.createStatement()) {
+                statement.executeUpdate(String.format(ADD_MESSAGE_QUERY_TEMPLATE, author.getId(), chatroom.getId(), text));
+            } catch (SQLException sqlException) {
+                throw new NotSavedSubEntityException();
+            }
+            updateMessageId(message);
         } catch (SQLException sqlException) {
             throw new NotSavedSubEntityException();
         }
-        updateMessageId(message);
     }
 
-    private void updateMessageId(Message message) {
+    private void updateMessageId(Message message) throws SQLException {
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement()) {
             ResultSet maxMessage = statement.executeQuery(GET_MAX_MESSAGE_ID);
             while (maxMessage.next()) {
                 message.setId(maxMessage.getLong(1));
             }
-        } catch (SQLException sqlException) {
-            throw new NotSavedSubEntityException();
         }
     }
 
-    private boolean checkUser(User author) {
+    private boolean checkUser(User author) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet checkUserResultSet = statement.executeQuery(String.format(GET_USER_WITH_ID_TEMPLATE, author.getId()));
@@ -125,13 +124,11 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository {
                         new ArrayList<>());
                 if (author.equals(tableUser)) return true;
             }
-        } catch (SQLException sqlException) {
-            return false;
         }
         return false;
     }
 
-    private boolean checkChat(Chatroom chatroom) {
+    private boolean checkChat(Chatroom chatroom) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet checkChatroomResultSet = statement.executeQuery(String.format(GET_CHATROOM_WITH_ID_TEMPLATE, chatroom.getId()));
@@ -144,9 +141,7 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository {
                 Chatroom tableChatroom = new Chatroom(chatroom.getId(), chatroomName, chatroom.getOwner(), new ArrayList<>());
                 if (tableChatroom.equals(chatroom)) return true;
             }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            return false;
         }
-        return false;
     }
 }
