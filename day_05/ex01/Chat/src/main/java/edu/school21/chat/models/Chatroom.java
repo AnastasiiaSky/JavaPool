@@ -49,12 +49,18 @@ public final class Chatroom {
 
     @Override
     public String toString() {
-        return "{" +
+        String result = "{" +
                 "id=" + id +
                 ", chatName=\"'" + chatName + '\"' +
-                ", owner=" + owner.toString() +
-                ", messages= null" +
+                ", owner=";
+        if (owner == null) {
+            result += "null";
+        } else {
+            result += owner.toString();
+        }
+        result += ", messages= null" +
                 '}';
+        return result;
     }
 
 }

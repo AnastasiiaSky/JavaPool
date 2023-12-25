@@ -9,9 +9,9 @@ public final class Message {
     private final User author;
     private final Chatroom chat;
     private final String text;
-    private final Timestamp time;
+    private final LocalDateTime time;
 
-    public Message(Long id, User author, Chatroom chat, String text, Timestamp time) {
+    public Message(Long id, User author, Chatroom chat, String text, LocalDateTime time) {
         this.id = id;
         this.author = author;
         this.chat = chat;
@@ -35,7 +35,7 @@ public final class Message {
     public int hashCode() {
         return Objects.hash(77 * id + 25 * author.hashCode()
                 + 17 + 45 * chat.hashCode() +
-                +33 * text.length() + 15 * time.getNanos());
+                +33 * text.length() + 15 * time.getSecond());
     }
 
     @Override
@@ -45,7 +45,8 @@ public final class Message {
                 "author=" + author.toString() + '\n' +
                 "chat= " + chat.toString() + '\n' +
                 "text=\"" + text + '\"' + '\n' +
-                "time=" + time +
+                "dateTime=" + time.getDayOfMonth() + '/' + time.getMonth() + '/' + time.getYear() +
+                ' ' + time.getHour() + ':' + time.getMinute() + '\n' +
                 '}';
     }
 }

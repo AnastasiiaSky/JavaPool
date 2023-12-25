@@ -16,18 +16,25 @@ public class Program {
         Long messageId;
         try (InputStreamReader reader = new InputStreamReader(System.in);
              BufferedReader scanner = new BufferedReader(reader)) {
-            messageId = Long.parseLong(scanner.readLine());
+            while (true) {
+                try {
+                    messageId = Long.parseLong(scanner.readLine());
+                    MessagesRepositoryJdbcImpl task = new MessagesRepositoryJdbcImpl();
+                    Optional<Message> message = task.findById(messageId);
+                    if (!message.isPresent()) {
+                        System.out.println(NULL_MESSAGE_TEMPLATE + messageId);
+                    } else {
+                        message.ifPresent(value -> {
+                            System.out.println(value.toString());
+                        });
+                    }
+                    break;
+                } catch (NumberFormatException numberFormatException) {
+                    System.out.println("Введите число!");
+                }
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-        MessagesRepositoryJdbcImpl task = new MessagesRepositoryJdbcImpl();
-        Optional<Message> message = task.findById(messageId);
-        if (!message.isPresent()) {
-            System.out.println(NULL_MESSAGE_TEMPLATE + messageId);
-        } else {
-            message.ifPresent(value -> {
-                System.out.println(value.toString());
-            });
         }
     }
 }
