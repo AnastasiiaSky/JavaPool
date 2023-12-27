@@ -7,15 +7,15 @@ public final class User {
     private final Long id;
     private final String login;
     private final String password;
-    private List<Chatroom> allChatRooms;
-    private List<Chatroom> userChatRooms;
+    private List<Chatroom> usersChatrooms;
+    private List<Chatroom> usersChatingChatrooms;
 
-    public User(Long id, String login, String password, List<Chatroom> allChatrooms, List<Chatroom> userChatrooms) {
+    public User(Long id, String login, String password, List<Chatroom> usersChatrooms, List<Chatroom> userChatrooms) {
         this.id = id;
         this.login = login;
         this.password = password;
-        this.allChatRooms = allChatrooms;
-        this.userChatRooms = userChatrooms;
+        this.usersChatrooms = usersChatrooms;
+        this.usersChatingChatrooms = usersChatingChatrooms;
     }
 
     public Long getId() {
@@ -38,15 +38,15 @@ public final class User {
         if (this.hashCode() != o.hashCode()) return false;
         return id == user.id && Objects.equals(login, user.login)
                 && Objects.equals(password, user.password)
-                && Objects.equals(allChatRooms, user.allChatRooms)
-                && Objects.equals(userChatRooms, user.userChatRooms);
+                && Objects.equals(usersChatrooms, user.usersChatrooms)
+                && Objects.equals(usersChatingChatrooms, user.usersChatingChatrooms);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(5 * id + 3 * login.length() +
-                7 * password.length() + 99 * allChatRooms.size() +
-                25 * userChatRooms.size());
+                7 * password.length() + 99 * usersChatrooms.size() +
+                25 * usersChatingChatrooms.size());
     }
 
     @Override
@@ -55,8 +55,8 @@ public final class User {
                 "id=" + id +
                 ", login=\"" + login + '\"' +
                 ", password=\"" + password + '\"' +
-                ", allChatRooms = null" +
-                ", userChatRooms = null" +
+                ", usersChatrooms = null" +
+                ", usersChatingChatrooms = null" +
                 '}';
     }
 }

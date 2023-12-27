@@ -16,8 +16,7 @@ import java.util.Optional;
 
 
 public class MessagesRepositoryJdbcImpl implements MessagesRepository {
-    private static HikariDataSource dataSource;
-    private static HikariConfig config = new HikariConfig();
+    private HikariDataSource dataSource;
     private static final String MESSAGE_QUERY_TEMPLATE = "SELECT \"Message\".message_author,\n" +
             "\"User\".user_login,\n" +
             "\"User\".user_password,\n" +
@@ -30,35 +29,31 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository {
             "JOIN chatroom ON \"Message\".message_room = chatroom.id\n" +
             "WHERE \"Message\".id = %d;";
 
-    static {
-        config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
-        config.setUsername("postgres");
-        config.setPassword("");
-        config.setConnectionTimeout(5000);
-        dataSource = new HikariDataSource(config);
+    public MessagesRepositoryJdbcImpl(HikariDataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
 
     @Override
     public Optional<Message> findById(Long id) {
         Optional<Message> message = Optional.empty();
-        try (Connection connection = dataSource.getConnection();){
+        try (Connection connection = dataSource.getConnection();) {
             Statement statement = connection.createStatement();
             ResultSet messageResultSet = statement.executeQuery(String.format(MESSAGE_QUERY_TEMPLATE, id));
             while (messageResultSet.next()) {
-                Long authorId = messageResultSet.getLong(1);
-                String authorName = messageResultSet.getString(2);
-                String authorPassword = messageResultSet.getString(3);
-                User author = new User(authorId, authorName, authorPassword, null, null);
+                User author = new User(messageResultSet.getLong(1),
+                        messageResultSet.getString(2),
+                        messageResultSet.getString(3),
+                        null, null);
 
-                Long chatId = messageResultSet.getLong(4);
-                String chatName = messageResultSet.getString(5);
-                Chatroom chatroom = new Chatroom(chatId, chatName, null, null);
+                Chatroom chatroom = new Chatroom(messageResultSet.getLong(4),
+                        messageResultSet.getString(5),
+                        null, null);
 
-                String text = messageResultSet.getString(6);
-                LocalDateTime time = (messageResultSet.getTimestamp(7)).toLocalDateTime();
+                Message queryResult = new Message(id, author, chatroom,
+                        messageResultSet.getString(6),
+                        (messageResultSet.getTimestamp(7)).toLocalDateTime());
 
-                Message queryResult = new Message(id, author, chatroom, text, time);
                 message = Optional.ofNullable(queryResult);
 
             }
@@ -67,5 +62,4 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository {
         }
         return message;
     }
-
 }

@@ -3,6 +3,7 @@ package edu.school21.chat.app;
 import edu.school21.chat.models.Chatroom;
 import edu.school21.chat.models.Message;
 import edu.school21.chat.models.User;
+import edu.school21.chat.repositories.DataSourceConfiguration;
 import edu.school21.chat.repositories.Exceptions.NotUpdatedException;
 import edu.school21.chat.repositories.MessagesRepository;
 import edu.school21.chat.repositories.MessagesRepositoryJdbcImpl;
@@ -13,8 +14,8 @@ import java.util.Optional;
 
 public class Program {
     public static void main(String[] args) {
-        MessagesRepository messagesRepository = new MessagesRepositoryJdbcImpl();
-        Optional<Message> messageOptional = messagesRepository.findById(10L);
+        MessagesRepository messagesRepository = new MessagesRepositoryJdbcImpl(DataSourceConfiguration.dataSource);
+        Optional<Message> messageOptional = messagesRepository.findById(9L);
         if (messageOptional.isPresent()) {
             Message message = messageOptional.get();
             message.setText("Updated message from task 3");

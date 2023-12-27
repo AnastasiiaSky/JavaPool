@@ -6,6 +6,7 @@ import edu.school21.chat.models.User;
 import edu.school21.chat.repositories.Exceptions.NotSavedSubEntityException;
 import edu.school21.chat.repositories.MessagesRepository;
 import edu.school21.chat.repositories.MessagesRepositoryJdbcImpl;
+import edu.school21.chat.reposotories.DataSourceConfiguration;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class Program {
         User creator = new User(1L, "qylenett", "1111", new ArrayList<>(), new ArrayList<>());
         Chatroom room = new Chatroom(1L, "qylenett_chat", creator, new ArrayList<>());
         Message message = new Message(null, creator, room, NEW_MESSAGE_TEMPLATE, LocalDateTime.now());
-        MessagesRepository messagesRepository = new MessagesRepositoryJdbcImpl();
+        MessagesRepository messagesRepository = new MessagesRepositoryJdbcImpl(DataSourceConfiguration.dataSource);
         try {
             messagesRepository.save(message);
             System.out.println(message.getId());

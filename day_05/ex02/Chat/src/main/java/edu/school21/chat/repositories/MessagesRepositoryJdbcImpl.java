@@ -11,14 +11,13 @@ import edu.school21.chat.repositories.Exceptions.NotSavedSubEntityException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
 
 public class MessagesRepositoryJdbcImpl implements MessagesRepository {
-    private static final HikariDataSource dataSource;
-    private static HikariConfig config = new HikariConfig();
+    private final HikariDataSource dataSource;
+
 
     private static final String GET_MESSAGE_QUERY_TEMPLATE = "SELECT \"Message\".message_author,\n" +
             "\"User\".user_login,\n" +
@@ -33,51 +32,40 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository {
             "WHERE \"Message\".id = %d;";
 
 
-    private static final String GET_USER_WITH_ID_TEMPLATE = "SELECT user_login, user_password\n" +
-            "FROM \"User\"\n" +
-            "WHERE \"User\".id = %d;";
+    private static final String GET_USER_WITH_ID_TEMPLATE = "SELECT 2, 3\n FROM \"User\"\nWHERE \"User\".id = %d;";
 
-    private static final String GET_CHATROOM_WITH_ID_TEMPLATE = "SELECT chatroom_name, chatroom_owner\n" +
-            "FROM chatroom\n" +
-            "WHERE id = %d;";
-
+    private static final String GET_CHATROOM_WITH_ID_TEMPLATE = "SELECT 2, 3\nFROM chatroom\nWHERE id = %d;";
 
     private static final String ADD_MESSAGE_QUERY_TEMPLATE = "INSERT INTO \"Message\" (message_author, message_room, message_text) VALUES (\n" +
             "%d, %d,\'%s\');";
-
     private static final String GET_MAX_MESSAGE_ID = "SELECT MAX(id) FROM \"Message\";";
 
-
-    static {
-        config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
-        config.setUsername("postgres");
-        config.setPassword("");
-        config.setConnectionTimeout(5000);
-        dataSource = new HikariDataSource(config);
+    public MessagesRepositoryJdbcImpl(HikariDataSource dataSource) {
+        this.dataSource = dataSource;
     }
-
 
     @Override
     public Optional<Message> findById(Long id) {
         Optional<Message> message = Optional.empty();
-        try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement()) {
+        try (Connection connection = dataSource.getConnection();) {
+            Statement statement = connection.createStatement();
             ResultSet messageResultSet = statement.executeQuery(String.format(GET_MESSAGE_QUERY_TEMPLATE, id));
             while (messageResultSet.next()) {
-                Long authorId = messageResultSet.getLong(1);
-                String authorName = messageResultSet.getString(2);
-                String authorPassword = messageResultSet.getString(3);
-                User author = new User(authorId, authorName, authorPassword, null, null);
+                User author = new User(messageResultSet.getLong(1),
+                        messageResultSet.getString(2),
+                        messageResultSet.getString(3),
+                        null, null);
 
-                Long chatId = messageResultSet.getLong(4);
-                String chatName = messageResultSet.getString(5);
-                Chatroom chatroom = new Chatroom(chatId, chatName, null, null);
+                Chatroom chatroom = new Chatroom(messageResultSet.getLong(4),
+                        messageResultSet.getString(5),
+                        null, null);
 
-                String text = messageResultSet.getString(6);
-                LocalDateTime time = (messageResultSet.getTimestamp(7)).toLocalDateTime();
+                Message queryResult = new Message(id, author, chatroom,
+                        messageResultSet.getString(6),
+                        (messageResultSet.getTimestamp(7)).toLocalDateTime());
 
-                Message queryResult = new Message(id, author, chatroom, text, time);
                 message = Optional.ofNullable(queryResult);
+
             }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

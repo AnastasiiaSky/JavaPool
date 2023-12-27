@@ -74,6 +74,8 @@ public final class Message {
                 + 17 + 45 * chat.hashCode() + 33 * text.length() + 15 * time.getSecond());
     }
 
+
+
     @Override
     public String toString() {
         String result = "Message : {" + '\n' +
@@ -82,13 +84,13 @@ public final class Message {
                 "chat= " + chat.toString() + '\n' +
                 "text=\"" + text + '\"' + '\n' +
                 "dateTime=";
-        if(time == null) {
+        if (time == null) {
             result += "null";
         } else {
             result = result + time.getDayOfMonth() + '/' + time.getMonth() + '/' + time.getYear() +
                     ' ' + time.getHour() + ':' + time.getMinute() + '\n';
         }
-        result +=  '}';
+        result += '}';
         return result;
     }
 }
