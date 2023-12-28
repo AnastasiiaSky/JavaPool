@@ -49,3 +49,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+day_05/ex01/.DS_Store
+day_05/ex01/Chat/.DS_Store
+day_05/ex01/Chat/src/.DS_Store
+day_05/ex01/Chat/src/main/.DS_Store
+day_06/ex01/.DS_Store
+day_06/ex01/Tests/Tests.iml

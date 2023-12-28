@@ -57,3 +57,9 @@ ex00/Tests/*.idea
 ex00/Tests/target
 ex00/Tests/*.iml
 Tests/target/
+day_06/src/ex01/Tests/*.idea
+day_06/src/ex01/Tests/target
+day_06/src/ex01/Tests/*.iml
+day_06/src/ex01/Tests/target/
+day_06/src/ex01/Tests/.DS_Store
+day_06/src/ex01/.DS_Store
