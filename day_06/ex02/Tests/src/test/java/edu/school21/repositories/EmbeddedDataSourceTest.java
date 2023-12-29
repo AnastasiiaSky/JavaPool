@@ -14,11 +14,11 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class EmbeddedDataSourceTest {
+class EmbeddedDataSourceTest {
     private DataSource dataSource = null;
 
     @BeforeEach
-    public void init() {
+    void init() {
         this.dataSource = new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.HSQL)
                 .addScript("./schema.sql")
@@ -27,7 +27,7 @@ public class EmbeddedDataSourceTest {
     }
 
     @Test
-    public void testConnection() {
+    void testConnection() {
         try (Connection connection = dataSource.getConnection()) {
             assertNotNull(dataSource.getConnection());
         } catch (SQLException sqlException) {
