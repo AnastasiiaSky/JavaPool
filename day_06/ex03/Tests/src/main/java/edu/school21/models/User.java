@@ -32,6 +32,10 @@ public class User {
         return isAuthenticated;
     }
 
+    public void setAuthenticated(Boolean authenticated) {
+        isAuthenticated = authenticated;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
