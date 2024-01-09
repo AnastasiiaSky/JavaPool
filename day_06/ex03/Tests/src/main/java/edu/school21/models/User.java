@@ -41,14 +41,14 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        if(this.hashCode() != user.hashCode()) return false;
+        if (this.hashCode() != user.hashCode()) return false;
         return Objects.equals(id, user.id) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(isAuthenticated, user.isAuthenticated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(33 * id + 44 *(long)login.length() +
-                25 *(long) password.length() + 22 *(long) isAuthenticated.hashCode());
+        return Objects.hash(33 * id + 44 * (long) login.length() +
+                25 * (long) password.length() + 22 * (long) isAuthenticated.hashCode());
     }
 
     @Override

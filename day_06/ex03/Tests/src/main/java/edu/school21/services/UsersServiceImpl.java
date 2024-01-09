@@ -6,7 +6,7 @@ import edu.school21.models.User;
 import edu.school21.repositories.UsersRepository;
 
 
-public class UsersServiceImpl  {
+public class UsersServiceImpl {
     private final UsersRepository usersRepository;
 
     public UsersServiceImpl(UsersRepository usersRepository) {
@@ -16,15 +16,16 @@ public class UsersServiceImpl  {
     public boolean authenticate(String login, String password) throws AlreadyAuthenticatedException, EntityNotFoundException {
         User user = usersRepository.findByLogin(login);
 
-        if(user != null) {
-            if(user.getPassword().equals(password)) {
-                if(!user.getAuthenticated()) {
+        if (user != null) {
+            if (user.getPassword().equals(password)) {
+                if (!user.getAuthenticated()) {
                     user.setAuthenticated(true);
                     usersRepository.update(user);
                     return true;
-                } else throw new AlreadyAuthenticatedException(" User already authenticated");
-            } else throw new EntityNotFoundException(" Incorrect password");
+                } else throw new AlreadyAuthenticatedException("User already authenticated");
+            } else throw new EntityNotFoundException("Incorrect password");
+        } else {
+            throw new EntityNotFoundException("User not found");
         }
-        return false;
     }
 }

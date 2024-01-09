@@ -6,6 +6,7 @@ public class AlreadyAuthenticatedException extends Throwable {
     public AlreadyAuthenticatedException(String description) {
         this.description = description;
     }
+
     public AlreadyAuthenticatedException() {
         this.description = "";
     }

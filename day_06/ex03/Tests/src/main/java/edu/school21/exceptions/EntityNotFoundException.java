@@ -6,6 +6,7 @@ public class EntityNotFoundException extends Throwable {
     public EntityNotFoundException(String description) {
         this.description = description;
     }
+
     public EntityNotFoundException() {
         this.description = "";
     }
