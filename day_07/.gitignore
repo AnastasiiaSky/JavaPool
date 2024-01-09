@@ -1,0 +1,73 @@
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+*.idea
+src/ex00/Tests/*.idea
+src/ex00/Tests/target
+src/ex00/Tests/*.iml
+src/ex01/Tests/target/
+src/ex01/Tests/.DS_Store
+src/ex01/.DS_Store
+
+src/ex01/Tests/*.idea
+src/ex01/Tests/target
+src/ex01/Tests/*.iml
+src/ex01/Tests/target/
+src/ex01/Tests/.DS_Store
+src/ex01/.DS_Store
+
+src/ex02/Tests/*.idea
+src/ex02/Tests/target
+src/ex02/Tests/*.iml
+src/ex02/Tests/target/
+src/ex02/Tests/.DS_Store
+src/ex02/.DS_Store
