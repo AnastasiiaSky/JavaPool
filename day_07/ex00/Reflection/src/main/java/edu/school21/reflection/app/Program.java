@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class Program {
     public static String DIVIDER_TEMPLATE = "---------------------";
-    private static final String PACKAGE = "edu.school21.reflection.models";
+    protected static final String PACKAGE = "edu.school21.reflection.models";
     protected static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -18,5 +18,6 @@ public class Program {
         Class<?> currentClass = InformationMethods.printAllClasses(classes);
         Object newObject = ActionMethods.objectCreating(currentClass);
         newObject = ActionMethods.changeObject(newObject, currentClass);
+        ActionMethods.callObjectMethod(newObject, currentClass);
     }
 }

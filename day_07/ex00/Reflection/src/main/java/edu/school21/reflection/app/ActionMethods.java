@@ -2,6 +2,10 @@ package edu.school21.reflection.app;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class ActionMethods {
     protected static Object objectCreating(Class<?> currentClass) {
@@ -53,7 +57,7 @@ public class ActionMethods {
 
     protected static Object changeObject(Object object, Class<?> currentClass) {
         System.out.println("Enter name of the field for changing:");
-        if(Program.sc.hasNext()) {
+        if (Program.sc.hasNext()) {
             String changingFieldName = Program.sc.next().trim();
             try {
                 if (checkFields(changingFieldName, currentClass)) {
@@ -64,11 +68,10 @@ public class ActionMethods {
                     Object argument = getArgument(type);
                     field.set(object, argument);
                     System.out.println("Object updated: " + object.toString());
+                    System.out.println(Program.DIVIDER_TEMPLATE);
                 }
-            } catch (NoSuchFieldException noSuchFieldException) {
-                noSuchFieldException.printStackTrace();
-            } catch (IllegalAccessException illegalAccessException) {
-                illegalAccessException.printStackTrace();
+            } catch (NoSuchFieldException | IllegalAccessException exception) {
+                exception.printStackTrace();
             }
         }
         return object;
@@ -78,8 +81,82 @@ public class ActionMethods {
         boolean check = false;
         Field[] fields = currentClass.getDeclaredFields();
         for (Field field : fields) {
-            if(changingFieldName.equals(field.getName())) check = true;
+            if (changingFieldName.equals(field.getName())) check = true;
         }
         return check;
+    }
+
+    protected static void callObjectMethod(Object object, Class<?> currentClass) {
+        System.out.println("Enter name of the method for call:");
+        if (Program.sc.hasNext()) {
+            String collingMethodString = Program.sc.next().trim();
+            String[] collingMethod = collingMethodString.split("\\(");
+            try {
+                if (collingMethodString.endsWith("()")) {
+                    if (checkMethods(collingMethodString, currentClass)) {
+                        Method method = currentClass.getDeclaredMethod(collingMethod[0]);
+                        method.setAccessible(true);
+                        String parameterString = getParametersType(method);
+                        if (parameterString.length() == 0) {
+                            method.invoke(object);
+                        }
+                    }
+                } else if (!collingMethodString.endsWith(")")) {
+                    throw new NoSuchMethodException();
+                } else {
+                    callObjectParamMethod(object, currentClass, collingMethodString);
+                }
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+
+    private static void callObjectParamMethod(Object object, Class<?> currentClass, String collingMethodString)
+            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        if (checkMethods(collingMethodString, currentClass)) {
+            Method[] methods = currentClass.getDeclaredMethods();
+            for (Method method : methods) {
+                String parameters = getParametersType(method);
+                if (collingMethodString.equals(String.format("%s(%s)", method.getName(),
+                        parameters))) {
+                    method.setAccessible(true);
+                    String parameterString = getParametersType(method);
+                    String[] allParameters = parameterString.split(",");
+                    Object[] arguments = getMethodArguments(allParameters);
+                    Object result = method.invoke(object, arguments);
+                    System.out.println("Method returned:\n" + result);
+                }
+            }
+        } else {
+            throw new NoSuchMethodException();
+        }
+    }
+
+    private static Object[] getMethodArguments(String[] parameters) {
+        Object[] arguments = new Object[parameters.length];
+        for (int i = 0; i < parameters.length; ++i) {
+            System.out.println("Enter " + parameters[i] + " value:");
+            arguments[i] = getArgument(parameters[i]);
+        }
+        return arguments;
+    }
+
+    private static boolean checkMethods(String collingMethod, Class<?> currentClass) {
+        boolean check = false;
+        Method[] methods = currentClass.getDeclaredMethods();
+        for (Method method : methods) {
+            String parameters = getParametersType(method);
+            if (collingMethod.equals(String.format("%s(%s)", method.getName(),
+                    parameters))) check = true;
+        }
+        return check;
+    }
+
+    private static String getParametersType(Method method) {
+        return Arrays.stream(method.getParameterTypes())
+                .map(Class::getSimpleName)
+                .collect(Collectors.joining(", "));
     }
 }

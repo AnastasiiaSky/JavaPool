@@ -21,7 +21,7 @@ public class Car {
 
     public void move() {
         String start = "Start the engine.... Wooom.. Wooom.. Wooom..";
-        System.out.printf("I'm %s %s\nMy price is %f\nLet's go!\n%s", color, model, price, start);
+        System.out.printf("I'm %s %s\nMy price is %f\nLet's go!\n%s\n", color, model, price, start);
     }
 
     @Override
