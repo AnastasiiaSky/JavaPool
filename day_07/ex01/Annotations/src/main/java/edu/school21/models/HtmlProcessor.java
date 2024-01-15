@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@SupportedAnnotationTypes({"edu.school21.annotations.HtmlForm", "edu.school21.annotations.HtmlInput"})
+@SupportedAnnotationTypes("edu.school21.annotations.*")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class HtmlProcessor extends AbstractProcessor {
     @Override

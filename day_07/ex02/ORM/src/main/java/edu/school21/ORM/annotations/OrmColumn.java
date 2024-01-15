@@ -9,5 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface OrmColumn {
     String name();
+
     int length() default 5;
 }

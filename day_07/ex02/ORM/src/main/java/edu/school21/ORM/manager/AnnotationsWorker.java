@@ -1,14 +1,13 @@
 package edu.school21.ORM.manager;
 
 import edu.school21.ORM.annotations.OrmColumn;
-import edu.school21.ORM.annotations.OrmColumnId;
 import edu.school21.ORM.annotations.OrmEntity;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +18,7 @@ public class AnnotationsWorker {
     public AnnotationsWorker() {
         findClassesSet();
     }
+
     private void findClassesSet() {
         Reflections reflections = new Reflections(PACKAGE, Scanners.SubTypes.filterResultsBy(s -> true));
         this.classes = reflections.getSubTypesOf(Object.class);
@@ -35,8 +35,8 @@ public class AnnotationsWorker {
     protected List<List<Object>> getColumnsList(Class<?> clazz) {
         Field[] fields = clazz.getDeclaredFields();
         List<List<Object>> columnsData = new ArrayList<>();
-        for(Field field : fields) {
-            if(!field.getName().equals("id") && !field.getName().equals("idGenerator")) {
+        for (Field field : fields) {
+            if (!field.getName().equals("id")) {
                 List<Object> fieldData = new ArrayList<>();
                 fieldData.add(field.getAnnotation(OrmColumn.class).name());
                 fieldData.add(field.getAnnotation(OrmColumn.class).length());
@@ -46,16 +46,40 @@ public class AnnotationsWorker {
         return columnsData;
     }
 
+    protected void setEntityId(Long id, Object entity) {
+        Field[] fields = entity.getClass().getDeclaredFields();
+        try {
+            for (Field field : fields) {
+                if (field.getName().equals("id")) {
+                    field.setAccessible(true);
+                    field.set(entity, id);
+                }
+            }
+        } catch (IllegalAccessException illegalAccessException) {
+            illegalAccessException.printStackTrace();
+        }
+    }
+
+    protected <T> T objectCreating(Class<T> aClass, Long id, String name, String other, int value) {
+        try {
+            T instance = aClass.getDeclaredConstructor(Long.class, String.class, String.class, Integer.class)
+                    .newInstance(id, name, other, value);
+            return instance;
+        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException |
+                 InvocationTargetException | InstantiationException exception) {
+            exception.printStackTrace();
+        }
+        return null;
+    }
+
     protected List<Object> getClassDataForSave(Object entity) {
         List<Object> data = new ArrayList<>();
         Class<?> clazz = entity.getClass();
         Field[] fields = clazz.getDeclaredFields();
-        try{
+        try {
             for (Field field : fields) {
-                if(!field.getName().equals("idGenerator")) {
-                    field.setAccessible(true);
-                    data.add(field.get(entity));
-                }
+                field.setAccessible(true);
+                data.add(field.get(entity));
             }
         } catch (IllegalAccessException illegalAccessException) {
             illegalAccessException.printStackTrace();

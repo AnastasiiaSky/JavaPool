@@ -4,11 +4,13 @@ package edu.school21.ORM.models;
 import edu.school21.ORM.annotations.OrmColumn;
 import edu.school21.ORM.annotations.OrmColumnId;
 import edu.school21.ORM.annotations.OrmEntity;
+import jakarta.persistence.GenerationType;
+
+import java.util.StringJoiner;
 
 @OrmEntity(table = "simple_cat")
 public class Cat {
-    static Long idGenerator = 1L;
-    @OrmColumnId
+    @OrmColumnId(id = GenerationType.IDENTITY)
     private Long id;
     @OrmColumn(name = "name", length = 10)
     private String name;
@@ -18,11 +20,9 @@ public class Cat {
     private Integer age;
 
     public Cat(String name, String color, Integer age) {
-        this.id = idGenerator;
         this.name = name;
         this.color = color;
         this.age = age;
-        ++idGenerator;
     }
 
     public Cat(Long id, String name, String color, Integer age) {
@@ -58,5 +58,15 @@ public class Cat {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Cat.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("name='" + name + "'")
+                .add("color='" + color + "'")
+                .add("age=" + age)
+                .toString();
     }
 }
