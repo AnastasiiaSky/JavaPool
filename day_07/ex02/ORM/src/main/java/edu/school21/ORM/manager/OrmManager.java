@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import edu.school21.ORM.app.DataSourceConfiguration;
+import edu.school21.ORM.exceptions.WrongTypeException;
 
 import javax.sql.DataSource;
 
@@ -21,18 +22,16 @@ public class OrmManager {
         tablesCreation();
     }
 
-
     public void save(Object entity) {
         Class<?> clazz = entity.getClass();
         String table = annotations.getOrmEntity(clazz).table();
         List<List<Object>> columnsData = annotations.getColumnsList(clazz);
         List<Object> data = annotations.getClassDataForSave(entity);
         try (Connection connection = dataSource.getConnection()) {
-            String insertTemplate = String.format("INSERT INTO %s (%s, %s, %s) VALUES " +
-                            "(\'%s\', \'%s\', \'%d\');", table, columnsData.get(0).get(0),
-                    columnsData.get(1).get(0), columnsData.get(2).get(0), data.get(1),
-                    data.get(2), data.get(3));
+            String insertTemplate = String.format("INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?)", table, columnsData.get(0).get(0),
+                    columnsData.get(1).get(0), columnsData.get(2).get(0));
             PreparedStatement preparedStatement = connection.prepareStatement(insertTemplate);
+            workWithAStatement(preparedStatement, data);
             preparedStatement.executeUpdate();
             System.out.println(insertTemplate);
             String searchingIdTemplate = String.format("SELECT max(id) FROM %s", table);
@@ -44,16 +43,42 @@ public class OrmManager {
         }
     }
 
+    private void workWithAStatement(PreparedStatement preparedStatement, List<Object> data) {
+        try {
+            int index = 0;
+            for (Object element : data) {
+                ++index;
+                if (element == null) {
+                    --index;
+                    continue;
+                } else if (element instanceof Integer) {
+                    preparedStatement.setInt(index, (Integer) element);
+                } else if (element instanceof String) {
+                    preparedStatement.setString(index, (String) element);
+                } else if (element instanceof Double) {
+                    preparedStatement.setDouble(index, (Double) element);
+                } else if (element instanceof Boolean) {
+                    preparedStatement.setBoolean(index, (Boolean) element);
+                } else if (element instanceof Long) {
+                    preparedStatement.setLong(index, (Long) element);
+                } else throw new WrongTypeException("Wrong type: Use : String, Integer, Double, Boolean or Long");
+            }
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+    }
+
     public void update(Object entity) {
         Class<?> clazz = entity.getClass();
         String table = annotations.getOrmEntity(clazz).table();
         List<List<Object>> columnsData = annotations.getColumnsList(clazz);
         List<Object> data = annotations.getClassDataForSave(entity);
         try (Connection connection = dataSource.getConnection()) {
-            String updateTemplate = String.format("UPDATE %s SET %s = \'%s\', %s = \'%s\', %s = \'%d\' " +
-                            "WHERE id = %d;", table, columnsData.get(0).get(0), data.get(1), columnsData.get(1).get(0),
-                    data.get(2), columnsData.get(2).get(0), data.get(3), data.get(0));
+            String updateTemplate = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE id = %d;",
+                    table, columnsData.get(0).get(0), columnsData.get(1).get(0), columnsData.get(2).get(0), data.get(0));
+            data.remove(0);
             PreparedStatement statement = connection.prepareStatement(updateTemplate);
+            workWithAStatement(statement, data);
             statement.executeUpdate();
             System.out.println(updateTemplate);
         } catch (SQLException sqlException) {

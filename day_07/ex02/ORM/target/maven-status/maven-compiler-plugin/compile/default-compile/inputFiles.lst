@@ -1,0 +1,10 @@
+/Users/qylenett/Desktop/Java_Bootcamp.Day07-1/src/ex02/ORM/src/main/java/edu/school21/ORM/manager/AnnotationsWorker.java
+/Users/qylenett/Desktop/Java_Bootcamp.Day07-1/src/ex02/ORM/src/main/java/edu/school21/ORM/annotations/OrmColumn.java
+/Users/qylenett/Desktop/Java_Bootcamp.Day07-1/src/ex02/ORM/src/main/java/edu/school21/ORM/manager/OrmManager.java
+/Users/qylenett/Desktop/Java_Bootcamp.Day07-1/src/ex02/ORM/src/main/java/edu/school21/ORM/models/Cat.java
+/Users/qylenett/Desktop/Java_Bootcamp.Day07-1/src/ex02/ORM/src/main/java/edu/school21/ORM/models/User.java
+/Users/qylenett/Desktop/Java_Bootcamp.Day07-1/src/ex02/ORM/src/main/java/edu/school21/ORM/annotations/OrmColumnId.java
+/Users/qylenett/Desktop/Java_Bootcamp.Day07-1/src/ex02/ORM/src/main/java/edu/school21/ORM/exceptions/WrongTypeException.java
+/Users/qylenett/Desktop/Java_Bootcamp.Day07-1/src/ex02/ORM/src/main/java/edu/school21/ORM/app/DataSourceConfiguration.java
+/Users/qylenett/Desktop/Java_Bootcamp.Day07-1/src/ex02/ORM/src/main/java/edu/school21/ORM/app/Program.java
+/Users/qylenett/Desktop/Java_Bootcamp.Day07-1/src/ex02/ORM/src/main/java/edu/school21/ORM/annotations/OrmEntity.java

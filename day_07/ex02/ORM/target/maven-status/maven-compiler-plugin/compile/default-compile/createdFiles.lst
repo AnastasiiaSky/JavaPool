@@ -1,0 +1,10 @@
+edu/school21/ORM/models/User.class
+edu/school21/ORM/manager/OrmManager.class
+edu/school21/ORM/annotations/OrmColumnId.class
+edu/school21/ORM/exceptions/WrongTypeException.class
+edu/school21/ORM/manager/AnnotationsWorker.class
+edu/school21/ORM/app/DataSourceConfiguration.class
+edu/school21/ORM/annotations/OrmColumn.class
+edu/school21/ORM/app/Program.class
+edu/school21/ORM/annotations/OrmEntity.class
+edu/school21/ORM/models/Cat.class
