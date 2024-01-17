@@ -33,7 +33,7 @@ public class OrmManager {
             PreparedStatement preparedStatement = connection.prepareStatement(insertTemplate);
             workWithAStatement(preparedStatement, data);
             preparedStatement.executeUpdate();
-            System.out.println(insertTemplate);
+            printExecutedQuery(preparedStatement);
             String searchingIdTemplate = String.format("SELECT max(id) FROM %s", table);
             preparedStatement = connection.prepareStatement(searchingIdTemplate);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -41,6 +41,12 @@ public class OrmManager {
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
+    }
+
+    private void printExecutedQuery(PreparedStatement statement) {
+        String[] dataForPrint = new String[2];
+        dataForPrint = String.valueOf(statement).split("wrapping");
+        System.out.println(dataForPrint[1].trim());
     }
 
     private void workWithAStatement(PreparedStatement preparedStatement, List<Object> data) {
@@ -80,7 +86,7 @@ public class OrmManager {
             PreparedStatement statement = connection.prepareStatement(updateTemplate);
             workWithAStatement(statement, data);
             statement.executeUpdate();
-            System.out.println(updateTemplate);
+            printExecutedQuery(statement);
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
@@ -131,9 +137,9 @@ public class OrmManager {
         try (Connection connection = dataSource.getConnection()) {
             String query = String.format("CREATE TABLE IF  NOT EXISTS %s (%n" +
                             "id bigserial NOT NULL PRIMARY KEY,%n" +
-                            "%s VARCHAR(%d) NOT NULL,%n" +
-                            "%s VARCHAR(%d) NOT NULL,%n" +
-                            "%s INT NOT NULL%n);", table,
+                            "%s VARCHAR(%d),%n" +
+                            "%s VARCHAR(%d),%n" +
+                            "%s INT %n);", table,
                     columnsData.get(0).get(0), columnsData.get(0).get(1),
                     columnsData.get(1).get(0), columnsData.get(1).get(1),
                     columnsData.get(2).get(0), columnsData.get(2).get(1));
