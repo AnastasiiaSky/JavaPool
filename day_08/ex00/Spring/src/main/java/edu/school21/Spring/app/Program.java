@@ -20,6 +20,7 @@ public class Program {
 //        "PrinterWithPrefixStandartLower"
 //        "PrinterWithPrefixErrUpper"
 //        "PrinterWithPrefixErrLower"
+        context.close();
 
     }
 }
